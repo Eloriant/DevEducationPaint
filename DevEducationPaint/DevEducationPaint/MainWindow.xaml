@@ -3,21 +3,38 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas/xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:DevEducationPaint"
+        xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="DevEducationPaint" Height="450" Width="800">
   <Grid>
-    <Border BorderBrush="LightBlue" BorderThickness="5" HorizontalAlignment="Center" VerticalAlignment="Center">
-      
+    <toolkit:ColorPicker Name="cp"
+                         DisplayColorAndName="True" 
+                         SelectedColorChanged="cp_SelectedColorChanged_1" 
+                         AvailableColorsSortingMode="HueSaturationBrightness"
+                         HorizontalAlignment="Left"
+                         Width="40"
+                         Height="25"
+                         Margin="742,41,2,342" />
+
+    <Label Content="Цвет" HorizontalAlignment="Left" Margin="746,0,0,385" VerticalAlignment="Bottom"/>
+    <Border x:Name="BorderImage" 
+            BorderBrush="LightBlue" 
+            BorderThickness="5" 
+            HorizontalAlignment="left" 
+            Height="Auto"
+            Width="730"
+            VerticalAlignment="Stretch"
+            Margin="5,5,0,0" >
+
       <Image x:Name="DrawWindow" 
-             HorizontalAlignment="Left" 
-             Height="400" 
-             Margin="10,10,0,0" 
-             VerticalAlignment="Top" 
-             Width="770"
+             Height="Auto" 
+             Width="Auto"
              MouseMove="Image_MouseMove"
              MouseWheel="Image_MouseWheel"/>
     </Border>
+
 
   </Grid>
 </Window>

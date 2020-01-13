@@ -22,19 +22,19 @@ namespace DevEducationPaint
   {
     private WriteableBitmap writeableBitmap;
 
-    List<Color> pencilColor = new List<Color>{Colors.Black, Colors.Black, Colors.Black};
+    private Color pencilColor;
     public MainWindow()
     {
       InitializeComponent();
-      writeableBitmap = new WriteableBitmap(770,
-        400, 300, 300, PixelFormats.Bgra32, null);
+      writeableBitmap = new WriteableBitmap(726,
+        396, 96, 96, PixelFormats.Bgra32, null);
       FillWhite();
     }
 
     private void FillWhite()
     {
-      int width = 760;
-      int height = 400;
+      int width = 728;
+      int height = 428;
       int stride = width / 8;
       byte[] pixels = new byte[height * stride];
 
@@ -58,12 +58,15 @@ namespace DevEducationPaint
     private void Image_MouseMove(object sender, MouseEventArgs e)
     {
 
-      byte[] colorData = { Colors.Black.R, Colors.Black.G, Colors.Black.B, Colors.Black.A };
+      byte[] colorData =
+      {
+        pencilColor.R, pencilColor.G, pencilColor.B, pencilColor.A
+      };
 
       if (e.LeftButton != MouseButtonState.Pressed) return;
       var position = e.GetPosition(sender as IInputElement);
       var rect = new Int32Rect((int)position.X, (int)position.Y, 1, 1);
-      writeableBitmap.WritePixels(rect, colorData, 4, 0);
+      writeableBitmap.WritePixels(rect, colorData, 100, 0);
       DrawWindow.Source = writeableBitmap;
     }
 
@@ -78,6 +81,15 @@ namespace DevEducationPaint
         m.ScaleAtPrepend(1 / 1.1, 1 / 1.1, p.X, p.Y);
 
       DrawWindow.RenderTransform = new MatrixTransform(m);
+    }
+
+    private void cp_SelectedColorChanged_1(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+    {
+      if (cp.SelectedColor.HasValue)
+      {
+        pencilColor = cp.SelectedColor.Value;
+      }
+
     }
 
   }
