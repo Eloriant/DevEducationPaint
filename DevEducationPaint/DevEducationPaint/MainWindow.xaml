@@ -34,5 +34,7 @@
              MouseMove="Image_MouseMove"
              MouseWheel="Image_MouseWheel"/>
     </Border>
+    <Label  Content="Размер" HorizontalAlignment="Left" Margin="743,100,0,0" VerticalAlignment="Top"/>
+    <TextBox x:Name="tbxPencilSize" HorizontalAlignment="Left" Margin="743,131,0,0" Text="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="tbxPencilSize_Changed"/>
   </Grid>
 </Window>

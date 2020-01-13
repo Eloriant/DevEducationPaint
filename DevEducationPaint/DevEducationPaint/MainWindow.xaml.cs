@@ -22,12 +22,16 @@ namespace DevEducationPaint
   {
     private WriteableBitmap writeableBitmap;
 
+    private int pencilSize;
     private Color pencilColor;
     public MainWindow()
     {
       InitializeComponent();
       writeableBitmap = new WriteableBitmap(726,
         396, 96, 96, PixelFormats.Bgra32, null);
+      Int32.TryParse(tbxPencilSize.Text as string, out int value);
+
+      pencilSize = value;
       FillWhite();
     }
 
@@ -61,12 +65,28 @@ namespace DevEducationPaint
       byte[] colorData =
       {
         pencilColor.R, pencilColor.G, pencilColor.B, pencilColor.A
+       
       };
-
+      
       if (e.LeftButton != MouseButtonState.Pressed) return;
       var position = e.GetPosition(sender as IInputElement);
-      var rect = new Int32Rect((int)position.X, (int)position.Y, 1, 1);
-      writeableBitmap.WritePixels(rect, colorData, 100, 0);
+
+      var rect = new Int32Rect((int)position.X, (int)position.Y, pencilSize, pencilSize);
+
+      var stride = (rect.Width * writeableBitmap.Format.BitsPerPixel + 7) / 8;
+      var bufferSize = rect.Height * stride;
+
+      byte[] newColorData = new byte[bufferSize];
+
+      for (int i = 0; i < newColorData.Length; i += 4)
+      {
+        newColorData[i] = pencilColor.B;
+        newColorData[i+1] = pencilColor.G;
+        newColorData[i+2] = pencilColor.R;
+        newColorData[i+3] = pencilColor.A;
+      }
+
+      writeableBitmap.WritePixels(rect, newColorData, stride, 0);
       DrawWindow.Source = writeableBitmap;
     }
 
@@ -89,9 +109,13 @@ namespace DevEducationPaint
       {
         pencilColor = cp.SelectedColor.Value;
       }
-
     }
 
+    private void tbxPencilSize_Changed(object sender, TextChangedEventArgs e)
+    {
+      Int32.TryParse(tbxPencilSize.Text as string, out int value);
+      pencilSize = value;
+    }
   }
 
 }
