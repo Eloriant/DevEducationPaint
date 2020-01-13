@@ -58,11 +58,7 @@ namespace DevEducationPaint
     private void Image_MouseMove(object sender, MouseEventArgs e)
     {
 
-      byte blue = 0;
-      byte green = 0;
-      byte red = 0;
-      byte alpha = 255;
-      byte[] colorData = { Colors.Black.R, Colors.Black.G, Colors.Black.B, alpha };
+      byte[] colorData = { Colors.Black.R, Colors.Black.G, Colors.Black.B, Colors.Black.A };
 
       if (e.LeftButton != MouseButtonState.Pressed) return;
       var position = e.GetPosition(sender as IInputElement);
@@ -83,6 +79,7 @@ namespace DevEducationPaint
 
       DrawWindow.RenderTransform = new MatrixTransform(m);
     }
+
   }
 
 }
