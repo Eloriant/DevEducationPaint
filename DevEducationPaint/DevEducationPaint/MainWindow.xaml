@@ -34,7 +34,5 @@
              MouseMove="Image_MouseMove"
              MouseWheel="Image_MouseWheel"/>
     </Border>
-
-
   </Grid>
 </Window>
