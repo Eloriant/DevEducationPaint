@@ -6,7 +6,18 @@
         xmlns:local="clr-namespace:DevEducationPaint"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+  <Grid>
+    <Border BorderBrush="LightBlue" BorderThickness="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+      
+      <Image x:Name="DrawWindow" 
+             HorizontalAlignment="Left" 
+             Height="400" 
+             Margin="10,10,0,0" 
+             VerticalAlignment="Top" 
+             Width="770"
+             MouseMove="Image_MouseMove"
+             MouseWheel="Image_MouseWheel"/>
+    </Border>
 
-    </Grid>
+  </Grid>
 </Window>
