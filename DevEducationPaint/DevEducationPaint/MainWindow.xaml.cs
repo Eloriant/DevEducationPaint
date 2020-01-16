@@ -31,6 +31,7 @@ namespace DevEducationPaint
             Int32.TryParse(tbxPencilSize.Text as string, out int value);
             pencilSize = value;
             FillWhite();
+
         }
         private void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -42,9 +43,7 @@ namespace DevEducationPaint
         {
             prev = e.GetPosition(sender as IInputElement);
             isDrawing = true;
-            //SetPixel(prev); - Ставит точку при клике без движения. 
-            //Выключил, потому что ставит точку отдельно от той,
-            // которая поставится во время начала движения мыши 
+            SetPixel(prev);
         }
         private void FillWhite()
         {
@@ -105,31 +104,229 @@ namespace DevEducationPaint
         {
             //написать разные отпечатки от кисти(точка, квадрат 2х2, крестик 3х3 и так далее.)
         }
-        private void DrawLine(int x1, int y1, int x2, int y2)
+        private void DrawLine(Point prev, Point position)
         {
-            //Соединение точек линиями
+
+            int wth = Convert.ToInt32(Math.Abs(position.X - prev.X) + 1);
+            int hght = Convert.ToInt32(Math.Abs(position.Y - prev.Y) + 1);
+            int x0 = Convert.ToInt32(prev.X);
+            int y0 = Convert.ToInt32(prev.X);
+            int x = 0;
+            int y = 0;
+            int[] xArr = new int[] { };
+            int[] yArr = new int[] { };
+            double k;
+            int quarter = FindQuarter(prev, position);
+
+            if (hght >= wth)
+            {
+                xArr = new int[hght];
+                yArr = new int[hght];
+                k = wth * 1.0 / hght;
+
+                if (quarter == 0)
+                {
+                    if (Convert.ToInt32(position.Y - x0) > 0)
+                    {
+                        for (int i = 0; i < hght; i++)
+                        {
+                            xArr[i] = x0;
+                            yArr[i] = y0 + i;
+                        }
+                    }
+
+                    else
+                    {
+                        for (int i = 0; i < hght; i++)
+                        {
+                            xArr[i] = x0;
+                            yArr[i] = y0 - i;
+                        }
+                    }
+                }
+
+                if (quarter == 4)
+                {
+                    for (int i = 0; i < hght; i++)
+                    {
+                        x = Convert.ToInt32(k * i + x0);
+                        xArr[i] = x;
+                        yArr[i] = y0 + i;
+                    }
+                }
+
+                if (quarter == 3)
+                {
+                    for (int i = 0; i < hght; i++)
+                    {
+                        x = Convert.ToInt32(k * i - x0);
+                        xArr[i] = -x >= 0 ? -x : 0;
+                        yArr[i] = y0 + i;
+                    }
+                }
+
+                if (quarter == 1)
+                {
+                    for (int i = 0; i < hght; i++)
+                    {
+                        x = Convert.ToInt32(k * i + x0);
+                        xArr[i] = x;
+                        yArr[i] = y0 - i;
+                    }
+                }
+
+                if (quarter == 2)
+                {
+                    for (int i = 0; i < hght; i++)
+                    {
+                        x = Convert.ToInt32(k * i - x0);
+                        xArr[i] = -x;
+                        yArr[i] = y0 - i;
+                    }
+                }
+
+                for (int i = 0; i < hght; i++)
+                {
+                    prev.Y = yArr[i];
+                    prev.X = xArr[i];
+                    SetPixel(prev);
+                }
+            }
+            else if (hght < wth)
+            {
+                xArr = new int[wth];
+                yArr = new int[wth];
+                k = hght * 1.0 / wth;
+
+                if (quarter == 0)
+                {
+                    if (Convert.ToInt32(position.X - x0) > 0)
+                    {
+                        for (int i = 0; i < wth; i++)
+                        {
+                            yArr[i] = y0;
+                            xArr[i] = x0 + i;
+                        }
+                    }
+
+                    else
+                    {
+                        for (int i = 0; i < wth; i++)
+                        {
+                            yArr[i] = y0;
+                            xArr[i] = x0 - i;
+                        }
+                    }
+                }
+
+                if (quarter == 1)
+                {
+                    for (int i = 0; i < wth; i++)
+                    {
+                        y = Convert.ToInt32(k * i - y0);
+                        yArr[i] = -y;
+                        xArr[i] = x0 + i;
+                    }
+                }
+
+                if (quarter == 2)
+                {
+                    for (int i = 0; i < wth; i++)
+                    {
+                        y = Convert.ToInt32(k * i - y0);
+                        yArr[i] = -y;
+                        xArr[i] = x0 - i;
+                    }
+                }
+
+                if (quarter == 4)
+                {
+                    for (int i = 0; i < wth; i++)
+                    {
+                        y = Convert.ToInt32(k * i + y0);
+                        yArr[i] = y;
+                        xArr[i] = x0 + i;
+                    }
+                }
+
+                if (quarter == 3)
+                {
+                    for (int i = 0; i < wth; i++)
+                    {
+                        y = Convert.ToInt32(k * i + y0);
+                        yArr[i] = y;
+                        xArr[i] = x0 - i;
+                    }
+                }
+
+                for (int i = 0; i < wth; i++)
+                {
+                    prev.Y = yArr[i];
+                    prev.X = xArr[i];
+                    SetPixel(prev);
+                }
+            }
+
         }
+
+        public int FindQuarter(Point prev, Point position)
+        {
+            int quarter = 0;
+            if (position.X > prev.X && position.Y > prev.Y)
+            {
+                quarter = 4;
+            }
+            if (position.X < prev.X && position.Y < prev.Y)
+            {
+                quarter = 2;
+            }
+            if (position.X > prev.X && position.Y < prev.Y)
+            {
+                quarter = 1;
+            }
+            if (position.X < prev.X && position.Y > prev.Y)
+            {
+                quarter = 3;
+            }
+            return quarter;
+        }
+
+        public object[] FindRelativeValue(Point prev, Point position)
+        {
+            object[] arr = new object[2];
+            int k;
+            int withdraw = Convert.ToInt32(position.X - prev.X);
+            int height = Convert.ToInt32(position.Y - position.X);
+            string relativeValue = "";
+            if (Math.Abs(withdraw) > Math.Abs(height))
+            {
+                if (withdraw == 0) { k = height; }
+                else k = height / withdraw;
+                relativeValue = "x";
+            }
+            else
+            {
+                if (height == 0) { k = withdraw; }
+                else k = withdraw / height;
+                relativeValue = "y";
+            }
+            arr[0] = k;
+            arr[1] = relativeValue;
+            return arr;
+        }
+
         private void SetPixel(Point prev)
         {
             byte[] colorData = { pencilColor.R, pencilColor.G, pencilColor.B, pencilColor.A };
-            var rect = new Int32Rect((int)prev.X, (int)prev.Y, pencilSize, pencilSize);
-            // Где-то здесь должен вызываться метод Pencil_Print
-            int stride = (rect.Width * writeableBitmap.Format.BitsPerPixel + 7) / 8;
-            int bufferSize = rect.Height * stride;
-
-            byte[] newColorData = new byte[bufferSize];
-
-            for (int i = 0; i < newColorData.Length; i += 4)
-            {
-                newColorData[i] = pencilColor.B;
-                newColorData[i + 1] = pencilColor.G;
-                newColorData[i + 2] = pencilColor.R;
-                newColorData[i + 3] = pencilColor.A;
-            }
-            writeableBitmap.WritePixels(rect, newColorData, stride, 0);
+            var rect = new Int32Rect((int)prev.X, (int)prev.Y, 1, 1);
+            writeableBitmap.WritePixels(rect, colorData, 4, 0);
             DrawWindow.Source = writeableBitmap;
         }
 
+        private void buttonLine_Click(object sender, RoutedEventArgs e)
+        {
+            DrawLine(new Point(200, 200), new Point(100, 100));
+        }
     }
 
 }

@@ -40,5 +40,6 @@
         </Border>
         <Label  Content="Размер" HorizontalAlignment="Left" Margin="48,100,0,0" VerticalAlignment="Top" Grid.Column="2"/>
         <TextBox x:Name="tbxPencilSize" HorizontalAlignment="Left" Margin="48,131,0,0" Text="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="tbxPencilSize_Changed" Grid.Column="2"/>
+        <Button x:Name="buttonLine" Content="Line" Grid.Column="2" HorizontalAlignment="Left" Margin="47,174,0,0" VerticalAlignment="Top" Width="40" Click="buttonLine_Click"/>
     </Grid>
 </Window>
