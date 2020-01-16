@@ -22,7 +22,9 @@ namespace DevEducationPaint
         private int pencilSize;
         private Color pencilColor = Brushes.Black.Color;
         private Point prev = new Point(0, 0);
+        private Point position = new Point(0, 0);
         private bool isDrawing = false; //флаг сигнализирующий
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -31,19 +33,30 @@ namespace DevEducationPaint
             Int32.TryParse(tbxPencilSize.Text as string, out int value);
             pencilSize = value;
             FillWhite();
+            SetPixel(new Point(1, 100));
+            SetPixel(new Point(1, 200));
+            SetPixel(new Point(1, 300));
 
         }
         private void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            position = e.GetPosition(sender as IInputElement);
+            //DrawLine(prev, position);
             prev.X = 0;
             prev.Y = 0;
+            position.X = 0;
+            position.Y = 0;
             isDrawing = false;
+
+            
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            prev = e.GetPosition(sender as IInputElement);
+            
             isDrawing = true;
-            SetPixel(prev);
+            prev = e.GetPosition(sender as IInputElement);
+            ddd.Content = $"{prev.X} {prev.Y}";
+            //SetPixel(prev);
         }
         private void FillWhite()
         {
@@ -70,10 +83,13 @@ namespace DevEducationPaint
         }
         private void Image_MouseMove(object sender, MouseEventArgs e)
         {
+            var position = e.GetPosition(sender as IInputElement);
+            ddd.Content = $"{position.X} {position.Y}";
             if (isDrawing == true && prev.X != 0 && prev.Y != 0)
             {
-                var position = e.GetPosition(sender as IInputElement);
-                SetPixel(position);
+                position = e.GetPosition(sender as IInputElement);
+                DrawLine(prev, position);
+                prev = position;
             }
         }
         private void Image_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -110,7 +126,7 @@ namespace DevEducationPaint
             int wth = Convert.ToInt32(Math.Abs(position.X - prev.X) + 1);
             int hght = Convert.ToInt32(Math.Abs(position.Y - prev.Y) + 1);
             int x0 = Convert.ToInt32(prev.X);
-            int y0 = Convert.ToInt32(prev.X);
+            int y0 = Convert.ToInt32(prev.Y);
             int x = 0;
             int y = 0;
             int[] xArr = new int[] { };
@@ -123,28 +139,7 @@ namespace DevEducationPaint
                 xArr = new int[hght];
                 yArr = new int[hght];
                 k = wth * 1.0 / hght;
-
-                if (quarter == 0)
-                {
-                    if (Convert.ToInt32(position.Y - x0) > 0)
-                    {
-                        for (int i = 0; i < hght; i++)
-                        {
-                            xArr[i] = x0;
-                            yArr[i] = y0 + i;
-                        }
-                    }
-
-                    else
-                    {
-                        for (int i = 0; i < hght; i++)
-                        {
-                            xArr[i] = x0;
-                            yArr[i] = y0 - i;
-                        }
-                    }
-                }
-
+                                
                 if (quarter == 4)
                 {
                     for (int i = 0; i < hght; i++)
@@ -154,7 +149,6 @@ namespace DevEducationPaint
                         yArr[i] = y0 + i;
                     }
                 }
-
                 if (quarter == 3)
                 {
                     for (int i = 0; i < hght; i++)
@@ -197,27 +191,6 @@ namespace DevEducationPaint
                 xArr = new int[wth];
                 yArr = new int[wth];
                 k = hght * 1.0 / wth;
-
-                if (quarter == 0)
-                {
-                    if (Convert.ToInt32(position.X - x0) > 0)
-                    {
-                        for (int i = 0; i < wth; i++)
-                        {
-                            yArr[i] = y0;
-                            xArr[i] = x0 + i;
-                        }
-                    }
-
-                    else
-                    {
-                        for (int i = 0; i < wth; i++)
-                        {
-                            yArr[i] = y0;
-                            xArr[i] = x0 - i;
-                        }
-                    }
-                }
 
                 if (quarter == 1)
                 {
@@ -272,19 +245,19 @@ namespace DevEducationPaint
         public int FindQuarter(Point prev, Point position)
         {
             int quarter = 0;
-            if (position.X > prev.X && position.Y > prev.Y)
+            if (position.X >= prev.X && position.Y >= prev.Y)
             {
                 quarter = 4;
             }
-            if (position.X < prev.X && position.Y < prev.Y)
+            if (position.X <= prev.X && position.Y <= prev.Y)
             {
                 quarter = 2;
             }
-            if (position.X > prev.X && position.Y < prev.Y)
+            if (position.X >= prev.X && position.Y <= prev.Y)
             {
                 quarter = 1;
             }
-            if (position.X < prev.X && position.Y > prev.Y)
+            if (position.X <= prev.X && position.Y >= prev.Y)
             {
                 quarter = 3;
             }
@@ -322,10 +295,11 @@ namespace DevEducationPaint
             writeableBitmap.WritePixels(rect, colorData, 4, 0);
             DrawWindow.Source = writeableBitmap;
         }
-
+        
         private void buttonLine_Click(object sender, RoutedEventArgs e)
         {
             DrawLine(new Point(200, 200), new Point(100, 100));
+            //это не нужно
         }
     }
 
