@@ -18,12 +18,14 @@ namespace DevEducationPaint
     public partial class MainWindow : Window
     {
         private WriteableBitmap writeableBitmap;
+        private WriteableBitmap copy;
 
         private int pencilSize;
         private Color pencilColor = Brushes.Black.Color;
         private Point prev = new Point(0, 0);
         private Point position = new Point(0, 0);
         private bool isDrawing = false; //флаг сигнализирующий
+        private bool isDrawingTriangle = false; // флаг сигнализирующий о рисовании треугольника
         
         public MainWindow()
         {
@@ -40,6 +42,11 @@ namespace DevEducationPaint
         }
         private void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (isDrawingTriangle == true)
+            {
+                writeableBitmap = copy;
+                isDrawingTriangle = false;
+            }
             //position = e.GetPosition(sender as IInputElement);
             //DrawLine(prev, position);
             prev.X = 0;
@@ -52,7 +59,7 @@ namespace DevEducationPaint
         {
             
             //isDrawing = true;
-            //prev = e.GetPosition(sender as IInputElement);
+            prev = e.GetPosition(sender as IInputElement);
             //ddd.Content = $"{prev.X} {prev.Y}";
             ////SetPixel(prev);
         }
@@ -84,7 +91,16 @@ namespace DevEducationPaint
             if (e.LeftButton != MouseButtonState.Pressed) return;
             var position = e.GetPosition(sender as IInputElement);
             ddd.Content = $"{position.X} {position.Y}";
-            if (/*isDrawing == true && */prev.X != 0 && prev.Y != 0)
+
+            if (isDrawingTriangle == true && prev.X != 0 && prev.Y != 0)
+            {
+                copy = new WriteableBitmap(writeableBitmap);
+                DrawWindow.Source = writeableBitmap;
+                position = e.GetPosition(sender as IInputElement);
+                Draw_Triangle(prev, position, copy);
+                DrawWindow.Source = copy;
+            }
+            else if(/*isDrawing == true && */prev.X != 0 && prev.Y != 0)
             {
                 position = e.GetPosition(sender as IInputElement);
                 DrawLine(prev, position);
@@ -122,11 +138,11 @@ namespace DevEducationPaint
         {
             //написать разные отпечатки от кисти(точка, квадрат 2х2, крестик 3х3 и так далее.)
         }
-        private void DrawLine(Point prev, Point position)
+        private void DrawLine(Point prev, Point position, WriteableBitmap bmp = null)
         {
 
-            int wth = Convert.ToInt32(Math.Abs(position.X - prev.X) + 1);
-            int hght = Convert.ToInt32(Math.Abs(position.Y - prev.Y) + 1);
+            int wth = Convert.ToInt32(Math.Abs(position.X - prev.X));
+            int hght = Convert.ToInt32(Math.Abs(position.Y - prev.Y));
             int x0 = Convert.ToInt32(prev.X);
             int y0 = Convert.ToInt32(prev.Y);
             int x = 0;
@@ -185,7 +201,7 @@ namespace DevEducationPaint
                 {
                     prev.Y = yArr[i];
                     prev.X = xArr[i];
-                    SetPixel(prev);
+                    SetPixel(prev, bmp);
                 }
             }
             else if (hght < wth)
@@ -238,7 +254,7 @@ namespace DevEducationPaint
                 {
                     prev.Y = yArr[i];
                     prev.X = xArr[i];
-                    SetPixel(prev);
+                    SetPixel(prev, bmp);
                 }
             }
 
@@ -290,11 +306,14 @@ namespace DevEducationPaint
             return arr;
         }
 
-        private void SetPixel(Point prev)
+        private void SetPixel(Point prev, WriteableBitmap bmp = null)
         {
             byte[] colorData = { pencilColor.B, pencilColor.G, pencilColor.R, pencilColor.A };
             var rect = new Int32Rect((int)prev.X, (int)prev.Y, 1, 1);
-            writeableBitmap.WritePixels(rect, colorData, 4, 0);
+            if (bmp != null)
+                bmp.WritePixels(rect, colorData, 4, 0);
+            else
+                writeableBitmap.WritePixels(rect, colorData, 4, 0);
             DrawWindow.Source = writeableBitmap;
         }
         
@@ -302,6 +321,20 @@ namespace DevEducationPaint
         {
             DrawLine(new Point(200, 200), new Point(100, 100));
             //это не нужно
+        }
+
+        private void triangle_Click(object sender, RoutedEventArgs e)
+        {
+            isDrawingTriangle = true;
+        }
+
+        private void Draw_Triangle(Point prev, Point position, WriteableBitmap bmp)
+        {
+            Double weigth = position.X - prev.X + (prev.X / 2);
+            Point high = new Point(weigth / 2, (weigth * Math.Sqrt(3) / 2));
+            DrawLine(prev, position, bmp);
+            DrawLine(prev, high, bmp);
+            DrawLine(high, position, bmp);
         }
     }
 

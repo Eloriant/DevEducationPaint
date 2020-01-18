@@ -42,5 +42,6 @@
         <TextBox x:Name="tbxPencilSize" HorizontalAlignment="Left" Margin="48,131,0,0" Text="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="tbxPencilSize_Changed" Grid.Column="2"/>
         <Button x:Name="buttonLine" Content="Line" Grid.Column="2" HorizontalAlignment="Left" Margin="47,174,0,0" VerticalAlignment="Top" Width="40" Click="buttonLine_Click"/>
         <Label x:Name="ddd" Content="Label" Grid.Column="2" HorizontalAlignment="Left" Margin="49,386,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="triangle" Content="Button" Grid.Column="2" HorizontalAlignment="Left" Margin="51,254,0,0" VerticalAlignment="Top" Click="triangle_Click"/>
     </Grid>
 </Window>
