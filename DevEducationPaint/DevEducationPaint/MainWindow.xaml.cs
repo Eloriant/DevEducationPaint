@@ -290,7 +290,7 @@ namespace DevEducationPaint
 
         private void SetPixel(Point prev)
         {
-            byte[] colorData = { pencilColor.R, pencilColor.G, pencilColor.B, pencilColor.A };
+            byte[] colorData = { pencilColor.B, pencilColor.G, pencilColor.R, pencilColor.A };
             var rect = new Int32Rect((int)prev.X, (int)prev.Y, 1, 1);
             writeableBitmap.WritePixels(rect, colorData, 4, 0);
             DrawWindow.Source = writeableBitmap;
