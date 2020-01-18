@@ -192,3 +192,5 @@ bin
 obj
 
 *.ide-wal
+
+*.ide-shm

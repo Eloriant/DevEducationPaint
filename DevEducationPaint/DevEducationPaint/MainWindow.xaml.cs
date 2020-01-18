@@ -40,23 +40,21 @@ namespace DevEducationPaint
         }
         private void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            position = e.GetPosition(sender as IInputElement);
+            //position = e.GetPosition(sender as IInputElement);
             //DrawLine(prev, position);
             prev.X = 0;
             prev.Y = 0;
             position.X = 0;
             position.Y = 0;
             isDrawing = false;
-
-            
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             
-            isDrawing = true;
-            prev = e.GetPosition(sender as IInputElement);
-            ddd.Content = $"{prev.X} {prev.Y}";
-            //SetPixel(prev);
+            //isDrawing = true;
+            //prev = e.GetPosition(sender as IInputElement);
+            //ddd.Content = $"{prev.X} {prev.Y}";
+            ////SetPixel(prev);
         }
         private void FillWhite()
         {
@@ -83,13 +81,17 @@ namespace DevEducationPaint
         }
         private void Image_MouseMove(object sender, MouseEventArgs e)
         {
+            if (e.LeftButton != MouseButtonState.Pressed) return;
             var position = e.GetPosition(sender as IInputElement);
             ddd.Content = $"{position.X} {position.Y}";
-            if (isDrawing == true && prev.X != 0 && prev.Y != 0)
+            if (/*isDrawing == true && */prev.X != 0 && prev.Y != 0)
             {
                 position = e.GetPosition(sender as IInputElement);
                 DrawLine(prev, position);
                 prev = position;
+            }else
+            {
+                prev = e.GetPosition(sender as IInputElement);
             }
         }
         private void Image_MouseWheel(object sender, MouseWheelEventArgs e)
