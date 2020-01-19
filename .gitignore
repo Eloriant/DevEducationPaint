@@ -194,3 +194,7 @@ obj
 *.ide-wal
 
 *.ide-shm
+
+*.v2
+
+*.ide
