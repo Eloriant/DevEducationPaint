@@ -32,7 +32,9 @@ namespace DevEducationPaint
         private bool isDrawing = false; //флаг сигнализирующий
         private bool isDrawingTriangle = false; // флаг сигнализирующий о рисовании треугольника
         private bool isDrawingCircle = false; // флаг сигнализирующий о рисовании круга
-
+        private bool isDrawingSquare = false;
+        TriangleFigure triangle = new TriangleFigure();
+        SquareFigure square = new SquareFigure();
         public MainWindow()
         {
             InitializeComponent();
@@ -47,9 +49,8 @@ namespace DevEducationPaint
             drawer.pencilColor = System.Drawing.Color.Blue;
 
             DrawWindow.Source = writeableBitmap;
-
             drawer.FigureStrategy = new SquareFigure();
-            DrawWindow.Source = drawer.DrawFigure(writeableBitmap, new Point(10, 50), new Point(15, 40));
+            drawer.FigureStrategy = new TriangleFigure();
         }
         private void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -58,7 +59,11 @@ namespace DevEducationPaint
                 writeableBitmap = copy;
                 isDrawingTriangle = false;
             }
-
+            if (isDrawingSquare == true)
+            {
+                writeableBitmap = copy;
+                isDrawingSquare = false;
+            }
             if (isDrawingCircle == true)
             {
                 writeableBitmap = copy;
@@ -76,7 +81,7 @@ namespace DevEducationPaint
         {
 
             //isDrawing = true;
-            //prev = e.GetPosition(sender as IInputElement);
+            prev = e.GetPosition(sender as IInputElement);
             //ddd.Content = $"{prev.X} {prev.Y}";
             ////SetPixel(prev);
         }
@@ -114,11 +119,19 @@ namespace DevEducationPaint
                 copy = new WriteableBitmap(writeableBitmap);
                 DrawWindow.Source = writeableBitmap;
                 position = e.GetPosition(sender as IInputElement);
-                Draw_Triangle(prev, position, copy);
+                triangle.DrawAlgorithm(copy, prev, position);
                 DrawWindow.Source = copy;
             }
+            else if (isDrawingSquare == true && prev.X != 0 && prev.Y != 0)
+            {
+                copy = new WriteableBitmap(writeableBitmap);
+                DrawWindow.Source = writeableBitmap;
+                position = e.GetPosition(sender as IInputElement);
+                square.DrawAlgorithm(copy, prev, position);
+                DrawWindow.Source = copy;
 
-            if (isDrawingCircle == true && prev.X != 0 && prev.Y != 0)
+            }
+            else if (isDrawingCircle == true && prev.X != 0 && prev.Y != 0)
             {
                 copy = new WriteableBitmap(writeableBitmap);
                 DrawWindow.Source = writeableBitmap;
@@ -167,10 +180,6 @@ namespace DevEducationPaint
         {
             Int32.TryParse(tbxPencilSize.Text as string, out int value);
             pencilSize = value;
-        }
-        private void Pencil_Print(int pencilSize)
-        {
-            //написать разные отпечатки от кисти(точка, квадрат 2х2, крестик 3х3 и так далее.)
         }
         private void DrawLine(Point prev, Point position, WriteableBitmap bmp = null)
         {
@@ -356,18 +365,10 @@ namespace DevEducationPaint
             //это не нужно
         }
 
-        private void triangle_Click(object sender, RoutedEventArgs e)
+        private void Triangle_Click(object sender, RoutedEventArgs e)
         {
             isDrawingTriangle = true;
-        }
-
-        private void Draw_Triangle(Point prev, Point position, WriteableBitmap bmp)
-        {
-            Double weigth = position.X - prev.X + (prev.X / 2);
-            Point high = new Point(weigth / 2, (weigth * Math.Sqrt(3) / 2));
-            DrawLine(prev, position, bmp);
-            DrawLine(prev, high, bmp);
-            DrawLine(high, position, bmp);
+            drawer.FigureStrategy = new TriangleFigure();
         }
 
         public static int Sqr(double x)
@@ -409,8 +410,8 @@ namespace DevEducationPaint
             for (int i = 1; i < points.Count; i++)
             {
                 //SetPixel(new Point(points[i].X + cx, points[i].Y + cy));
-                DrawLine(new Point(points[i-1].X + cx, points[i-1].Y + cy), new Point(points[i].X + cx, points[i].Y + cy), bmp);
-                DrawLine(new Point(points[i-1].X + cx, Math.Abs(points[i-1].Y - cy)), new Point(points[i].X + cx, Math.Abs(points[i].Y - cy)), bmp);
+                DrawLine(new Point(points[i - 1].X + cx, points[i - 1].Y + cy), new Point(points[i].X + cx, points[i].Y + cy), bmp);
+                DrawLine(new Point(points[i - 1].X + cx, Math.Abs(points[i - 1].Y - cy)), new Point(points[i].X + cx, Math.Abs(points[i].Y - cy)), bmp);
                 DrawLine(new Point(Math.Abs(points[i - 1].X - cx), points[i - 1].Y + cy), new Point(Math.Abs(points[i].X - cx), points[i].Y + cy), bmp);
                 DrawLine(new Point(Math.Abs(points[i - 1].X - cx), Math.Abs(points[i - 1].Y - cy)), new Point(Math.Abs(points[i].X - cx), Math.Abs(points[i].Y - cy)), bmp);
 
@@ -441,7 +442,7 @@ namespace DevEducationPaint
         private void Square_Click(object sender, RoutedEventArgs e)
         {
             //Тут я подсовываю рисовальщику стратегию прямоугольника, т.е пока у него лежит объект прямоугольника, он будет рисовать их, менять можно прямо по ходу рантайма
-            isDrawing = true;
+            isDrawingSquare = true;
             drawer.FigureStrategy = new SquareFigure();
         }
 
