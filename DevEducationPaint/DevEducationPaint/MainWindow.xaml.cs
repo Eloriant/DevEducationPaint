@@ -26,6 +26,7 @@ namespace DevEducationPaint
 
 
         private int pencilSize;
+        private int angleNumber = 5;
         private Color pencilColor = Brushes.Black.Color;
         private Point prev = new Point(0, 0);
         private Point position = new Point(0, 0);
@@ -33,8 +34,10 @@ namespace DevEducationPaint
         private bool isDrawingTriangle = false; // флаг сигнализирующий о рисовании треугольника
         private bool isDrawingCircle = false; // флаг сигнализирующий о рисовании круга
         private bool isDrawingSquare = false;
+        private bool isDrawingPolygon = false;
         TriangleFigure triangle = new TriangleFigure();
         SquareFigure square = new SquareFigure();
+        PolygonFigure polygon = new PolygonFigure();
         public MainWindow()
         {
             InitializeComponent();
@@ -42,6 +45,8 @@ namespace DevEducationPaint
               396, 96, 96, PixelFormats.Bgra32, null);
             Int32.TryParse(tbxPencilSize.Text as string, out int value);
             pencilSize = value;
+            Int32.TryParse(tbxAngleNumber.Text as string, out int nValue);
+            angleNumber = nValue;
 
             //Тут получаем синглтон рисовальщика
             drawer = RastrDrawer.GetDrawer();
@@ -49,8 +54,6 @@ namespace DevEducationPaint
             drawer.pencilColor = System.Drawing.Color.Blue;
 
             DrawWindow.Source = writeableBitmap;
-            drawer.FigureStrategy = new SquareFigure();
-            drawer.FigureStrategy = new TriangleFigure();
         }
         private void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -139,11 +142,19 @@ namespace DevEducationPaint
                 DrawCircle(prev, position, copy);
                 DrawWindow.Source = copy;
             }
+            else if (isDrawingPolygon == true && prev.X != 0 && prev.Y != 0)
+            {
+                copy = new WriteableBitmap(writeableBitmap);
+                DrawWindow.Source = writeableBitmap;
+                position = e.GetPosition(sender as IInputElement);
+                drawer.DrawFigure(copy, prev, position, Convert.ToInt32(tbxAngleNumber.Text));
+                DrawWindow.Source = copy;
+            }
             else if (isDrawing == false && prev.X != 0 && prev.Y != 0)
             {
                 position = e.GetPosition(sender as IInputElement);
                 DrawLine(prev, position);
-                prev = position;
+                //prev = position;
             }
             else
             {
@@ -446,6 +457,19 @@ namespace DevEducationPaint
             drawer.FigureStrategy = new SquareFigure();
         }
 
+        private void Polygon_Click(object sender, RoutedEventArgs e)
+        {
+            isDrawingPolygon = true;
+            drawer.FigureStrategy = new PolygonFigure();
+        }
+
+        private void tbxAngleNumber_Changed(object sender, TextChangedEventArgs e)
+        {
+            Int32.TryParse(tbxAngleNumber.Text as string, out int value);
+            angleNumber = value;
+        }
+
+        //public int AngleNumber => angleNumber;
     }
 
 }

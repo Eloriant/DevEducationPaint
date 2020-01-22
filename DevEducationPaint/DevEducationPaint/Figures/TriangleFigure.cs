@@ -13,7 +13,7 @@ namespace DevEducationPaint.Figures
     class TriangleFigure : IFigureStrategy
     {
         private RastrDrawer drawer = RastrDrawer.GetDrawer();
-        public WriteableBitmap DrawAlgorithm(WriteableBitmap bitmap, System.Windows.Point startPoint, System.Windows.Point endPoint)
+        public WriteableBitmap DrawAlgorithm(WriteableBitmap bitmap, System.Windows.Point startPoint, System.Windows.Point endPoint, int angleNumber = -1)
         {
             //Point high = new Point(startPoint.X, endPoint.Y);  // код для прямоугольного треугольника
             //bitmap = drawer.DrawLine(startPoint, endPoint, bitmap);

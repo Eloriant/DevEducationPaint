@@ -8,13 +8,13 @@
         xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="DevEducationPaint" Height="450" Width="800" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp">
-  <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="92*"/>
-      <ColumnDefinition Width="47*"/>
-      <ColumnDefinition Width="21*"/>
-    </Grid.ColumnDefinitions>
-    <toolkit:ColorPicker Name="cp"
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="92*"/>
+            <ColumnDefinition Width="47*"/>
+            <ColumnDefinition Width="21*"/>
+        </Grid.ColumnDefinitions>
+        <toolkit:ColorPicker Name="cp"
                          DisplayColorAndName="True" 
                          SelectedColorChanged="cp_SelectedColorChanged_1" 
                          AvailableColorsSortingMode="HueSaturationBrightness"
@@ -23,8 +23,8 @@
                          Height="25"
                          Margin="47,54,0,355" Grid.Column="2" />
 
-    <Label Content="Цвет" HorizontalAlignment="Left" Margin="51,0,0,385" VerticalAlignment="Bottom" Grid.Column="2"/>
-    <Border x:Name="BorderImage" 
+        <Label Content="Цвет" HorizontalAlignment="Left" Margin="51,0,0,385" VerticalAlignment="Bottom" Grid.Column="2"/>
+        <Border x:Name="BorderImage" 
             BorderBrush="LightBlue" 
             BorderThickness="5" 
             HorizontalAlignment="Left" 
@@ -32,18 +32,20 @@
             Width="730"
             Margin="5,5,0,0" Grid.ColumnSpan="3" >
 
-      <Image x:Name="DrawWindow" 
+            <Image x:Name="DrawWindow" 
              Height="Auto" 
              Width="Auto"
              MouseMove="Image_MouseMove"
              MouseWheel="Image_MouseWheel"/>
-    </Border>
-    <Label  Content="Размер" HorizontalAlignment="Left" Margin="48,100,0,0" VerticalAlignment="Top" Grid.Column="2"/>
-    <TextBox x:Name="tbxPencilSize" HorizontalAlignment="Left" Margin="48,131,0,0" Text="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="tbxPencilSize_Changed" Grid.Column="2"/>
-    <Button x:Name="buttonLine" Content="Line" Grid.Column="2" HorizontalAlignment="Left" Margin="47,174,0,0" VerticalAlignment="Top" Width="40" Click="buttonLine_Click"/>
-    <Label x:Name="ddd" Content="Label" Grid.Column="2" HorizontalAlignment="Left" Margin="49,386,0,0" VerticalAlignment="Top"/>
-    <Button x:Name="Triangle" Content="Треугольник" Grid.Column="2" HorizontalAlignment="Left" Margin="51,254,0,0" VerticalAlignment="Top" Click="Triangle_Click"/>
-    <Button x:Name="Square" Content="Прямоугольник" Grid.Column="2" HorizontalAlignment="Left" Margin="51,293,0,0" VerticalAlignment="Top" Click="Square_Click"/>
-    <Button x:Name="Circle" Content="Круг" Grid.Column="2" HorizontalAlignment="Left" Margin="51,343,0,0" VerticalAlignment="Top" Click="Circle_Click"/>
-  </Grid>
+        </Border>
+        <Label  Content="Размер" HorizontalAlignment="Left" Margin="48,100,0,0" VerticalAlignment="Top" Grid.Column="2"/>
+        <TextBox x:Name="tbxPencilSize" HorizontalAlignment="Left" Margin="48,131,0,0" Text="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="tbxPencilSize_Changed" Grid.Column="2"/>
+        <Button x:Name="buttonLine" Content="Line" Grid.Column="2" HorizontalAlignment="Left" Margin="47,174,0,0" VerticalAlignment="Top" Width="40" Click="buttonLine_Click"/>
+        <Label x:Name="ddd" Content="Label" Grid.Column="2" HorizontalAlignment="Left" Margin="49,386,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="Triangle" Content="Треугольник" Grid.Column="2" HorizontalAlignment="Left" Margin="51,254,0,0" VerticalAlignment="Top" Click="Triangle_Click"/>
+        <Button x:Name="Square" Content="Прямоугольник" Grid.Column="2" HorizontalAlignment="Left" Margin="51,293,0,0" VerticalAlignment="Top" Click="Square_Click"/>
+        <Button x:Name="Circle" Content="Круг" Grid.Column="2" HorizontalAlignment="Left" Margin="51,343,0,0" VerticalAlignment="Top" Click="Circle_Click"/>
+        <Button x:Name="Polygon" Content="Полигон" Grid.Column="2" Margin="51,218,3,0" VerticalAlignment="Top" Click="Polygon_Click"/>
+        <TextBox x:Name="tbxAngleNumber" HorizontalAlignment="Left" Margin="49,197,0,0" Text="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="tbxAngleNumber_Changed" Grid.Column="2"/>
+    </Grid>
 </Window>
