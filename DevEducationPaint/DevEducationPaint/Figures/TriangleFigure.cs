@@ -31,6 +31,11 @@ namespace DevEducationPaint.Figures
             return bitmap;
         }
 
+        public WriteableBitmap DrawAlgorithm(WriteableBitmap bitmap, Point startPoint, Point endPoint)
+        {
+          throw new NotImplementedException();
+        }
+
         Point GetPointHigh(System.Windows.Point startPoint, System.Windows.Point endPoint)
         {
             Double weigth = Math.Abs(endPoint.X - startPoint.X);

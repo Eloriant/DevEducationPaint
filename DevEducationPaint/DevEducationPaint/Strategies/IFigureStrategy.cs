@@ -11,5 +11,6 @@ namespace DevEducationPaint.Strategies
   public interface IFigureStrategy
   {
     public WriteableBitmap DrawAlgorithm(WriteableBitmap bitmap, Point startPoint, Point endPoint, int angleNumber = -1);
+
   }
 }

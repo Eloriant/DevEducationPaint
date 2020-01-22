@@ -41,6 +41,11 @@ namespace DevEducationPaint.Figures
             return bitmap;
         }
 
+        public WriteableBitmap DrawAlgorithm(WriteableBitmap bitmap, Point startPoint, Point endPoint)
+        {
+          throw new NotImplementedException();
+        }
+
         private Point[] LineAngle(double angle, int angleNumber, Point polygonsTop, Point[] circuitsPoints) 
         {
             double z = 0;
@@ -55,5 +60,6 @@ namespace DevEducationPaint.Figures
             }
             return circuitsPoints;
         }
+
     }
 }
