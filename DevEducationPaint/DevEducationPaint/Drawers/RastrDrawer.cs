@@ -21,13 +21,13 @@ namespace DevEducationPaint.Drawers
     {
       return drawer ??= new RastrDrawer();
     }
-    public WriteableBitmap SetPixel(WriteableBitmap bmp, Point pixelPoint)
-    {
-      byte[] colorData = { pencilColor.B, pencilColor.G, pencilColor.R, pencilColor.A };
-      var rect = new Int32Rect((int)pixelPoint.X, (int)pixelPoint.Y, 1, 1);
-      bmp?.WritePixels(rect, colorData, 4, 0);
-      return bmp;
-    }
+        public WriteableBitmap SetPixel(WriteableBitmap bmp, Point pixelPoint)
+        {
+            byte[] colorData = { pencilColor.B, pencilColor.G, pencilColor.R, pencilColor.A };
+            var rect = new Int32Rect((int)pixelPoint.X, (int)pixelPoint.Y, 1, 1);
+            bmp?.WritePixels(rect, colorData, 4, 0);
+            return bmp;
+        }
 
     public WriteableBitmap DrawLine(Point prev, Point position, WriteableBitmap bmp)
     {
@@ -92,7 +92,12 @@ namespace DevEducationPaint.Drawers
         {
           prev.Y = yArr[i];
           prev.X = xArr[i];
-          bmp = SetPixel(bmp, prev);
+          if (prev.X <= 0 || prev.Y <= 0 || prev.X >= bmp.PixelWidth || prev.Y >= bmp.PixelHeight)
+          {
+              continue;
+          }
+          else
+              bmp = SetPixel(bmp, prev);
         }
       }
       else if (hght < wth)
@@ -145,7 +150,12 @@ namespace DevEducationPaint.Drawers
         {
           prev.Y = yArr[i];
           prev.X = xArr[i];
-         bmp = SetPixel(bmp, prev);
+          if (prev.X <= 0 || prev.Y <= 0 || prev.X >= bmp.PixelWidth || prev.Y >= bmp.PixelHeight)
+          {
+              continue;
+          }
+          else
+              bmp = SetPixel(bmp, prev);
         }
       }
 

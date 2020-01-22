@@ -59,7 +59,7 @@ namespace DevEducationPaint.Figures
             {
                 if (endPoint.Y > startPoint.Y)
                 {
-                    findX = Convert.ToInt32(Math.Abs(weigth * Math.Cos(Math.PI / 3) - high * Math.Sin(Math.PI / 3) - endPoint.X));
+                    findX = Convert.ToInt32(endPoint.X + weigth * Math.Cos(Math.PI / 3) - high * Math.Sin(Math.PI / 3));
                     findY = Convert.ToInt32(endPoint.Y - (weigth * Math.Sin(Math.PI / 3) + high * Math.Cos(Math.PI / 3)));
                 }
 
@@ -82,10 +82,4 @@ namespace DevEducationPaint.Figures
         }
     }
 }
-
-            //Point high = new Point(startPoint.X + (weigth / 2), Math.Sqrt(Math.Pow(weigth, 2) - (Math.Pow(weigth, 2) / 4))); // пока получился равнобедренный по иксу
-
-            //bitmap = drawer.DrawLine(startPoint, endPoint, bitmap);
-            //bitmap = drawer.DrawLine(startPoint, high, bitmap);
-            //bitmap = drawer.DrawLine(high, endPoint, bitmap);
 
