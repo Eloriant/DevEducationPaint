@@ -20,13 +20,16 @@ namespace DevEducationPaint.Figures
             //bitmap = drawer.DrawLine(startPoint, high, bitmap);
             //bitmap = drawer.DrawLine(high, endPoint, bitmap);
 
+            Point high = new Point(startPoint.X-(endPoint.X - startPoint.X), endPoint.Y);  // код для равнобедренного треугольника
+            bitmap = drawer.DrawLine(startPoint, endPoint, bitmap);
+            bitmap = drawer.DrawLine(startPoint, high, bitmap);
+            bitmap = drawer.DrawLine(high, endPoint, bitmap);
 
-
-            bitmap = drawer.DrawLine(startPoint, endPoint, bitmap);  // код для равностороннего треугольника + метод для поиска третьей вершины треугольника через поворот
-            Point high1 = GetPointHigh(startPoint, endPoint);
-            bitmap = drawer.DrawLine(endPoint, high1, bitmap);
-            Point startXY = new Point(startPoint.X, startPoint.Y);
-            bitmap = drawer.DrawLine(high1, startXY, bitmap);
+            //bitmap = drawer.DrawLine(startPoint, endPoint, bitmap);  // код для равностороннего треугольника + метод для поиска третьей вершины треугольника через поворот
+            //Point high1 = GetPointHigh(startPoint, endPoint);
+            //bitmap = drawer.DrawLine(endPoint, high1, bitmap);
+            //Point startXY = new Point(startPoint.X, startPoint.Y);
+            //bitmap = drawer.DrawLine(high1, startXY, bitmap);
 
             return bitmap;
         }
