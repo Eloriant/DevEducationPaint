@@ -10,7 +10,7 @@ using Point = System.Windows.Point;
 
 namespace DevEducationPaint.Figures
 {
-    class BrokenLineFigure : IFigureStrategy
+    class BrokenLineFigure : Figure
     {
         private RastrDrawer drawer = RastrDrawer.GetDrawer();
 

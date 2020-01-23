@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -13,7 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DevEducationPaint.Drawers;
+using DevEducationPaint.FigureCreators;
 using DevEducationPaint.Figures;
+using Figure = DevEducationPaint.Figures.Figure;
 
 namespace DevEducationPaint
 {
@@ -68,6 +70,23 @@ namespace DevEducationPaint
         }
         private void Image_MouseMove(object sender, MouseEventArgs e)
         {
+            Figure resultFigure;
+            FigureCreator currentCreator = null;
+            int thickness = Convert.ToInt32(tbxPencilSize.Text);
+            switch (currentFigure)
+            {
+                case FigureEnum.Circle:
+                    currentCreator = new CircleCreator();
+                    break;
+                case FigureEnum.Triangle:
+                    currentCreator = new TriangleCreator();
+                    break;
+            }
+            if (currentCreator == null) return;
+            resultFigure = currentCreator.CreateFigure(new Point(), new Point(), thickness);
+            resultFigure.Draw();
+
+            /////
             if (e.LeftButton != MouseButtonState.Pressed) return;
             var position = e.GetPosition(sender as IInputElement);
             ddd.Content = $"{position.X} {position.Y}";

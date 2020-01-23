@@ -10,7 +10,7 @@ using Point = System.Windows.Point;
 
 namespace DevEducationPaint.Figures
 {
-    class TriangleFigure : IFigureStrategy
+    class TriangleFigure : Figure
     {
         private RastrDrawer drawer = RastrDrawer.GetDrawer();
         public WriteableBitmap DrawAlgorithm(WriteableBitmap bitmap, System.Windows.Point startPoint, System.Windows.Point endPoint, int angleNumber = -1)

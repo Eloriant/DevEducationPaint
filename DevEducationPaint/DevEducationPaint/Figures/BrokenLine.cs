@@ -10,8 +10,8 @@ using Point = System.Windows.Point;
 
 namespace DevEducationPaint.Figures
 {
-  class BrokenLine : MainWindow
-  {
+  class BrokenLine : Figure
+    {
     private RastrDrawer drawer = RastrDrawer.GetDrawer();
     public WriteableBitmap DrawAlgorithm(WriteableBitmap bitmap, System.Windows.Point startPoint, System.Windows.Point endPoint)
     {
@@ -20,5 +20,7 @@ namespace DevEducationPaint.Figures
       return bitmap;
       
     }
+
+
   }
 }

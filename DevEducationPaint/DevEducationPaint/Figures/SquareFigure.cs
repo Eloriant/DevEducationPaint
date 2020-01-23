@@ -10,8 +10,8 @@ using Point = System.Windows.Point;
 
 namespace DevEducationPaint.Figures
 {
-  class SquareFigure : IFigureStrategy
-  {
+  class SquareFigure : Figure
+    {
     private RastrDrawer drawer = RastrDrawer.GetDrawer();
 
 
