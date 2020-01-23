@@ -8,6 +8,7 @@
         xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="DevEducationPaint" Height="450" Width="800" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp">
+    <!--MouseRightButtonDown="Window_MouseRightButtonDown"-->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="92*"/>

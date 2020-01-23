@@ -120,9 +120,9 @@ namespace DevEducationPaint
 
     private void buttonLine_Click(object sender, RoutedEventArgs e)
     {
-      drawer.DrawLine(new Point(200, 200), new Point(100, 100), writeableBitmap);
-      //это не нужно
-    }
+            isDrawingFigure = true;
+            drawer.FigureStrategy = new BrokenLineFigure();
+        }
 
     private void Triangle_Click(object sender, RoutedEventArgs e)
     {
@@ -153,5 +153,11 @@ namespace DevEducationPaint
       Int32.TryParse(tbxAngleNumber.Text as string, out int value);
       angleNumber = value;
     }
-  }
+
+        //private void Window_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    isDrawingFigure = true;
+        //    drawer.FigureStrategy = new CloseLineFigure();
+        //}
+    }
 }
