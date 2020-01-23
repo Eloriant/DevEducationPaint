@@ -32,8 +32,8 @@ namespace DevEducationPaint
         public MainWindow()
         {
             InitializeComponent();
-            writeableBitmap = new WriteableBitmap(726,
-              396, 96, 96, PixelFormats.Bgra32, null);
+            writeableBitmap = new WriteableBitmap(730,
+              800, 96, 96, PixelFormats.Bgra32, null);
 
             Int32.TryParse(tbxAngleNumber.Text as string, out int nValue);
             angleNumber = nValue;
@@ -121,8 +121,8 @@ namespace DevEducationPaint
 
         private void buttonLine_Click(object sender, RoutedEventArgs e)
         {
-            drawer.DrawLine(new Point(200, 200), new Point(100, 100), writeableBitmap);
-            //это не нужно
+            isDrawingFigure = true;
+            drawer.FigureStrategy = new BrokenLineFigure();
         }
 
         private void Pencil_Click(object sender, RoutedEventArgs e)
