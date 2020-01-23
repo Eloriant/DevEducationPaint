@@ -32,8 +32,8 @@ namespace DevEducationPaint
         public MainWindow()
         {
             InitializeComponent();
-            writeableBitmap = new WriteableBitmap(730,
-              800, 96, 96, PixelFormats.Bgra32, null);
+            writeableBitmap = new WriteableBitmap(800,
+              730, 96, 96, PixelFormats.Bgra32, null);
 
             Int32.TryParse(tbxAngleNumber.Text as string, out int nValue);
             angleNumber = nValue;
@@ -121,18 +121,20 @@ namespace DevEducationPaint
 
         private void buttonLine_Click(object sender, RoutedEventArgs e)
         {
+            SetState(FigureEnum.Line);
             isDrawingFigure = true;
             drawer.FigureStrategy = new BrokenLineFigure();
         }
 
         private void Pencil_Click(object sender, RoutedEventArgs e)
         {
+            SetState(FigureEnum.Pencil);
             isDrawingFigure = false;
         }
 
         private void Triangle_Click(object sender, RoutedEventArgs e)
         {
-
+            SetState(FigureEnum.Triangle);
             isDrawingFigure = true;
             drawer.FigureStrategy = new TriangleFigure();
             currentFigure = FigureEnum.Triangle;
@@ -141,7 +143,7 @@ namespace DevEducationPaint
         private void Circle_Click(object sender, RoutedEventArgs e)
         {
             //tbCircle.IsChecked = true;
-
+            SetState(FigureEnum.Circle);
             isDrawingFigure = true;
             drawer.FigureStrategy = new CircleFigure();
             currentFigure = FigureEnum.Circle;
@@ -149,12 +151,14 @@ namespace DevEducationPaint
 
         private void Square_Click(object sender, RoutedEventArgs e)
         {
+            SetState(FigureEnum.Square);
             isDrawingFigure = true;
             drawer.FigureStrategy = new SquareFigure();
         }
 
         private void Polygon_Click(object sender, RoutedEventArgs e)
         {
+            SetState(FigureEnum.Polygon);
             isDrawingFigure = true;
             drawer.FigureStrategy = new PolygonFigure();
         }
@@ -165,20 +169,21 @@ namespace DevEducationPaint
             angleNumber = value;
         }
 
-        private void Eraser_Checked(object sender, RoutedEventArgs e)
+        private void Fill_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void Fill_Checked(object sender, RoutedEventArgs e)
+        private void Eraser_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void Clear_Checked(object sender, RoutedEventArgs e)
+        private void Clear_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
 
 
         //private void tbCircle_Clicked(object sender, RoutedEventArgs e)
@@ -191,21 +196,37 @@ namespace DevEducationPaint
         //    SetState(FigureEnum.Triangle);
         //}
 
-        //private void SetState(FigureEnum pressedButton)
-        //{
-        //    tbTriangle.IsChecked = false;
-        //    tbCircle.IsChecked = false;
+        private void SetState(FigureEnum pressedButton)
+        {
+            Pencil.IsChecked = false;
+            Triangle.IsChecked = false;
+            Circle.IsChecked = false;
+            Line.IsChecked = false;
+            Square.IsChecked = false;
+            Polygon.IsChecked = false;
 
-        //    switch (pressedButton)
-        //    {
-        //        case FigureEnum.Circle:
-        //            tbCircle.IsChecked = true;
-        //            break;
-        //        case FigureEnum.Triangle:
-        //            tbTriangle.IsChecked = true;
-        //            break;
-        //    }
-        //}
+            switch (pressedButton)
+            {
+                case FigureEnum.Pencil:
+                    Pencil.IsChecked = true;
+                    break;
+                case FigureEnum.Circle:
+                    Circle.IsChecked = true;
+                    break;
+                case FigureEnum.Line:
+                    Line.IsChecked = true;
+                    break;
+                case FigureEnum.Triangle:
+                    Triangle.IsChecked = true;
+                    break;
+                case FigureEnum.Square:
+                    Square.IsChecked = true;
+                    break;
+                case FigureEnum.Polygon:
+                    Polygon.IsChecked = true;
+                    break;
+            }
+        }
 
     }
 }

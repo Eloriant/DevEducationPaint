@@ -18,16 +18,7 @@
             <ColumnDefinition Width="800"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <toolkit:ColorPicker Name="cp"
-                         DisplayColorAndName="True" 
-                         SelectedColorChanged="cp_SelectedColorChanged_1" 
-                         AvailableColorsSortingMode="HueSaturationBrightness"
-                         HorizontalAlignment="Left"
-                         Width="40"
-                         Height="25"
-                         Margin="45,36,0,373" Grid.Column="2" />
 
-        <Label Content="Цвет" HorizontalAlignment="Left" Margin="47,0,0,398" VerticalAlignment="Bottom" Grid.Column="2"/>
         <Border x:Name="BorderImage" 
             HorizontalAlignment="Center" 
             Height="730"
@@ -51,7 +42,7 @@
 
 
 
-        <toolkit:ColorPicker Name="cp1"
+        <toolkit:ColorPicker Name="cp"
                          DisplayColorAndName="True" 
                          SelectedColorChanged="cp_SelectedColorChanged_1" 
                          AvailableColorsSortingMode="HueSaturationBrightness"
@@ -69,7 +60,7 @@
         <TextBox x:Name="tbxPencilSize" HorizontalAlignment="Left" Margin="270,36,0,0" Text="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" Height="26" TextChanged="tbxPencilSize_Changed" Grid.Column="1" TextAlignment="Left" FontSize="14"/>
 
         <ToggleButton x:Name = "Pencil" Content = "Pencil" Grid.Column="1"
-         Width = "53" HorizontalAlignment = "Left" Background="#FFDA4B4B" Click="Pencil_Click" Margin="10,11,0,69" >
+         Width = "53" HorizontalAlignment = "Left" Background="#FFDA4B4B" Margin="10,32,0,48" Click="Pencil_Click" >
             <ToggleButton.Style>
                 <Style TargetType="{x:Type ToggleButton}">
                     <Setter Property="Background" Value="Green"/>
@@ -83,50 +74,11 @@
             </ToggleButton.Style>
         </ToggleButton>
 
-        <ToggleButton x:Name = "Fill" Content = "Fill" Grid.Column="1"
-         Width = "53" HorizontalAlignment = "Left" Background="#FFDA4B4B" Margin="90,11,0,69" Checked="Fill_Checked" >
-            <ToggleButton.Style>
-                <Style TargetType="{x:Type ToggleButton}">
-                    <Setter Property="Background" Value="Green"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsChecked" Value="true">
-                            <Setter Property="BorderThickness" Value="5"/>
-                        </Trigger>
-                    </Style.Triggers>
+        <Button x:Name="Fill" Content="Fill" Grid.Column="1" HorizontalAlignment="Left" Margin="90,16,0,0" VerticalAlignment="Top" Click="Fill_Click" Width="53"/>
 
-                </Style>
-            </ToggleButton.Style>
-        </ToggleButton>
+        <Button x:Name="Eraser" Content="Eraser" Grid.Column="1" HorizontalAlignment="Left" Margin="90,47,0,0" VerticalAlignment="Top" Click="Eraser_Click" Width="53"/>
 
-        <ToggleButton x:Name = "Eraser" Content = "Eraser" Grid.Column="1"
-         Width = "53" HorizontalAlignment = "Left" Background="#FFDA4B4B" Click="Eraser_Checked" Margin="10,61,0,19" Checked="Eraser_Checked" >
-            <ToggleButton.Style>
-                <Style TargetType="{x:Type ToggleButton}">
-                    <Setter Property="Background" Value="Green"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsChecked" Value="true">
-                            <Setter Property="BorderThickness" Value="5"/>
-                        </Trigger>
-                    </Style.Triggers>
-
-                </Style>
-            </ToggleButton.Style>
-        </ToggleButton>
-
-        <ToggleButton x:Name = "Clear" Content = "Clear" Grid.Column="1"
-         Width = "53" HorizontalAlignment = "Left" Background="#FFDA4B4B" Click="Clear_Checked" Margin="90,60,0,20" Checked="Clear_Checked" >
-            <ToggleButton.Style>
-                <Style TargetType="{x:Type ToggleButton}">
-                    <Setter Property="Background" Value="Green"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsChecked" Value="true">
-                            <Setter Property="BorderThickness" Value="5"/>
-                        </Trigger>
-                    </Style.Triggers>
-
-                </Style>
-            </ToggleButton.Style>
-        </ToggleButton>
+        <Button x:Name="Clear" Content="Clear" Grid.Column="1" HorizontalAlignment="Left" Margin="90,79,0,0" VerticalAlignment="Top" Click="Clear_Click" Width="53"/>
 
         <ToggleButton x:Name = "Line" Content = "Line" Grid.Column="1" VerticalAlignment="Top" Background="#FFDA4B4B" Click="buttonLine_Click" Margin="380,16,366,0" >
             <ToggleButton.Style>
