@@ -22,9 +22,9 @@
                          HorizontalAlignment="Left"
                          Width="40"
                          Height="25"
-                         Margin="47,54,0,355" Grid.Column="2" />
+                         Margin="45,36,0,373" Grid.Column="2" />
 
-        <Label Content="Цвет" HorizontalAlignment="Left" Margin="51,0,0,385" VerticalAlignment="Bottom" Grid.Column="2"/>
+        <Label Content="Цвет" HorizontalAlignment="Left" Margin="47,0,0,398" VerticalAlignment="Bottom" Grid.Column="2"/>
         <Border x:Name="BorderImage" 
             BorderBrush="LightBlue" 
             BorderThickness="5" 
@@ -39,14 +39,15 @@
              MouseMove="Image_MouseMove"
              MouseWheel="Image_MouseWheel"/>
         </Border>
-        <Label  Content="Размер" HorizontalAlignment="Left" Margin="48,100,0,0" VerticalAlignment="Top" Grid.Column="2"/>
-        <TextBox x:Name="tbxPencilSize" HorizontalAlignment="Left" Margin="48,131,0,0" Text="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="tbxPencilSize_Changed" Grid.Column="2"/>
+        <Label  Content="Размер" HorizontalAlignment="Left" Margin="43,66,0,0" VerticalAlignment="Top" Grid.Column="2"/>
+        <TextBox x:Name="tbxPencilSize" HorizontalAlignment="Left" Margin="47,92,0,0" Text="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="tbxPencilSize_Changed" Grid.Column="2"/>
         <Button x:Name="buttonLine" Content="Line" Grid.Column="2" HorizontalAlignment="Left" Margin="47,174,0,0" VerticalAlignment="Top" Width="40" Click="buttonLine_Click"/>
-        <Label x:Name="ddd" Content="Label" Grid.Column="2" HorizontalAlignment="Left" Margin="49,386,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="Triangle" Content="Треугольник" Grid.Column="2" HorizontalAlignment="Left" Margin="51,254,0,0" VerticalAlignment="Top" Click="Triangle_Click"/>
-        <Button x:Name="Square" Content="Прямоугольник" Grid.Column="2" HorizontalAlignment="Left" Margin="51,293,0,0" VerticalAlignment="Top" Click="Square_Click"/>
-        <Button x:Name="Circle" Content="Круг" Grid.Column="2" HorizontalAlignment="Left" Margin="51,343,0,0" VerticalAlignment="Top" Click="Circle_Click"/>
-        <Button x:Name="Polygon" Content="Полигон" Grid.Column="2" Margin="51,218,3,0" VerticalAlignment="Top" Click="Polygon_Click"/>
-        <TextBox x:Name="tbxAngleNumber" HorizontalAlignment="Left" Margin="49,197,0,0" Text="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="tbxAngleNumber_Changed" Grid.Column="2"/>
+        <Label x:Name="ddd" Content="position" Grid.Column="2" HorizontalAlignment="Left" Margin="42,408,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="Triangle" Content="Треугольник" Grid.Column="2" HorizontalAlignment="Left" Margin="41,202,0,0" VerticalAlignment="Top" Click="Triangle_Click"/>
+        <Button x:Name="Square" Content="Прямоугольник" Grid.Column="2" HorizontalAlignment="Left" Margin="39,227,0,0" VerticalAlignment="Top" Click="Square_Click"/>
+        <Button x:Name="Circle" Content="Круг" Grid.Column="2" HorizontalAlignment="Left" Margin="41,252,0,0" VerticalAlignment="Top" Click="Circle_Click"/>
+        <Button x:Name="Polygon" Content="Полигон" Grid.Column="2" Margin="41,115,12,0" VerticalAlignment="Top" Click="Polygon_Click"/>
+        <TextBox x:Name="tbxAngleNumber" HorizontalAlignment="Left" Margin="43,140,0,0" Text="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="tbxAngleNumber_Changed" Grid.Column="2"/>
+        <Button x:Name="Clear" Content="Очистка" Grid.Column="2" HorizontalAlignment="Left" Margin="42,277,0,0" VerticalAlignment="Top" Click="Clear_Click"/>
     </Grid>
 </Window>
