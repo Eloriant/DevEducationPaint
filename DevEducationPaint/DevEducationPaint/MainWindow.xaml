@@ -7,12 +7,7 @@
         xmlns:local="clr-namespace:DevEducationPaint"
         xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-<<<<<<< Updated upstream
-        Title="DevEducationPaint" Height="450" Width="800" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp">
-    <!--MouseRightButtonDown="Window_MouseRightButtonDown"-->
-=======
         Title="DevEducationPaint" Height="880" Width="900" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"  Background="#FFECECEC">
->>>>>>> Stashed changes
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="120"></RowDefinition>
@@ -23,7 +18,6 @@
             <ColumnDefinition Width="800"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-<<<<<<< Updated upstream
         <toolkit:ColorPicker Name="cp"
                          DisplayColorAndName="True" 
                          SelectedColorChanged="cp_SelectedColorChanged_1" 
@@ -34,9 +28,6 @@
                          Margin="45,36,0,373" Grid.Column="2" />
 
         <Label Content="Цвет" HorizontalAlignment="Left" Margin="47,0,0,398" VerticalAlignment="Bottom" Grid.Column="2"/>
-=======
-
->>>>>>> Stashed changes
         <Border x:Name="BorderImage" 
             HorizontalAlignment="Center" 
             Height="730"
@@ -57,22 +48,10 @@
             </Border.Effect>
 
         </Border>
-<<<<<<< Updated upstream
-        <Label  Content="Размер" HorizontalAlignment="Left" Margin="43,66,0,0" VerticalAlignment="Top" Grid.Column="2"/>
-        <TextBox x:Name="tbxPencilSize" HorizontalAlignment="Left" Margin="47,92,0,0" Text="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="tbxPencilSize_Changed" Grid.Column="2"/>
-        <Button x:Name="buttonLine" Content="Line" Grid.Column="2" HorizontalAlignment="Left" Margin="47,174,0,0" VerticalAlignment="Top" Width="40" Click="buttonLine_Click"/>
-        <Label x:Name="ddd" Content="position" Grid.Column="2" HorizontalAlignment="Left" Margin="42,408,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="Triangle" Content="Треугольник" Grid.Column="2" HorizontalAlignment="Left" Margin="41,202,0,0" VerticalAlignment="Top" Click="Triangle_Click"/>
-        <Button x:Name="Square" Content="Прямоугольник" Grid.Column="2" HorizontalAlignment="Left" Margin="39,227,0,0" VerticalAlignment="Top" Click="Square_Click"/>
-        <Button x:Name="Circle" Content="Круг" Grid.Column="2" HorizontalAlignment="Left" Margin="41,252,0,0" VerticalAlignment="Top" Click="Circle_Click"/>
-        <Button x:Name="Polygon" Content="Полигон" Grid.Column="2" Margin="41,115,12,0" VerticalAlignment="Top" Click="Polygon_Click"/>
-        <TextBox x:Name="tbxAngleNumber" HorizontalAlignment="Left" Margin="43,140,0,0" Text="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="tbxAngleNumber_Changed" Grid.Column="2"/>
-        <Button x:Name="Clear" Content="Очистка" Grid.Column="2" HorizontalAlignment="Left" Margin="42,277,0,0" VerticalAlignment="Top" Click="Clear_Click"/>
-=======
 
 
 
-        <toolkit:ColorPicker Name="cp"
+        <toolkit:ColorPicker Name="cp1"
                          DisplayColorAndName="True" 
                          SelectedColorChanged="cp_SelectedColorChanged_1" 
                          AvailableColorsSortingMode="HueSaturationBrightness"
@@ -243,6 +222,5 @@
             </ToggleButton.Style>
         </ToggleButton>-->
         <!--<Button x:Name="Pencil" Content="Pencil" Grid.Column="2" HorizontalAlignment="Left" Margin="55,361,0,0" VerticalAlignment="Top" Click="Pencil_Click"/>-->
->>>>>>> Stashed changes
     </Grid>
 </Window>
