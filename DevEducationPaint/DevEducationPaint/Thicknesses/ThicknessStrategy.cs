@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Collections.Generic;
 using Point = System.Drawing.Point;
 
 namespace DevEducationPaint.DrawStrategy

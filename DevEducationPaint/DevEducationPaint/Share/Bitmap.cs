@@ -4,7 +4,18 @@ using System.Text;
 
 namespace DevEducationPaint.Bitmap
 {
-    class Bitmap
+    public class Bitmap
     {
+        private static Bitmap instance;
+
+        private Bitmap()
+        { }
+
+        public static Bitmap getInstance()
+        {
+            if (instance == null)
+                instance = new Bitmap();
+            return instance;
+        }
     }
 }

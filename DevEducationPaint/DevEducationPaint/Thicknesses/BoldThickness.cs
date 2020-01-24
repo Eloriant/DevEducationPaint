@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DevEducationPaint.DrawStrategy
 {
-    public class DefaultThickness : ThicknessStrategy
+    public class BoldThickness : ThicknessStrategy
     {
         public override List<Point> GetPoints(Point point)
         {

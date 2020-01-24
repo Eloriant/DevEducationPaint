@@ -1,25 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+//using System.Windows;
+//using System.Windows.Controls;
+//using System.Windows.Input;
+//using System.Windows.Media;
+//using System.Windows.Media.Imaging;
 using DevEducationPaint.Drawers;
 using DevEducationPaint.FigureCreators;
 using DevEducationPaint.Figures;
+using DevEducationPaint.Share;
 using Figure = DevEducationPaint.Figures.Figure;
 
 namespace DevEducationPaint
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow// : Window
     {
         private WriteableBitmap writeableBitmap;
         private WriteableBitmap copy;
@@ -28,9 +22,11 @@ namespace DevEducationPaint
 
         private int angleNumber = 5;
         private Point prev = new Point(0, 0);
-        private Point position = new Point(0, 0);
+        private System.Drawing.Point position = new System.Drawing.Point(0, 0);
+        //private Point position = new Point(0, 0);
         private bool isDrawingFigure = false; //флаг сигнализирующий
         private FigureEnum currentFigure;
+        public byte[] currentColor = DrawColor.getInstance();
         public MainWindow()
         {
             InitializeComponent();
@@ -43,8 +39,7 @@ namespace DevEducationPaint
             //Тут получаем синглтон рисовальщика
             drawer = RastrDrawer.GetDrawer();
             //таким видмом ему можно задать цвет, который он будет использовать для рисования всего, что нам нужно
-            drawer.pencilColor = System.Drawing.Color.Black;
-
+           
             DrawWindow.Source = writeableBitmap;
         }
         private void Window_MouseUp(object sender, MouseButtonEventArgs e)
@@ -83,7 +78,7 @@ namespace DevEducationPaint
                     break;
             }
             if (currentCreator == null) return;
-            resultFigure = currentCreator.CreateFigure(new Point(), new Point(), thickness);
+            resultFigure = currentCreator.CreateFigure(new System.Drawing.Point(), new System.Drawing.Point(), thickness);
             resultFigure.Draw();
 
             /////
@@ -112,7 +107,7 @@ namespace DevEducationPaint
         }
         private void Image_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            Point p = e.MouseDevice.GetPosition(DrawWindow);
+            System.Drawing.Point p = e.MouseDevice.GetPosition(DrawWindow);
 
             Matrix m = DrawWindow.RenderTransform.Value;
             if (e.Delta > 0)
@@ -122,14 +117,14 @@ namespace DevEducationPaint
 
             DrawWindow.RenderTransform = new MatrixTransform(m);
         }
-        private void cp_SelectedColorChanged_1(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        private void cp_SelectedColorChanged_1(object sender, RoutedPropertyChangedEventArgs<System.Drawing.Color?> e)
         {
             if (cp.SelectedColor.HasValue)
             {
-                drawer.pencilColor = System.Drawing.Color.FromArgb(cp.SelectedColor.Value.A,
-                                                                    cp.SelectedColor.Value.R,
-                                                                    cp.SelectedColor.Value.G,
-                                                                    cp.SelectedColor.Value.B);
+                DrawColor.currentColor = System.Drawing.Color.FromArgb(cp.SelectedColor.Value.A,
+                                                             cp.SelectedColor.Value.R,
+                                                             cp.SelectedColor.Value.G,
+                                                             cp.SelectedColor.Value.B);
             }
         }
         private void tbxPencilSize_Changed(object sender, TextChangedEventArgs e)
