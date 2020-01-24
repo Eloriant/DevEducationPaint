@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Windows;
 using System.Text;
 using System.Windows.Media.Imaging;
-using Point = System.Windows.Point;
+using Point = System.Drawing.Point;
 
 namespace DevEducationPaint.Strategies
 {

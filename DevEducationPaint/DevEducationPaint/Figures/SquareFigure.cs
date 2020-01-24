@@ -6,16 +6,18 @@ using System.Text;
 using System.Windows.Media.Imaging;
 using DevEducationPaint.Drawers;
 using DevEducationPaint.Strategies;
-using Point = System.Windows.Point;
+using Point = System.Drawing.Point;
 
 namespace DevEducationPaint.Figures
 {
   class SquareFigure : Figure
-    {
+  {
     private RastrDrawer drawer = RastrDrawer.GetDrawer();
 
-
-    public WriteableBitmap DrawAlgorithm(WriteableBitmap bitmap, System.Windows.Point startPoint, System.Windows.Point endPoint, int angleNumber = -1)
+    public SquareFigure(List<Point> points) : base(points)
+    {
+    }
+    public WriteableBitmap DrawAlgorithm(WriteableBitmap bitmap, Point startPoint, Point endPoint, int angleNumber = -1)
     {
       /*ТРАПЕЦИЯ
       Point leftDownPoint = new Point(startPoint.X, endPoint.Y);
@@ -84,6 +86,7 @@ namespace DevEducationPaint.Figures
       return bitmap;
 
     }
+
 
   }
 }

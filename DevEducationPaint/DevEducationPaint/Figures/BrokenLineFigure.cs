@@ -6,21 +6,26 @@ using System.Text;
 using System.Windows.Media.Imaging;
 using DevEducationPaint.Drawers;
 using DevEducationPaint.Strategies;
-using Point = System.Windows.Point;
+using Point = System.Drawing.Point;
 
 namespace DevEducationPaint.Figures
 {
-    class BrokenLineFigure : Figure
+  class BrokenLineFigure : Figure
+  {
+    public BrokenLineFigure(List<Point> points) : base(points)
     {
-        private RastrDrawer drawer = RastrDrawer.GetDrawer();
-
-        public WriteableBitmap DrawAlgorithm(WriteableBitmap bitmap, Point startPoint, Point endPoint, int angleNumber = -1)
-        {
-            bitmap = drawer.DrawLine(startPoint, endPoint, bitmap);
-            return bitmap;
-        }
     }
+    private RastrDrawer drawer = RastrDrawer.GetDrawer();
+
+    public WriteableBitmap DrawAlgorithm(WriteableBitmap bitmap, Point startPoint, Point endPoint, int angleNumber = -1)
+    {
+      bitmap = drawer.DrawLine(startPoint, endPoint, bitmap);
+      return bitmap;
+    }
+
+
+  }
 }
 
 
-    
+

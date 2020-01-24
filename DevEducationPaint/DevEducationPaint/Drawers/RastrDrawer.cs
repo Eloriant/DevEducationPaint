@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using DevEducationPaint.Figures;
 using DevEducationPaint.Strategies;
-using Point = System.Windows.Point;
+using Point = System.Drawing.Point;
 
 namespace DevEducationPaint.Drawers
 {
@@ -14,7 +15,7 @@ namespace DevEducationPaint.Drawers
 
     public Color pencilColor { get; set; }
 
-    public IFigureStrategy FigureStrategy {private get; set; }
+    public BrokenLineFigure FigureStrategy {private get; set; }
 
     public static RastrDrawer GetDrawer()
     {
