@@ -1,21 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Windows.Media.Imaging;
 
 namespace DevEducationPaint.Bitmap
 {
-    public class Bitmap
+    public class SuperBitmap
     {
-        private static Bitmap instance;
+        private static WriteableBitmap instance;
+        private static WriteableBitmap instanceCopy;
 
-        private Bitmap()
-        { }
-
-        public static Bitmap getInstance()
+        public static WriteableBitmap Instance
         {
-            if (instance == null)
-                instance = new Bitmap();
-            return instance;
+            get => instance; 
+            set
+            {
+                instance = value;
+                instanceCopy = new WriteableBitmap(value);
+            }
+        }
+
+        public static void CopyInstance()
+        {
+            if (instance != null)
+                instanceCopy = new WriteableBitmap(Instance);
+        }
+
+        public static WriteableBitmap GetInstanceCopy()
+        {
+            if (instanceCopy == null && instance != null)
+                instanceCopy = new WriteableBitmap(Instance);
+            return instanceCopy;
         }
     }
 }

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DevEducationPaint.Bitmap;
 using DevEducationPaint.Drawers;
 using DevEducationPaint.FigureCreators;
 using DevEducationPaint.Figures;
@@ -23,69 +24,74 @@ using Point = System.Drawing.Point;
 
 namespace DevEducationPaint
 {
-  public partial class MainWindow : Window
-  {
-    private WriteableBitmap writeableBitmap;
-    private WriteableBitmap copy;
-
-    private RastrDrawer drawer;
-
-    private int angleNumber = 5;
-    private Point prev = new Point(0, 0);
-    private Point position = new Point(0, 0);
-    private bool isDrawingFigure = false; //флаг сигнализирующий
-    private FigureEnum currentFigure;
-    public MainWindow()
+    public partial class MainWindow : Window
     {
-      InitializeComponent();
-      writeableBitmap = new WriteableBitmap(730,
-        800, 96, 96, PixelFormats.Bgra32, null);
+        private WriteableBitmap writeableBitmap;
+        private WriteableBitmap copy;
 
-      Int32.TryParse(tbxAngleNumber.Text as string, out int nValue);
-      angleNumber = nValue;
+        private RastrDrawer drawer;
 
-      //Тут получаем синглтон рисовальщика
-      drawer = RastrDrawer.GetDrawer();
-      //таким видмом ему можно задать цвет, который он будет использовать для рисования всего, что нам нужно
-      drawer.pencilColor = System.Drawing.Color.Black;
+        private int angleNumber = 5;
+        private Point prev = new Point(0, 0);
+        private Point position = new Point(0, 0);
+        private bool isDrawingFigure = false; //флаг сигнализирующий
+        private FigureEnum currentFigure;
+        public MainWindow()
+        {
+            InitializeComponent();
+            WriteableBitmap instance = SuperBitmap.GetInstance(new WriteableBitmap(730,
+              800, 96, 96, PixelFormats.Bgra32, null));
+            writeableBitmap = new WriteableBitmap(730,
+              800, 96, 96, PixelFormats.Bgra32, null);
 
-      DrawWindow.Source = writeableBitmap;
-    }
-    private void Window_MouseUp(object sender, MouseButtonEventArgs e)
-    {
-      if (isDrawingFigure)
-      {
-        writeableBitmap = copy;
-        //isDrawingFigure = false;
-      }
-      prev.X = 0;
-      prev.Y = 0;
-      position.X = 0;
-      position.Y = 0;
-      //isDrawingFigure = false;
-    }
-    private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-    {
+            Int32.TryParse(tbxAngleNumber.Text as string, out int nValue);
+            angleNumber = nValue;
 
-      //isDrawingFigure = true;
-      // prev = e.GetPosition(sender as IInputElement);
-      //ddd.Content = $"{prev.X} {prev.Y}";
-      ////SetPixel(prev);
-    }
-    private void Image_MouseMove(object sender, MouseEventArgs e)
-    {
-      Figure resultFigure;
-      FigureCreator currentCreator = null;
-      int thickness = Convert.ToInt32(tbxPencilSize.Text);
-      switch (currentFigure)
-      {
-        case FigureEnum.Circle:
-          currentCreator = new CircleCreator();
-          break;
-        case FigureEnum.Triangle:
-          currentCreator = new TriangleCreator();
-          break;
-      }
+            //Тут получаем синглтон рисовальщика
+            drawer = RastrDrawer.GetDrawer();
+            //таким видмом ему можно задать цвет, который он будет использовать для рисования всего, что нам нужно
+            drawer.pencilColor = System.Drawing.Color.Black;
+
+            DrawWindow.Source = writeableBitmap;
+        }
+        private void Window_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (isDrawingFigure)
+            {
+                writeableBitmap = copy;
+                //isDrawingFigure = false;
+            }
+            prev.X = 0;
+            prev.Y = 0;
+            position.X = 0;
+            position.Y = 0;
+            //isDrawingFigure = false;
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+            //isDrawingFigure = true;
+            // prev = e.GetPosition(sender as IInputElement);
+            //ddd.Content = $"{prev.X} {prev.Y}";
+            ////SetPixel(prev);
+        }
+        private void Image_MouseMove(object sender, MouseEventArgs e)
+        {
+            Figure resultFigure;
+            FigureCreator currentCreator = null;
+            int thickness = Convert.ToInt32(tbxPencilSize.Text);
+            switch (currentFigure)
+            {
+                case FigureEnum.Circle:
+                    currentCreator = new CircleCreator();
+                    break;
+                case FigureEnum.Triangle:
+                    currentCreator = new TriangleCreator();
+                    break;
+                case FigureEnum.Line:
+                    currentCreator = new LineCreator();
+                    break;
+            }
       if (currentCreator == null) return;
       resultFigure = currentCreator.CreateFigure(new Point(), new Point(), thickness);
       resultFigure.Draw();
