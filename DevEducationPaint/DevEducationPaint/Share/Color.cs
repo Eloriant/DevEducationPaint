@@ -6,16 +6,11 @@ namespace DevEducationPaint.Share
 {
     public class DrawColor
     {
-        private static byte[] instance;
+        public byte[] Instance { get; set; }
 
-        private DrawColor()
-        { }
-
-        public static byte[] getInstance()
+        public DrawColor(byte alpha, byte red, byte green, byte blue)
         {
-            if (instance == null)
-                instance =new byte[] { 255, 0,0, 0};
-            return instance;
+            Instance = new byte[] { alpha, red, green, blue };
         }
     }
 }

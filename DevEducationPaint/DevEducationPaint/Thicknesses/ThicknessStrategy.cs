@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Point = System.Drawing.Point;
 
-namespace DevEducationPaint.DrawStrategy
+namespace DevEducationPaint.Thicknesses
 {
     public abstract class ThicknessStrategy
     {

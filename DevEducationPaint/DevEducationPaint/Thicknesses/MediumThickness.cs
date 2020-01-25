@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-namespace DevEducationPaint.DrawStrategy
+namespace DevEducationPaint.Thicknesses
 {
     public class MediumThickness : ThicknessStrategy
     {

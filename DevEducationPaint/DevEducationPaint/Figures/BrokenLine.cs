@@ -10,22 +10,23 @@ using Point = System.Drawing.Point;
 
 namespace DevEducationPaint.Figures
 {
-  class BrokenLine : Figure
-  {
-    public BrokenLine(List<Point> points) : base(points)
+    class BrokenLine : Figure
     {
+        public BrokenLine(List<Point> points)
+        {
+            FigurePoints = points;
+        }
+
+        private RastrDrawer drawer = RastrDrawer.GetDrawer();
+        public WriteableBitmap DrawAlgorithm(WriteableBitmap bitmap, Point startPoint, Point endPoint)
+        {
+            Point one = new Point(startPoint.X, startPoint.Y);
+            bitmap = drawer.DrawLine(startPoint, endPoint, bitmap);
+            return bitmap;
+
+        }
+
+
+
     }
-
-    private RastrDrawer drawer = RastrDrawer.GetDrawer();
-    public WriteableBitmap DrawAlgorithm(WriteableBitmap bitmap, Point startPoint, Point endPoint)
-    {
-      Point one = new Point(startPoint.X, startPoint.Y);
-      bitmap = drawer.DrawLine(startPoint, endPoint, bitmap);
-      return bitmap;
-
-    }
-
-
-
-  }
 }

@@ -1,5 +1,5 @@
-﻿using DevEducationPaint.DrawStrategy;
-using DevEducationPaint.Figures;
+﻿using DevEducationPaint.Figures;
+using DevEducationPaint.Share;
 using DevEducationPaint.Strategies;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace DevEducationPaint.FigureCreators
 {
     public class CircleCreator : FigureCreator
     {
-        public override Figure CreateFigure(Point start, Point end, int thickness)
+        public override Figure CreateFigure(Point start, Point end)
         {
             int cx = start.X;
             int cy = start.Y;
@@ -42,19 +42,9 @@ namespace DevEducationPaint.FigureCreators
                 bitmap = drawer.DrawLine(new Point(Math.Abs(points[i - 1].X - cx), Math.Abs(points[i - 1].Y - cy)),
                   new Point(Math.Abs(points[i].X - cx), Math.Abs(points[i].Y - cy)), bitmap);
 
-            }*/
-            DrawByLine currentStrategy = new DrawByLine();
-            switch (thickness)
-            {
-                case 1:
-                    currentStrategy.ConcreteThickness = new DefaultThickness();
-                    break;
+            }*/            
 
-            }
-            currentStrategy.CurrentColor = new Color(255, 0, 0, 0);
-            CircleFigure result = new CircleFigure(circlePoints);
-            result.ConcreteDraw = currentStrategy;
-            return result;
+            return new CircleFigure(circlePoints);
         }
     }
 }

@@ -1,6 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Text;
+using System.Windows.Media.Imaging;
+using DevEducationPaint.Drawers;
+using DevEducationPaint.Strategies;
+using Point = System.Drawing.Point;
+
+namespace DevEducationPaint.Figures
+{
+    public class PolygonFigure : Figure
+    {
+        public PolygonFigure(List<Point> points) {
+            FigurePoints = points;
+        }
+    }
+}
+
+/*using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows;
 using System.Text;
 using System.Windows.Media.Imaging;
@@ -31,6 +50,7 @@ namespace DevEducationPaint.Figures
       int i = angleNumber - 1;
       Point[] circuitsPoints = new Point[angleNumber];
       circuitsPoints = LineAngle(angle, angleNumber, polygonsTop, circuitsPoints);
+
       for (int idx = 0; idx < circuitsPoints.Length; idx++)
       {
         circuitsPoints[idx].X += startPoint.X;
@@ -68,3 +88,4 @@ namespace DevEducationPaint.Figures
 
   }
 }
+*/

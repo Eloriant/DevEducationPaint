@@ -8,6 +8,6 @@ namespace DevEducationPaint.FigureCreators
 {
     public abstract class FigureCreator
     {
-        public abstract Figure CreateFigure(Point start, Point end, int thickness);
+        public abstract Figure CreateFigure(Point start, Point end);
     }
 }
