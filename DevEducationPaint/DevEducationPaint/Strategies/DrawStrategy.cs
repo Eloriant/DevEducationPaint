@@ -1,5 +1,6 @@
 ﻿using DevEducationPaint.Bitmap;
 using DevEducationPaint.Share;
+using DevEducationPaint.Thicknesses;
 using System.Collections.Generic;
 using System.Drawing;
 using Point = System.Drawing.Point;
