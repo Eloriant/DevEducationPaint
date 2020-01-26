@@ -110,12 +110,24 @@ namespace DevEducationPaint
           //currentCreator = new PolygonCreator();
           break;
       }
+
+      
       if (currentCreator == null) return;
       if (e.LeftButton != MouseButtonState.Pressed) return;
-      resultFigure = currentCreator.CreateFigure(new Point(5,5), new Point(100,100));
-      resultFigure.ConcreteDraw = currentDrawStrategy;
-      resultFigure.Draw();
-      DrawWindow.Source = SuperBitmap.GetInstanceCopy();
+      var temp = e.GetPosition(sender as IInputElement);
+      prev = new Point((int)temp.X, (int)temp.Y);
+
+      if (prev.X != 0 && prev.Y != 0)
+      {
+        temp = e.GetPosition(sender as IInputElement);
+        position = new Point((int)temp.X, (int)temp.Y);
+        ddd.Content = $"{position.X} {position.Y}";
+        resultFigure = currentCreator.CreateFigure(prev, position);
+        resultFigure.ConcreteDraw = currentDrawStrategy;
+        resultFigure.Draw();
+        DrawWindow.Source = SuperBitmap.GetInstanceCopy();
+      }
+     
 
 
 
@@ -123,7 +135,7 @@ namespace DevEducationPaint
       //
       //var temp = e.GetPosition(sender as IInputElement);
       //Point position = new Point((int)temp.X, (int)temp.Y);
-      //ddd.Content = $"{position.X} {position.Y}";
+      
       //if (isDrawingFigure == false && prev.X != 0 && prev.Y != 0)
       //{
       //  temp = e.GetPosition(sender as IInputElement);

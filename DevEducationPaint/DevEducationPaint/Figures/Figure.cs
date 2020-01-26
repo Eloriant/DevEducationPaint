@@ -7,12 +7,17 @@ using Point = System.Drawing.Point;
 
 namespace DevEducationPaint.Figures
 {
-    public abstract class Figure
+  public abstract class Figure
+  {
+    public List<Point> FigurePoints { get; set; }
+    public DrawStrategy ConcreteDraw { get; set; }
+    public void Draw()
     {
-        public List<Point> FigurePoints { get; set; }
-        public DrawStrategy ConcreteDraw { get; set; }
-        public void Draw() {
-            ConcreteDraw.DrawLineWithThickness(FigurePoints[0], FigurePoints[1]);
-        }
+      for (int i = 0; i < FigurePoints.Count; i++)
+      {
+        ConcreteDraw.DrawLineWithThickness(FigurePoints[i], i + 1 >= FigurePoints.Count ? FigurePoints[0] : FigurePoints[i + 1]);
+      }
+
     }
+  }
 }
