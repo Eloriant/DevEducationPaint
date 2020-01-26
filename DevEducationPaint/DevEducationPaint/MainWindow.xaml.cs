@@ -60,7 +60,7 @@ namespace DevEducationPaint
 
       currentDrawStrategy = new DrawByLine
       {
-        CurrentColor = new DrawColor(255, 0, 0, 0),
+        CurrentColor = new DrawColor(255, 0, 0, 255),
         ConcreteThickness = new DefaultThickness()
       };
     }
@@ -111,43 +111,41 @@ namespace DevEducationPaint
           break;
       }
       if (currentCreator == null) return;
-      resultFigure = currentCreator.CreateFigure(new Point(), new Point());
+      if (e.LeftButton != MouseButtonState.Pressed) return;
+      resultFigure = currentCreator.CreateFigure(new Point(5,5), new Point(100,100));
       resultFigure.ConcreteDraw = currentDrawStrategy;
       resultFigure.Draw();
       DrawWindow.Source = SuperBitmap.GetInstanceCopy();
 
 
-      /////
-      ///
 
 
+      //
+      //var temp = e.GetPosition(sender as IInputElement);
+      //Point position = new Point((int)temp.X, (int)temp.Y);
+      //ddd.Content = $"{position.X} {position.Y}";
+      //if (isDrawingFigure == false && prev.X != 0 && prev.Y != 0)
+      //{
+      //  temp = e.GetPosition(sender as IInputElement);
+      //  position = new Point((int)temp.X, (int)temp.Y);
+      //  drawer.DrawLine(prev, position, writeableBitmap);
+      //}
 
-      if (e.LeftButton != MouseButtonState.Pressed) return;
-      var temp = e.GetPosition(sender as IInputElement);
-      Point position = new Point((int)temp.X, (int)temp.Y);
-      ddd.Content = $"{position.X} {position.Y}";
-      if (isDrawingFigure == false && prev.X != 0 && prev.Y != 0)
-      {
-        temp = e.GetPosition(sender as IInputElement);
-        position = new Point((int)temp.X, (int)temp.Y);
-        drawer.DrawLine(prev, position, writeableBitmap);
-      }
+      //if (isDrawingFigure && prev.X != 0 && prev.Y != 0)
+      //{
 
-      if (isDrawingFigure && prev.X != 0 && prev.Y != 0)
-      {
-
-        copy = new WriteableBitmap(writeableBitmap);
-        DrawWindow.Source = writeableBitmap;
-        temp = e.GetPosition(sender as IInputElement);
-        position = new Point((int)temp.X, (int)temp.Y);
-        drawer.DrawFigure(copy, prev, position, Convert.ToInt32(tbxAngleNumber.Text));
-        DrawWindow.Source = copy;
-      }
-      else
-      {
-        temp = e.GetPosition(sender as IInputElement);
-        prev = new Point((int)temp.X, (int)temp.Y);
-      }
+      //  copy = new WriteableBitmap(writeableBitmap);
+      //  DrawWindow.Source = writeableBitmap;
+      //  temp = e.GetPosition(sender as IInputElement);
+      //  position = new Point((int)temp.X, (int)temp.Y);
+      //  drawer.DrawFigure(copy, prev, position, Convert.ToInt32(tbxAngleNumber.Text));
+      //  DrawWindow.Source = copy;
+      //}
+      //else
+      //{
+      //  temp = e.GetPosition(sender as IInputElement);
+      //  prev = new Point((int)temp.X, (int)temp.Y);
+      //}
     }
     private void Image_MouseWheel(object sender, MouseWheelEventArgs e)
     {
