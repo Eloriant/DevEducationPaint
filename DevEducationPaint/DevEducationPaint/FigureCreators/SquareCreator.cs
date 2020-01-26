@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DevEducationPaint.FigureCreators
 {
-    class TriangleCreator
+    class SquareCreator
     {
     }
 }

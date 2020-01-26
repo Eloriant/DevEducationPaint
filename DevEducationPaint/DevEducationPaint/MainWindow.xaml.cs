@@ -42,8 +42,9 @@ namespace DevEducationPaint
         public MainWindow()
         {
             InitializeComponent();
-            WriteableBitmap instance = SuperBitmap.GetInstance(new WriteableBitmap(730,
-              800, 96, 96, PixelFormats.Bgra32, null));
+            SuperBitmap.Instance = new WriteableBitmap(730,
+              800, 96, 96, PixelFormats.Bgra32, null);
+            WriteableBitmap instance = SuperBitmap.Instance;
             writeableBitmap = new WriteableBitmap(730,
               800, 96, 96, PixelFormats.Bgra32, null);
 
