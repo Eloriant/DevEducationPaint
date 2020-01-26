@@ -18,16 +18,18 @@
             <ColumnDefinition Width="800"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        
         <toolkit:ColorPicker Name="cp"
                          DisplayColorAndName="True" 
-                         SelectedColorChanged="cp_SelectedColorChanged_1" 
+                         SelectedColorChanged="Cp_OnSelectedColorChanged"
                          AvailableColorsSortingMode="HueSaturationBrightness"
                          HorizontalAlignment="Left"
+                         VerticalAlignment="Top"
                          Width="40"
                          Height="25"
-                         Margin="45,36,0,373" Grid.Column="2" />
-
-        <Label Content="Цвет" HorizontalAlignment="Left" Margin="47,0,0,398" VerticalAlignment="Bottom" Grid.Column="2"/>
+                         Margin="189,36,0,0"
+                         Grid.Column="1" />
+<Label Content="Цвет" HorizontalAlignment="Left" Margin="47,0,0,398" VerticalAlignment="Bottom" Grid.Column="2"/>
         <Border x:Name="BorderImage" 
             HorizontalAlignment="Center" 
             Height="730"
@@ -51,22 +53,13 @@
 
 
 
-        <toolkit:ColorPicker Name="cp1"
-                         DisplayColorAndName="True" 
-                         SelectedColorChanged="cp_SelectedColorChanged_1" 
-                         AvailableColorsSortingMode="HueSaturationBrightness"
-                         HorizontalAlignment="Left"
-                         VerticalAlignment="Top"
-                         Width="40"
-                         Height="25"
-                         Margin="189,36,0,0"
-                         Grid.Column="1" />
+        
 
         <!--<Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="68" Margin="357,23,0,0" Stroke="#FF8B8B8B" VerticalAlignment="Top" Width="244" Fill="White"/>-->
 
         <Label Content="Colour" Grid.Column="1" HorizontalAlignment="Left" Margin="189,10,0,0" VerticalAlignment="Top"/>
         <Label  Content="Thinckness" HorizontalAlignment="Left" Margin="260,10,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <TextBox x:Name="tbxPencilSize" HorizontalAlignment="Left" Margin="270,36,0,0" Text="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" Height="26" TextChanged="tbxPencilSize_Changed" Grid.Column="1" TextAlignment="Left" FontSize="14"/>
+        <TextBox x:Name="tbxPencilSize" HorizontalAlignment="Left" Margin="270,36,0,0" Text="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" Height="26" TextChanged="tbxPencilSize_Changed" Grid.Column="1" TextAlignment="Left" FontSize="14"/>
 
         <ToggleButton x:Name = "Pencil" Content = "Pencil" Grid.Column="1"
          Width = "53" HorizontalAlignment = "Left" Background="#FFDA4B4B" Click="Pencil_Click" Margin="10,11,0,69" >
@@ -78,7 +71,6 @@
                             <Setter Property="BorderThickness" Value="5"/>
                         </Trigger>
                     </Style.Triggers>
-
                 </Style>
             </ToggleButton.Style>
         </ToggleButton>
