@@ -64,74 +64,85 @@ namespace DevEducationPaint
         ConcreteThickness = new DefaultThickness()
       };
     }
-    private void Window_MouseUp(object sender, MouseButtonEventArgs e)
-    {
-      if (isDrawingFigure)
-      {
-        writeableBitmap = copy;
-        //isDrawingFigure = false;
-      }
-      prev.X = 0;
-      prev.Y = 0;
-      position.X = 0;
-      position.Y = 0;
-      //isDrawingFigure = false;
-    }
     private void Window_MouseDown(object sender, MouseButtonEventArgs e)
     {
-
-      //isDrawingFigure = true;
-      // prev = e.GetPosition(sender as IInputElement);
-      //ddd.Content = $"{prev.X} {prev.Y}";
-      ////SetPixel(prev);
+        isDrawingFigure = true;
+        // prev = e.GetPosition(sender as IInputElement);
+        ////SetPixel(prev);
+        if (e.LeftButton != MouseButtonState.Pressed) return;
+        var temp = e.GetPosition(sender as IInputElement);
+        prev = new Point((int)temp.X, (int)temp.Y);
+        ddd.Content = $"{prev.X} {prev.Y}";
     }
+
     private void Image_MouseMove(object sender, MouseEventArgs e)
     {
-      Figure resultFigure;
-      FigureCreator currentCreator = null;
+        Figure resultFigure;
+        FigureCreator currentCreator = null;
 
-      SuperBitmap.CopyInstance();
+        SuperBitmap.CopyInstance();
 
-      switch (currentFigure)
-      {
-        case FigureEnum.Circle:
-          currentCreator = new CircleCreator();
-          break;
-        case FigureEnum.Triangle:
-          currentCreator = new TriangleCreator();
-          break;
-        case FigureEnum.Line:
-          //currentCreator = new LineCreator();
-          break;
-        case FigureEnum.Square:
-          //currentCreator = new SquareCreator();
-          break;
-        case FigureEnum.Polygon:
-          //currentCreator = new PolygonCreator();
-          break;
-      }
+        switch (currentFigure)
+        {
+            case FigureEnum.Circle:
+                currentCreator = new CircleCreator();
+                break;
+            case FigureEnum.Triangle:
+                currentCreator = new TriangleCreator();
+                break;
+            case FigureEnum.Line:
+                //currentCreator = new LineCreator();
+                break;
+            case FigureEnum.Square:
+                //currentCreator = new SquareCreator();
+                break;
+            case FigureEnum.Polygon:
+                //currentCreator = new PolygonCreator();
+                break;
+        }
 
+        if (currentCreator == null) return;
+        //if (e.LeftButton != MouseButtonState.Pressed) return;
+        var temp = e.GetPosition(sender as IInputElement);
+        //prev = new Point((int)temp.X, (int)temp.Y);
+
+        if (prev.X != 0 && prev.Y != 0)
+        {
+            temp = e.GetPosition(sender as IInputElement);
+            position = new Point((int)temp.X, (int)temp.Y);
+            ddd.Content = $"{position.X} {position.Y}";
+            resultFigure = currentCreator.CreateFigure(prev, position);
+            resultFigure.ConcreteDraw = currentDrawStrategy;
+            resultFigure.Draw();
+            DrawWindow.Source = SuperBitmap.GetInstanceCopy();
+            //isDrawingFigure = false;
+        }
+    }
+    private void Window_MouseUp(object sender, MouseButtonEventArgs e)
+    {
+        //if (isDrawingFigure)
+        //{
+            //writeableBitmap = copy;
+            //isDrawingFigure = false;
+            //prev.X = 0;
+            //prev.Y = 0;
+            //position.X = 0;
+            //position.Y = 0;
+            if (prev.X != 0 && prev.Y != 0)
+            {
+                //var temp = e.GetPosition(sender as IInputElement);
+                //temp = e.GetPosition(sender as IInputElement);
+                //position = new Point((int)temp.X, (int)temp.Y);
+                isDrawingFigure = false;
+                SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
+                prev.X = 0;
+                prev.Y = 0;
+                position.X = 0;
+                position.Y = 0;
+            }
+        //}
+    }
       
-      if (currentCreator == null) return;
-      if (e.LeftButton != MouseButtonState.Pressed) return;
-      var temp = e.GetPosition(sender as IInputElement);
-      prev = new Point((int)temp.X, (int)temp.Y);
-
-      if (prev.X != 0 && prev.Y != 0)
-      {
-        temp = e.GetPosition(sender as IInputElement);
-        position = new Point((int)temp.X, (int)temp.Y);
-        ddd.Content = $"{position.X} {position.Y}";
-        resultFigure = currentCreator.CreateFigure(prev, position);
-        resultFigure.ConcreteDraw = currentDrawStrategy;
-        resultFigure.Draw();
-        DrawWindow.Source = SuperBitmap.GetInstanceCopy();
-      }
-     
-
-
-
-
       //
       //var temp = e.GetPosition(sender as IInputElement);
       //Point position = new Point((int)temp.X, (int)temp.Y);
@@ -158,7 +169,6 @@ namespace DevEducationPaint
       //  temp = e.GetPosition(sender as IInputElement);
       //  prev = new Point((int)temp.X, (int)temp.Y);
       //}
-    }
     private void Image_MouseWheel(object sender, MouseWheelEventArgs e)
     {
       var temp = e.MouseDevice.GetPosition(DrawWindow);
