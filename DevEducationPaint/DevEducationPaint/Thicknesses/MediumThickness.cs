@@ -7,12 +7,7 @@ namespace DevEducationPaint.Thicknesses
 {
     public class MediumThickness : ThicknessStrategy
     {
-        private Point point;
-
-        public MediumThickness(Point point)
-        {
-            this.point = point;
-        }
+   
         public override List<Point> GetPoints(Point point)
         {
             List<Point> result = new List<Point>();

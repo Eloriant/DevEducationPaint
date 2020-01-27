@@ -26,55 +26,66 @@ using Point = System.Drawing.Point;
 
 namespace DevEducationPaint
 {
-  public partial class MainWindow : Window
-  {
-    private WriteableBitmap writeableBitmap;
-    private WriteableBitmap copy;
-
-    private RastrDrawer drawer;
-    private DrawStrategy currentDrawStrategy;
-
-    private int angleNumber = 5;
-    private Point prev = new Point(0, 0);
-    private Point position = new Point(0, 0);
-    Point point = new Point(0, 0);
-    private bool isDrawingFigure = false; //флаг сигнализирующий
-    private FigureEnum currentFigure;
-    public MainWindow()
+    public partial class MainWindow : Window
     {
-      InitializeComponent();
-      SuperBitmap.Instance = new WriteableBitmap(730,
-        800, 96, 96, PixelFormats.Bgra32, null);
-      WriteableBitmap instance = SuperBitmap.Instance;
-      writeableBitmap = new WriteableBitmap(730,
-        800, 96, 96, PixelFormats.Bgra32, null);
+        private WriteableBitmap writeableBitmap;
+        private WriteableBitmap copy;
 
-      Int32.TryParse(tbxAngleNumber.Text as string, out int nValue);
-      angleNumber = nValue;
+        private RastrDrawer drawer;
+        private DrawStrategy currentDrawStrategy;
 
-      ////Тут получаем синглтон рисовальщика
-      //drawer = RastrDrawer.GetDrawer();
-      ////таким видмом ему можно задать цвет, который он будет использовать для рисования всего, что нам нужно
-      //drawer.pencilColor = System.Drawing.Color.Black;
+        private int angleNumber = 5;
+        private Point prev = new Point(0, 0);
+        private Point position = new Point(0, 0);
+        Point point = new Point(0, 0);
+        private bool isDrawingFigure = false; //флаг сигнализирующий
+        private FigureEnum currentFigure;
+        public MainWindow()
+        {
+            InitializeComponent();
+            SuperBitmap.Instance = new WriteableBitmap(730,
+              800, 96, 96, PixelFormats.Bgra32, null);
+            WriteableBitmap instance = SuperBitmap.Instance;
+            writeableBitmap = new WriteableBitmap(730,
+              800, 96, 96, PixelFormats.Bgra32, null);
 
-      DrawWindow.Source = writeableBitmap;
-      point = prev;
-      currentDrawStrategy = new DrawByLine
-      {
-        CurrentColor = new DrawColor(255, 0, 0, 255),
-        ConcreteThickness = new DefaultThickness(point)
-      };
-    }
-    private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-    {
-        isDrawingFigure = true;
-        // prev = e.GetPosition(sender as IInputElement);
-        ////SetPixel(prev);
-        if (e.LeftButton != MouseButtonState.Pressed) return;
-        var temp = e.GetPosition(sender as IInputElement);
-        prev = new Point((int)temp.X, (int)temp.Y);
-        ddd.Content = $"{prev.X} {prev.Y}";
-    }
+            Int32.TryParse(tbxAngleNumber.Text as string, out int nValue);
+            angleNumber = nValue;
+
+            ////Тут получаем синглтон рисовальщика
+            //drawer = RastrDrawer.GetDrawer();
+            ////таким видмом ему можно задать цвет, который он будет использовать для рисования всего, что нам нужно
+            //drawer.pencilColor = System.Drawing.Color.Black;
+
+            DrawWindow.Source = writeableBitmap;
+            point = prev;
+            //currentDrawStrategy = new DrawByLine
+            //{
+            //  CurrentColor = new DrawColor(255, 0, 0, 255),
+            //  ConcreteThickness = new DefaultThickness()
+            //};
+
+            //      currentDrawStrategy.DrawLineWithThickness(new Point(0,0), new Point(100,100));
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            isDrawingFigure = true;
+            // prev = e.GetPosition(sender as IInputElement);
+            ////SetPixel(prev);
+            if (e.LeftButton != MouseButtonState.Pressed) return;
+            var temp = e.GetPosition(sender as IInputElement);
+            prev = new Point((int)temp.X, (int)temp.Y);
+            ddd.Content = $"{prev.X} {prev.Y}";
+            //===============================
+            currentDrawStrategy = new DrawByLine
+            {
+                CurrentColor = new DrawColor(255, 0, 0, 255),
+                ConcreteThickness = new BoldThickness()
+
+            };
+
+        currentDrawStrategy.DrawLineWithThickness(new Point(), new Point());
+        }
 
     private void Image_MouseMove(object sender, MouseEventArgs e)
     {
