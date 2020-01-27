@@ -120,7 +120,7 @@
       </ToggleButton.Style>
     </ToggleButton>
 
-    <ToggleButton x:Name = "Line" Content = "Line" Grid.Column="1" VerticalAlignment="Top" Background="#FFDA4B4B" Click="buttonLine_Click" Margin="380,16,366,0" >
+    <ToggleButton x:Name = "Line" Content = "Line" Grid.Column="1" VerticalAlignment="Top" Background="#FFDA4B4B" Click="buttonLine_Click" Margin="380,16,366,0">
       <ToggleButton.Style>
         <Style TargetType="{x:Type ToggleButton}">
           <Setter Property="Background" Value="Green"/>

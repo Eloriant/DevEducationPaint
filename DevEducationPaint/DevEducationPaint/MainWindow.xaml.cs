@@ -103,10 +103,10 @@ namespace DevEducationPaint
                 currentCreator = new TriangleCreator();
                 break;
             case FigureEnum.Line:
-                //currentCreator = new LineCreator();
+                currentCreator = new LineCreator();
                 break;
             case FigureEnum.Square:
-                //currentCreator = new SquareCreator();
+                currentCreator = new SquareCreator();
                 break;
             case FigureEnum.Polygon:
                 //currentCreator = new PolygonCreator();
@@ -238,11 +238,12 @@ namespace DevEducationPaint
     //}
     }
 
-    private void buttonLine_Click(object sender, RoutedEventArgs e)
-    {
-      isDrawingFigure = true;
+     private void buttonLine_Click(object sender, RoutedEventArgs e)
+     {
+         isDrawingFigure = true;
+         currentFigure = FigureEnum.Line;
 
-    }
+     }
 
     private void Pencil_Click(object sender, RoutedEventArgs e)
     {
@@ -334,5 +335,5 @@ namespace DevEducationPaint
           cp.SelectedColor.Value.B);
       }
     }
-  }
+    }
 }

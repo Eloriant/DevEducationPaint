@@ -25,24 +25,17 @@ namespace DevEducationPaint.FigureCreators
             for (int i = 0; i < arcPoints.Count; i++)
             {
                 circlePoints.Add(new Point(arcPoints[i].X + cx, arcPoints[i].Y + cy));
+                new Point(arcPoints[i].X + cx, arcPoints[i].Y + cy);
+                circlePoints.Add(new Point(arcPoints[i - 1].X + cx, Math.Abs(arcPoints[i - 1].Y - cy)));
+                new Point(arcPoints[i].X + cx, Math.Abs(arcPoints[i].Y - cy));
+                circlePoints.Add(new Point(Math.Abs(arcPoints[i - 1].X - cx), arcPoints[i - 1].Y + cy));
+                new Point(Math.Abs(arcPoints[i].X - cx), arcPoints[i].Y + cy);
+                circlePoints.Add(new Point(Math.Abs(arcPoints[i - 1].X - cx), Math.Abs(arcPoints[i - 1].Y - cy)));
+                new Point(Math.Abs(arcPoints[i].X - cx), Math.Abs(arcPoints[i].Y - cy));
+
                 // рассчитать точки для остальных дуг
             }
-
-
-
-            /*for (int i = 1; i < points.Count; i++)
-            {
-                //SetPixel(new Point(points[i].X + cx, points[i].Y + cy));
-                bitmap = drawer.DrawLine(new Point(points[i - 1].X + cx, points[i - 1].Y + cy),
-                  new Point(points[i].X + cx, points[i].Y + cy), bitmap);
-                bitmap = drawer.DrawLine(new Point(points[i - 1].X + cx, Math.Abs(points[i - 1].Y - cy)),
-                  new Point(points[i].X + cx, Math.Abs(points[i].Y - cy)), bitmap);
-                bitmap = drawer.DrawLine(new Point(Math.Abs(points[i - 1].X - cx), points[i - 1].Y + cy),
-                  new Point(Math.Abs(points[i].X - cx), points[i].Y + cy), bitmap);
-                bitmap = drawer.DrawLine(new Point(Math.Abs(points[i - 1].X - cx), Math.Abs(points[i - 1].Y - cy)),
-                  new Point(Math.Abs(points[i].X - cx), Math.Abs(points[i].Y - cy)), bitmap);
-
-            }*/            
+               
 
             return new CircleFigure(circlePoints);
         }
