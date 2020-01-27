@@ -59,13 +59,13 @@ namespace DevEducationPaint
 
             DrawWindow.Source = writeableBitmap;
             point = prev;
-            //currentDrawStrategy = new DrawByLine
-            //{
-            //  CurrentColor = new DrawColor(255, 0, 0, 255),
-            //  ConcreteThickness = new DefaultThickness()
-            //};
+            currentDrawStrategy = new DrawByLine
+            {
+                CurrentColor = new DrawColor(255, 0, 0, 255),
+                ConcreteThickness = new DefaultThickness()
+            };
 
-            //      currentDrawStrategy.DrawLineWithThickness(new Point(0,0), new Point(100,100));
+
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -77,63 +77,63 @@ namespace DevEducationPaint
             prev = new Point((int)temp.X, (int)temp.Y);
             ddd.Content = $"{prev.X} {prev.Y}";
             //===============================
-            currentDrawStrategy = new DrawByLine
+            //currentDrawStrategy = new DrawByLine
+            //{
+            //    CurrentColor = new DrawColor(255, 0, 0, 255),
+            //    ConcreteThickness = new BoldThickness()
+
+            //};
+
+            currentDrawStrategy.DrawLineWithThickness(new Point(), new Point());
+        }
+
+        private void Image_MouseMove(object sender, MouseEventArgs e)
+        {
+            Figure resultFigure;
+            FigureCreator currentCreator = null;
+
+            SuperBitmap.CopyInstance();
+
+            switch (currentFigure)
             {
-                CurrentColor = new DrawColor(255, 0, 0, 255),
-                ConcreteThickness = new BoldThickness()
+                case FigureEnum.Circle:
+                    currentCreator = new CircleCreator();
+                    break;
+                case FigureEnum.Triangle:
+                    currentCreator = new TriangleCreator();
+                    break;
+                case FigureEnum.Line:
+                    currentCreator = new LineCreator();
+                    break;
+                case FigureEnum.Square:
+                    currentCreator = new SquareCreator();
+                    break;
+                case FigureEnum.Polygon:
+                    //currentCreator = new PolygonCreator();
+                    break;
+            }
 
-            };
+            if (currentCreator == null) return;
+            //if (e.LeftButton != MouseButtonState.Pressed) return;
+            var temp = e.GetPosition(sender as IInputElement);
+            //prev = new Point((int)temp.X, (int)temp.Y);
 
-        currentDrawStrategy.DrawLineWithThickness(new Point(), new Point());
+            if (prev.X != 0 && prev.Y != 0)
+            {
+                temp = e.GetPosition(sender as IInputElement);
+                position = new Point((int)temp.X, (int)temp.Y);
+                ddd.Content = $"{position.X} {position.Y}";
+                resultFigure = currentCreator.CreateFigure(prev, position);
+                resultFigure.ConcreteDraw = currentDrawStrategy;
+                resultFigure.Draw();
+                DrawWindow.Source = SuperBitmap.GetInstanceCopy();
+                //isDrawingFigure = false;
+            }
         }
-
-    private void Image_MouseMove(object sender, MouseEventArgs e)
-    {
-        Figure resultFigure;
-        FigureCreator currentCreator = null;
-
-        SuperBitmap.CopyInstance();
-
-        switch (currentFigure)
+        private void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            case FigureEnum.Circle:
-                currentCreator = new CircleCreator();
-                break;
-            case FigureEnum.Triangle:
-                currentCreator = new TriangleCreator();
-                break;
-            case FigureEnum.Line:
-                currentCreator = new LineCreator();
-                break;
-            case FigureEnum.Square:
-                currentCreator = new SquareCreator();
-                break;
-            case FigureEnum.Polygon:
-                //currentCreator = new PolygonCreator();
-                break;
-        }
-
-        if (currentCreator == null) return;
-        //if (e.LeftButton != MouseButtonState.Pressed) return;
-        var temp = e.GetPosition(sender as IInputElement);
-        //prev = new Point((int)temp.X, (int)temp.Y);
-
-        if (prev.X != 0 && prev.Y != 0)
-        {
-            temp = e.GetPosition(sender as IInputElement);
-            position = new Point((int)temp.X, (int)temp.Y);
-            ddd.Content = $"{position.X} {position.Y}";
-            resultFigure = currentCreator.CreateFigure(prev, position);
-            resultFigure.ConcreteDraw = currentDrawStrategy;
-            resultFigure.Draw();
-            DrawWindow.Source = SuperBitmap.GetInstanceCopy();
-            //isDrawingFigure = false;
-        }
-    }
-    private void Window_MouseUp(object sender, MouseButtonEventArgs e)
-    {
-        //if (isDrawingFigure)
-        //{
+            //if (isDrawingFigure)
+            //{
             //writeableBitmap = copy;
             //isDrawingFigure = false;
             //prev.X = 0;
@@ -152,188 +152,180 @@ namespace DevEducationPaint
                 position.X = 0;
                 position.Y = 0;
             }
+            //}
+        }
+
+        //
+        //var temp = e.GetPosition(sender as IInputElement);
+        //Point position = new Point((int)temp.X, (int)temp.Y);
+
+        //if (isDrawingFigure == false && prev.X != 0 && prev.Y != 0)
+        //{
+        //  temp = e.GetPosition(sender as IInputElement);
+        //  position = new Point((int)temp.X, (int)temp.Y);
+        //  drawer.DrawLine(prev, position, writeableBitmap);
         //}
-    }
-      
-      //
-      //var temp = e.GetPosition(sender as IInputElement);
-      //Point position = new Point((int)temp.X, (int)temp.Y);
-      
-      //if (isDrawingFigure == false && prev.X != 0 && prev.Y != 0)
-      //{
-      //  temp = e.GetPosition(sender as IInputElement);
-      //  position = new Point((int)temp.X, (int)temp.Y);
-      //  drawer.DrawLine(prev, position, writeableBitmap);
-      //}
 
-      //if (isDrawingFigure && prev.X != 0 && prev.Y != 0)
-      //{
+        //if (isDrawingFigure && prev.X != 0 && prev.Y != 0)
+        //{
 
-      //  copy = new WriteableBitmap(writeableBitmap);
-      //  DrawWindow.Source = writeableBitmap;
-      //  temp = e.GetPosition(sender as IInputElement);
-      //  position = new Point((int)temp.X, (int)temp.Y);
-      //  drawer.DrawFigure(copy, prev, position, Convert.ToInt32(tbxAngleNumber.Text));
-      //  DrawWindow.Source = copy;
-      //}
-      //else
-      //{
-      //  temp = e.GetPosition(sender as IInputElement);
-      //  prev = new Point((int)temp.X, (int)temp.Y);
-      //}
-    private void Image_MouseWheel(object sender, MouseWheelEventArgs e)
-    {
-      var temp = e.MouseDevice.GetPosition(DrawWindow);
-      Point p = new Point((int)temp.X, (int)temp.Y);
+        //  copy = new WriteableBitmap(writeableBitmap);
+        //  DrawWindow.Source = writeableBitmap;
+        //  temp = e.GetPosition(sender as IInputElement);
+        //  position = new Point((int)temp.X, (int)temp.Y);
+        //  drawer.DrawFigure(copy, prev, position, Convert.ToInt32(tbxAngleNumber.Text));
+        //  DrawWindow.Source = copy;
+        //}
+        //else
+        //{
+        //  temp = e.GetPosition(sender as IInputElement);
+        //  prev = new Point((int)temp.X, (int)temp.Y);
+        //}
+        private void Image_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            var temp = e.MouseDevice.GetPosition(DrawWindow);
+            Point p = new Point((int)temp.X, (int)temp.Y);
 
-      Matrix m = DrawWindow.RenderTransform.Value;
-      if (e.Delta > 0)
-        m.ScaleAtPrepend(1.1, 1.1, p.X, p.Y);
-      else
-        m.ScaleAtPrepend(1 / 1.1, 1 / 1.1, p.X, p.Y);
+            Matrix m = DrawWindow.RenderTransform.Value;
+            if (e.Delta > 0)
+                m.ScaleAtPrepend(1.1, 1.1, p.X, p.Y);
+            else
+                m.ScaleAtPrepend(1 / 1.1, 1 / 1.1, p.X, p.Y);
 
-      DrawWindow.RenderTransform = new MatrixTransform(m);
-    }
-    private void cp_SelectedColorChanged_1(object sender, RoutedPropertyChangedEventArgs<Color?> e)
-    {
-      if (cp.SelectedColor.HasValue)
-      {
-        currentDrawStrategy.CurrentColor = new DrawColor(cp.SelectedColor.Value.A,
-                                                            cp.SelectedColor.Value.R,
-                                                            cp.SelectedColor.Value.G,
-                                                            cp.SelectedColor.Value.B);
-      }
-    }
-    private void tbxPencilSize_Changed(object sender, TextChangedEventArgs e)
-    {
-    //if (tbxPencilSize.Text != null)
-    //    {
-    //        int.TryParse(tbxPencilSize.Text as string, out int pencilSize);
-    //        int penciLSize = Convert.ToInt32(tbxPencilSize.Text);
-    //        point = prev;
-    //        if (penciLSize == 1)
-    //        {
-    //            currentDrawStrategy.ConcreteThickness = new DefaultThickness(point);
-    //        }
-    //        else if (penciLSize == 2)
-    //        {
-    //            currentDrawStrategy.ConcreteThickness = new MediumThickness(point);
-    //        }
-    //        else if (penciLSize == 2)
-    //        {
-    //            currentDrawStrategy.ConcreteThickness = new BoldThickness(point);
-    //        }
-    //    }
-    //switch (pencilSize)
-    //{
-    //    case 1:
-    //        currentDrawStrategy.ConcreteThickness = new DefaultThickness();
-    //        break;
-    //    case 2:
-    //        currentDrawStrategy.ConcreteThickness = new MediumThickness();
-    //        break;
-    //    case 3:
-    //        currentDrawStrategy.ConcreteThickness = new BoldThickness();
-    //        break;
-    //}
-    }
+            DrawWindow.RenderTransform = new MatrixTransform(m);
+        }
+        private void cp_SelectedColorChanged_1(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            if (cp.SelectedColor.HasValue)
+            {
+                currentDrawStrategy.CurrentColor = new DrawColor(cp.SelectedColor.Value.A,
+                                                                    cp.SelectedColor.Value.R,
+                                                                    cp.SelectedColor.Value.G,
+                                                                    cp.SelectedColor.Value.B);
+            }
+        }
+        private void tbxPencilSize_Changed(object sender, TextChangedEventArgs e)
+        {
+            int penciLSize = Convert.ToInt32(tbxPencilSize.Text);
+            if (tbxPencilSize.Text != null)
+            {
+                int.TryParse(tbxPencilSize.Text as string, out int pencilSize);
 
-     private void buttonLine_Click(object sender, RoutedEventArgs e)
-     {
-         isDrawingFigure = true;
-         currentFigure = FigureEnum.Line;
-
-     }
-
-    private void Pencil_Click(object sender, RoutedEventArgs e)
-    {
-      isDrawingFigure = false;
-    }
-
-    private void Triangle_Click(object sender, RoutedEventArgs e)
-    {
-
-      isDrawingFigure = true;
-      currentFigure = FigureEnum.Triangle;
-    }
-
-    private void Circle_Click(object sender, RoutedEventArgs e)
-    {
-      //tbCircle.IsChecked = true;
-
-      isDrawingFigure = true;
-      currentFigure = FigureEnum.Circle;
-    }
-
-    private void Square_Click(object sender, RoutedEventArgs e)
-    {
-      isDrawingFigure = true;
-      currentFigure = FigureEnum.Square;
-    }
-
-    private void Polygon_Click(object sender, RoutedEventArgs e)
-    {
-      isDrawingFigure = true;
-      currentFigure = FigureEnum.Polygon;
-    }
-
-    private void tbxAngleNumber_Changed(object sender, TextChangedEventArgs e)
-    {
-      Int32.TryParse(tbxAngleNumber.Text as string, out int value);
-      angleNumber = value;
-    }
-
-    private void Eraser_Checked(object sender, RoutedEventArgs e)
-    {
-
-    }
-
-    private void Fill_Checked(object sender, RoutedEventArgs e)
-    {
-
-    }
-
-    private void Clear_Checked(object sender, RoutedEventArgs e)
-    {
-
-    }
+            }
+            //currentDrawStrategy = new DrawByLine
+            currentDrawStrategy = new DrawByLine();
 
 
-    //private void tbCircle_Clicked(object sender, RoutedEventArgs e)
-    //{
-    //    SetState(FigureEnum.Circle);
-    //}
+            switch (penciLSize)
+            {
+                case '1':
+                    currentDrawStrategy.ConcreteThickness = new DefaultThickness();
+                    break;
+                case '2':
+                    currentDrawStrategy.ConcreteThickness = new MediumThickness();
+                    break;
+                case '3':
+                    currentDrawStrategy.ConcreteThickness = new BoldThickness();
+                    break;
+            }
+        }
 
-    //private void tbTriangle_Clicked(object sender, RoutedEventArgs e)
-    //{
-    //    SetState(FigureEnum.Triangle);
-    //}
+        private void buttonLine_Click(object sender, RoutedEventArgs e)
+        {
+            isDrawingFigure = true;
+            currentFigure = FigureEnum.Line;
 
-    //private void SetState(FigureEnum pressedButton)
-    //{
-    //    tbTriangle.IsChecked = false;
-    //    tbCircle.IsChecked = false;
+        }
 
-    //    switch (pressedButton)
-    //    {
-    //        case FigureEnum.Circle:
-    //            tbCircle.IsChecked = true;
-    //            break;
-    //        case FigureEnum.Triangle:
-    //            tbTriangle.IsChecked = true;
-    //            break;
-    //    }
-    //}
+        private void Pencil_Click(object sender, RoutedEventArgs e)
+        {
+            isDrawingFigure = false;
+        }
 
-    private void Cp_OnSelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
-    {
-      if (cp.SelectedColor.HasValue)
-      {
-        currentDrawStrategy.CurrentColor = new DrawColor(cp.SelectedColor.Value.A,
-          cp.SelectedColor.Value.R,
-          cp.SelectedColor.Value.G,
-          cp.SelectedColor.Value.B);
-      }
-    }
+        private void Triangle_Click(object sender, RoutedEventArgs e)
+        {
+
+            isDrawingFigure = true;
+            currentFigure = FigureEnum.Triangle;
+        }
+
+        private void Circle_Click(object sender, RoutedEventArgs e)
+        {
+            //tbCircle.IsChecked = true;
+
+            isDrawingFigure = true;
+            currentFigure = FigureEnum.Circle;
+        }
+
+        private void Square_Click(object sender, RoutedEventArgs e)
+        {
+            isDrawingFigure = true;
+            currentFigure = FigureEnum.Square;
+        }
+
+        private void Polygon_Click(object sender, RoutedEventArgs e)
+        {
+            isDrawingFigure = true;
+            currentFigure = FigureEnum.Polygon;
+        }
+
+        private void tbxAngleNumber_Changed(object sender, TextChangedEventArgs e)
+        {
+            Int32.TryParse(tbxAngleNumber.Text as string, out int value);
+            angleNumber = value;
+        }
+
+        private void Eraser_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Fill_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Clear_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        //private void tbCircle_Clicked(object sender, RoutedEventArgs e)
+        //{
+        //    SetState(FigureEnum.Circle);
+        //}
+
+        //private void tbTriangle_Clicked(object sender, RoutedEventArgs e)
+        //{
+        //    SetState(FigureEnum.Triangle);
+        //}
+
+        //private void SetState(FigureEnum pressedButton)
+        //{
+        //    tbTriangle.IsChecked = false;
+        //    tbCircle.IsChecked = false;
+
+        //    switch (pressedButton)
+        //    {
+        //        case FigureEnum.Circle:
+        //            tbCircle.IsChecked = true;
+        //            break;
+        //        case FigureEnum.Triangle:
+        //            tbTriangle.IsChecked = true;
+        //            break;
+        //    }
+        //}
+
+        private void Cp_OnSelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
+        {
+            if (cp.SelectedColor.HasValue)
+            {
+                currentDrawStrategy.CurrentColor = new DrawColor(cp.SelectedColor.Value.A,
+                  cp.SelectedColor.Value.R,
+                  cp.SelectedColor.Value.G,
+                  cp.SelectedColor.Value.B);
+            }
+        }
     }
 }

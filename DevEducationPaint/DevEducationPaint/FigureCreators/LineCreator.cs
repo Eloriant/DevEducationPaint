@@ -13,7 +13,7 @@ namespace DevEducationPaint.FigureCreators
         {
             List<Point> linePoints = new List<Point>();
 
-            Point one = new Point(start.X, start.Y);
+           // Point one = new Point(start.X, start.Y);
             linePoints.Add(start);
             linePoints.Add(end);
 
