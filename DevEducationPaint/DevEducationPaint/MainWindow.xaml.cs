@@ -37,6 +37,7 @@ namespace DevEducationPaint
     private int angleNumber = 5;
     private Point prev = new Point(0, 0);
     private Point position = new Point(0, 0);
+    Point point = new Point(0, 0);
     private bool isDrawingFigure = false; //флаг сигнализирующий
     private FigureEnum currentFigure;
     public MainWindow()
@@ -51,17 +52,17 @@ namespace DevEducationPaint
       Int32.TryParse(tbxAngleNumber.Text as string, out int nValue);
       angleNumber = nValue;
 
-      //Тут получаем синглтон рисовальщика
-      drawer = RastrDrawer.GetDrawer();
-      //таким видмом ему можно задать цвет, который он будет использовать для рисования всего, что нам нужно
-      drawer.pencilColor = System.Drawing.Color.Black;
+      ////Тут получаем синглтон рисовальщика
+      //drawer = RastrDrawer.GetDrawer();
+      ////таким видмом ему можно задать цвет, который он будет использовать для рисования всего, что нам нужно
+      //drawer.pencilColor = System.Drawing.Color.Black;
 
       DrawWindow.Source = writeableBitmap;
-
+      point = prev;
       currentDrawStrategy = new DrawByLine
       {
         CurrentColor = new DrawColor(255, 0, 0, 255),
-        ConcreteThickness = new DefaultThickness()
+        ConcreteThickness = new DefaultThickness(point)
       };
     }
     private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -194,16 +195,36 @@ namespace DevEducationPaint
     }
     private void tbxPencilSize_Changed(object sender, TextChangedEventArgs e)
     {
-      int.TryParse(tbxPencilSize.Text as string, out int pencilSize);
-      //switch (pencilSize)
-      //{
-      //  case 1:
-      //    currentDrawStrategy.ConcreteThickness = new DefaultThickness();
-      //    break;
-      //  case 2:
-      //    currentDrawStrategy.ConcreteThickness = new MediumThickness();
-      //    break;
-      //}
+    //if (tbxPencilSize.Text != null)
+    //    {
+    //        int.TryParse(tbxPencilSize.Text as string, out int pencilSize);
+    //        int penciLSize = Convert.ToInt32(tbxPencilSize.Text);
+    //        point = prev;
+    //        if (penciLSize == 1)
+    //        {
+    //            currentDrawStrategy.ConcreteThickness = new DefaultThickness(point);
+    //        }
+    //        else if (penciLSize == 2)
+    //        {
+    //            currentDrawStrategy.ConcreteThickness = new MediumThickness(point);
+    //        }
+    //        else if (penciLSize == 2)
+    //        {
+    //            currentDrawStrategy.ConcreteThickness = new BoldThickness(point);
+    //        }
+    //    }
+    //switch (pencilSize)
+    //{
+    //    case 1:
+    //        currentDrawStrategy.ConcreteThickness = new DefaultThickness();
+    //        break;
+    //    case 2:
+    //        currentDrawStrategy.ConcreteThickness = new MediumThickness();
+    //        break;
+    //    case 3:
+    //        currentDrawStrategy.ConcreteThickness = new BoldThickness();
+    //        break;
+    //}
     }
 
     private void buttonLine_Click(object sender, RoutedEventArgs e)

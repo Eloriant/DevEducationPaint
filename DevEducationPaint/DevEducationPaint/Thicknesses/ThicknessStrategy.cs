@@ -5,7 +5,7 @@ namespace DevEducationPaint.Thicknesses
 {
     public abstract class ThicknessStrategy
     {
-        public abstract List<Point> GetPoints(Point start);
+        public abstract List<Point> GetPoints(Point point);
         //задать толщину
     }
 }
