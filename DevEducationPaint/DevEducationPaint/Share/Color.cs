@@ -10,7 +10,7 @@ namespace DevEducationPaint.Share
 
         public DrawColor(byte alpha, byte red, byte green, byte blue)
         {
-            Instance = new byte[] { alpha, red, green, blue };
+            Instance = new byte[] {blue, green, red, alpha };
         }
     }
 }

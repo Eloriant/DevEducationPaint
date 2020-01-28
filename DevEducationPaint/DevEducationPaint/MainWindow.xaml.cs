@@ -48,11 +48,8 @@ namespace DevEducationPaint
                 ConcreteThickness = new BoldThickness()
             };
             InitializeComponent();
-            SuperBitmap.Instance = new WriteableBitmap(730,
-              850, 96, 96, PixelFormats.Bgra32, null);
-            WriteableBitmap instance = SuperBitmap.Instance;
-            writeableBitmap = new WriteableBitmap(730,
-              850, 96, 96, PixelFormats.Bgra32, null);
+            SuperBitmap.Instance = new WriteableBitmap((int)DrawWindow.Width,
+              (int)DrawWindow.Height, 96, 96, PixelFormats.Bgra32, null);
 
             Int32.TryParse(tbxAngleNumber.Text as string, out int nValue);
             angleNumber = nValue;
@@ -62,7 +59,7 @@ namespace DevEducationPaint
             ////таким видмом ему можно задать цвет, который он будет использовать для рисования всего, что нам нужно
             //drawer.pencilColor = System.Drawing.Color.Black;
 
-            DrawWindow.Source = writeableBitmap;
+            DrawWindow.Source = SuperBitmap.Instance;
             point = prev;
 
 
