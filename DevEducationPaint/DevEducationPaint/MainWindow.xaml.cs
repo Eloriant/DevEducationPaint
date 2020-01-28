@@ -42,6 +42,7 @@ namespace DevEducationPaint
         private Point position = new Point(0, 0);
         Point point = new Point(0, 0);
         private bool isDrawingFigure = false; //флаг сигнализирующий
+        private bool picker = false;
         private FigureEnum currentFigure;
         public MainWindow()
         {
@@ -69,6 +70,8 @@ namespace DevEducationPaint
 
 
         }
+
+
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             isDrawingFigure = true;
@@ -78,6 +81,17 @@ namespace DevEducationPaint
             var temp = e.GetPosition(this.DrawWindow);
             prev = new Point((int)temp.X, (int)temp.Y);
             ddd.Content = $"{prev.X} {prev.Y}";
+            if (picker)
+            {
+                byte[] color = GetPixelColorData(SuperBitmap.Instance, prev);
+                //cp.AvailableColors.Add(new ColorItem(System.Windows.Media.Color.FromArgb(color[0], color[1], color[2], color[3]), "fromPicker"));
+                cp.SelectedColor = System.Windows.Media.Color.FromArgb(color[3], color[2], color[1], color[0]);
+                currentDrawStrategy.CurrentColor = new DrawColor(color[3], color[2], color[1], color[0]);
+                picker = false;
+                SetState(FigureEnum.Picker);
+
+            }
+
             //===============================
             //currentDrawStrategy = new DrawByLine
             //{
@@ -229,6 +243,7 @@ namespace DevEducationPaint
 
         private void buttonLine_Click(object sender, RoutedEventArgs e)
         {
+            SetState(FigureEnum.Line);
             isDrawingFigure = true;
             currentFigure = FigureEnum.Line;
 
@@ -236,12 +251,14 @@ namespace DevEducationPaint
 
         private void Pencil_Click(object sender, RoutedEventArgs e)
         {
+            SetState(FigureEnum.Pencil);
             isDrawingFigure = false;
+            currentFigure = FigureEnum.Pencil;
         }
 
         private void Triangle_Click(object sender, RoutedEventArgs e)
         {
-
+            SetState(FigureEnum.Triangle);
             isDrawingFigure = true;
             currentFigure = FigureEnum.Triangle;
         }
@@ -249,19 +266,21 @@ namespace DevEducationPaint
         private void Circle_Click(object sender, RoutedEventArgs e)
         {
             //tbCircle.IsChecked = true;
-
+            SetState(FigureEnum.Circle);
             isDrawingFigure = true;
             currentFigure = FigureEnum.Circle;
         }
 
         private void Square_Click(object sender, RoutedEventArgs e)
         {
+            SetState(FigureEnum.Square);
             isDrawingFigure = true;
             currentFigure = FigureEnum.Square;
         }
 
         private void Polygon_Click(object sender, RoutedEventArgs e)
         {
+            SetState(FigureEnum.Polygon);
             isDrawingFigure = true;
             currentFigure = FigureEnum.Polygon;
         }
@@ -283,20 +302,25 @@ namespace DevEducationPaint
         }
 
 
-        private void Circle_Clicked(object sender, RoutedEventArgs e)
-        {
-            SetState(FigureEnum.Circle);
-        }
-
-        private void Triangle_Clicked(object sender, RoutedEventArgs e)
-        {
-            SetState(FigureEnum.Triangle);
-        }
+       // private void Circle_Clicked(object sender, RoutedEventArgs e)
+       // {
+       //     SetState(FigureEnum.Circle);
+       // }
+       //
+       // private void Triangle_Clicked(object sender, RoutedEventArgs e)
+       // {
+       //     SetState(FigureEnum.Triangle);
+       // }
 
         private void SetState(FigureEnum pressedButton)
         {
             Triangle.IsChecked = false;
             Circle.IsChecked = false;
+            Line.IsChecked = false;
+            Square.IsChecked = false;
+            Polygon.IsChecked = false;
+            Pencil.IsChecked = false;
+            Picker.IsChecked = false;
 
             switch (pressedButton)
             {
@@ -306,6 +330,19 @@ namespace DevEducationPaint
                 case FigureEnum.Triangle:
                     Triangle.IsChecked = true;
                     break;
+                case FigureEnum.Line:
+                    Line.IsChecked = true;
+                    break;
+                case FigureEnum.Square:
+                    Square.IsChecked = true;
+                    break;
+                case FigureEnum.Polygon:
+                    Polygon.IsChecked = true;
+                    break;
+                case FigureEnum.Pencil:
+                    Pencil.IsChecked = true;
+                    break;
+
             }
         } 
 
@@ -313,10 +350,10 @@ namespace DevEducationPaint
         {
             if (cp.SelectedColor.HasValue)
             {
-                currentDrawStrategy.CurrentColor = new DrawColor(cp.SelectedColor.Value.B,
-                  cp.SelectedColor.Value.G,
+                currentDrawStrategy.CurrentColor = new DrawColor(cp.SelectedColor.Value.A,
                   cp.SelectedColor.Value.R,
-                  cp.SelectedColor.Value.A);
+                  cp.SelectedColor.Value.G,
+                  cp.SelectedColor.Value.B);
             }
         }
 
@@ -349,17 +386,19 @@ namespace DevEducationPaint
             byte[] bitmapBytes = new byte[bmp.PixelWidth * bmp.PixelHeight * 4];
             bmp.CopyPixels(bitmapBytes, stride, 0);
             int currentByte = (int)prev.X * bytePerPixel + (stride * (int)prev.Y);
-            byte[] color = new byte[] { bitmapBytes[currentByte], bitmapBytes[currentByte + 1], bitmapBytes[currentByte + 2], 0 };
+            byte[] color = new byte[] {bitmapBytes[currentByte], bitmapBytes[currentByte + 1], bitmapBytes[currentByte + 2],  255 };
             return color;
         }
 
-        private void ColourPicker_Checked(object sender, RoutedEventArgs e)
+        private void Eraser_Checked(object sender, RoutedEventArgs e)
         {
+            picker = true;
             isDrawingFigure = false;
-            byte[] color = GetPixelColorData(writeableBitmap, prev);
-           
-            cp.AvailableColors.Add(new ColorItem(System.Windows.Media.Color.FromArgb(color[0], color[1], color[2], color[3]), "kuhhiuh"));
-            currentDrawStrategy.CurrentColor = new DrawColor(color[0], color[1], color[2], color[3]);
+            
+            //IsChecked = false;
+            //byte[] color = GetPixelColorData(SuperBitmap.Instance, prev);
+            //cp.AvailableColors.Add(new ColorItem(System.Windows.Media.Color.FromArgb(color[0], color[1], color[2], color[3]), "kuhhiuh"));
+            //currentDrawStrategy.CurrentColor = new DrawColor(color[0], color[1], color[2], color[3]);
         }
     }
 }

@@ -10,6 +10,9 @@ namespace DevEducationPaint.Figures
         Square,
         Circle,
         Triangle,
-        Polygon
+        Polygon,
+        Pencil,
+        Picker
+,
     }
 }
