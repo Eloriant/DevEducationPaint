@@ -8,18 +8,18 @@
         xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="DevEducationPaint" Height="880" Width="900" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"  Background="#FFECECEC">
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="120"></RowDefinition>
-      <RowDefinition></RowDefinition>
-    </Grid.RowDefinitions>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*"></ColumnDefinition>
-      <ColumnDefinition Width="800"></ColumnDefinition>
-      <ColumnDefinition Width="*"></ColumnDefinition>
-    </Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="800"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
 
-    <toolkit:ColorPicker Name="cp"
+        <toolkit:ColorPicker Name="cp"
                          DisplayColorAndName="True" 
                          SelectedColorChanged="Cp_OnSelectedColorChanged"
                          AvailableColorsSortingMode="HueSaturationBrightness"
@@ -29,8 +29,8 @@
                          Height="25"
                          Margin="189,36,0,0"
                          Grid.Column="1" />
-    <Label Content="Цвет" HorizontalAlignment="Left" Margin="47,0,0,398" VerticalAlignment="Bottom" Grid.Column="2"/>
-    <Border x:Name="BorderImage" 
+        <Label Content="Цвет" HorizontalAlignment="Left" Margin="47,0,0,398" VerticalAlignment="Bottom" Grid.Column="2"/>
+        <Border x:Name="BorderImage" 
             HorizontalAlignment="Center" 
             Height="730"
             Width="800"
@@ -39,167 +39,167 @@
             Grid.Row="2"
             Background="White">
 
-      <Image x:Name="DrawWindow" 
-             Height="Auto" 
-             Width="Auto"
+            <Image x:Name="DrawWindow" 
+             Height="730" 
+             Width="800"
              MouseMove="Image_MouseMove"
              MouseWheel="Image_MouseWheel"/>
 
-      <Border.Effect>
-        <DropShadowEffect Opacity="0.15" ShadowDepth="10"/>
-      </Border.Effect>
+            <Border.Effect>
+                <DropShadowEffect Opacity="0.15" ShadowDepth="10"/>
+            </Border.Effect>
 
-    </Border>
-
-
+        </Border>
 
 
 
-    <!--<Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="68" Margin="357,23,0,0" Stroke="#FF8B8B8B" VerticalAlignment="Top" Width="244" Fill="White"/>-->
 
-    <Label Content="Colour" Grid.Column="1" HorizontalAlignment="Left" Margin="189,10,0,0" VerticalAlignment="Top"/>
-    <Label  Content="Thinckness" HorizontalAlignment="Left" Margin="260,10,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-    <TextBox x:Name="tbxPencilSize" HorizontalAlignment="Left" Margin="270,36,0,0" Text="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" Height="26" TextChanged="tbxPencilSize_Changed" Grid.Column="1" TextAlignment="Left" FontSize="14"/>
 
-    <ToggleButton x:Name = "Pencil" Content = "Pencil" Grid.Column="1"
+        <!--<Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="68" Margin="357,23,0,0" Stroke="#FF8B8B8B" VerticalAlignment="Top" Width="244" Fill="White"/>-->
+
+        <Label Content="Colour" Grid.Column="1" HorizontalAlignment="Left" Margin="189,10,0,0" VerticalAlignment="Top"/>
+        <Label  Content="Thinckness" HorizontalAlignment="Left" Margin="260,10,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+
+        <ToggleButton x:Name = "Pencil" Content = "Pencil" Grid.Column="1"
          Width = "53" HorizontalAlignment = "Left" Background="#FFDA4B4B" Click="Pencil_Click" Margin="10,11,0,69" >
-      <ToggleButton.Style>
-        <Style TargetType="{x:Type ToggleButton}">
-          <Setter Property="Background" Value="Green"/>
-          <Style.Triggers>
-            <Trigger Property="IsChecked" Value="true">
-              <Setter Property="BorderThickness" Value="5"/>
-            </Trigger>
-          </Style.Triggers>
-        </Style>
-      </ToggleButton.Style>
-    </ToggleButton>
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="5"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
 
-    <ToggleButton x:Name = "Fill" Content = "Fill" Grid.Column="1"
+        <ToggleButton x:Name = "Fill" Content = "Fill" Grid.Column="1"
          Width = "53" HorizontalAlignment = "Left" Background="#FFDA4B4B" Margin="90,11,0,69" Checked="Fill_Checked" >
-      <ToggleButton.Style>
-        <Style TargetType="{x:Type ToggleButton}">
-          <Setter Property="Background" Value="Green"/>
-          <Style.Triggers>
-            <Trigger Property="IsChecked" Value="true">
-              <Setter Property="BorderThickness" Value="5"/>
-            </Trigger>
-          </Style.Triggers>
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="5"/>
+                        </Trigger>
+                    </Style.Triggers>
 
-        </Style>
-      </ToggleButton.Style>
-    </ToggleButton>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
 
-    <ToggleButton x:Name = "Eraser" Content = "Eraser" Grid.Column="1"
+        <ToggleButton x:Name = "Eraser" Content = "Eraser" Grid.Column="1"
          Width = "53" HorizontalAlignment = "Left" Background="#FFDA4B4B" Click="Eraser_Checked" Margin="10,61,0,19" Checked="Eraser_Checked" >
-      <ToggleButton.Style>
-        <Style TargetType="{x:Type ToggleButton}">
-          <Setter Property="Background" Value="Green"/>
-          <Style.Triggers>
-            <Trigger Property="IsChecked" Value="true">
-              <Setter Property="BorderThickness" Value="5"/>
-            </Trigger>
-          </Style.Triggers>
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="5"/>
+                        </Trigger>
+                    </Style.Triggers>
 
-        </Style>
-      </ToggleButton.Style>
-    </ToggleButton>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
 
-    <ToggleButton x:Name = "Clear" Content = "Clear" Grid.Column="1"
+        <ToggleButton x:Name = "Clear" Content = "Clear" Grid.Column="1"
          Width = "53" HorizontalAlignment = "Left" Background="#FFDA4B4B" Click="Clear_Checked" Margin="90,60,0,20" Checked="Clear_Checked" >
-      <ToggleButton.Style>
-        <Style TargetType="{x:Type ToggleButton}">
-          <Setter Property="Background" Value="Green"/>
-          <Style.Triggers>
-            <Trigger Property="IsChecked" Value="true">
-              <Setter Property="BorderThickness" Value="5"/>
-            </Trigger>
-          </Style.Triggers>
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="5"/>
+                        </Trigger>
+                    </Style.Triggers>
 
-        </Style>
-      </ToggleButton.Style>
-    </ToggleButton>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
 
-    <ToggleButton x:Name = "Line" Content = "Line" Grid.Column="1" VerticalAlignment="Top" Background="#FFDA4B4B" Click="buttonLine_Click" Margin="380,16,366,0">
-      <ToggleButton.Style>
-        <Style TargetType="{x:Type ToggleButton}">
-          <Setter Property="Background" Value="Green"/>
-          <Style.Triggers>
-            <Trigger Property="IsChecked" Value="true">
-              <Setter Property="BorderThickness" Value="5"/>
-            </Trigger>
-          </Style.Triggers>
+        <ToggleButton x:Name = "Line" Content = "Line" Grid.Column="1" VerticalAlignment="Top" Background="#FFDA4B4B" Click="buttonLine_Click" Margin="380,16,366,0">
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="5"/>
+                        </Trigger>
+                    </Style.Triggers>
 
-        </Style>
-      </ToggleButton.Style>
-    </ToggleButton>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
 
-    <ToggleButton x:Name = "Triangle" Content = "Triangle" VerticalAlignment="Top"  Background="#FFDA4B4B" Margin="379,46,366,0" Click="Triangle_Click" RenderTransformOrigin="0.5,0.5" Grid.Column="1" >
-      <ToggleButton.RenderTransform>
-        <TransformGroup>
-          <ScaleTransform/>
-          <SkewTransform AngleX="0.927"/>
-          <RotateTransform/>
-          <TranslateTransform X="0.648"/>
-        </TransformGroup>
-      </ToggleButton.RenderTransform>
-      <ToggleButton.Style>
-        <Style TargetType="{x:Type ToggleButton}">
-          <Setter Property="Background" Value="Green"/>
-          <Style.Triggers>
-            <Trigger Property="IsChecked" Value="true">
-              <Setter Property="BorderThickness" Value="5"/>
-            </Trigger>
-          </Style.Triggers>
-        </Style>
-      </ToggleButton.Style>
-    </ToggleButton>
+        <ToggleButton x:Name = "Triangle" Content = "Triangle" VerticalAlignment="Top"  Background="#FFDA4B4B" Margin="379,46,366,0" Click="Triangle_Click" RenderTransformOrigin="0.5,0.5" Grid.Column="1" >
+            <ToggleButton.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="0.927"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="0.648"/>
+                </TransformGroup>
+            </ToggleButton.RenderTransform>
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="5"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
 
-    <ToggleButton x:Name = "Square" Content = "Square" Grid.Column="1" VerticalAlignment="Top" Background="#FFDA4B4B" Click="Square_Click" Margin="380,74,366,0" >
-      <ToggleButton.Style>
-        <Style TargetType="{x:Type ToggleButton}">
-          <Setter Property="Background" Value="Green"/>
-          <Style.Triggers>
-            <Trigger Property="IsChecked" Value="true">
-              <Setter Property="BorderThickness" Value="5"/>
-            </Trigger>
-          </Style.Triggers>
+        <ToggleButton x:Name = "Square" Content = "Square" Grid.Column="1" VerticalAlignment="Top" Background="#FFDA4B4B" Click="Square_Click" Margin="380,74,366,0" >
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="5"/>
+                        </Trigger>
+                    </Style.Triggers>
 
-        </Style>
-      </ToggleButton.Style>
-    </ToggleButton>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
 
-    <ToggleButton x:Name = "Circle" Content = "Circle" Grid.Column="1" VerticalAlignment="Top" Background="#FFDA4B4B" Click="Circle_Click" Margin="454,16,292,0" >
-      <ToggleButton.Style>
-        <Style TargetType="{x:Type ToggleButton}">
-          <Setter Property="Background" Value="Green"/>
-          <Style.Triggers>
-            <Trigger Property="IsChecked" Value="true">
-              <Setter Property="BorderThickness" Value="5"/>
-            </Trigger>
-          </Style.Triggers>
+        <ToggleButton x:Name = "Circle" Content = "Circle" Grid.Column="1" VerticalAlignment="Top" Background="#FFDA4B4B" Click="Circle_Click" Margin="454,16,292,0" >
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="5"/>
+                        </Trigger>
+                    </Style.Triggers>
 
-        </Style>
-      </ToggleButton.Style>
-    </ToggleButton>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
 
-    <ToggleButton x:Name = "Polygon" Content = "Polygon" Grid.Column="1" VerticalAlignment="Top" Background="#FFDA4B4B" Click="Polygon_Click" Margin="454,47,292,0" >
-      <ToggleButton.Style>
-        <Style TargetType="{x:Type ToggleButton}">
-          <Setter Property="Background" Value="Green"/>
-          <Style.Triggers>
-            <Trigger Property="IsChecked" Value="true">
-              <Setter Property="BorderThickness" Value="5"/>
-            </Trigger>
-          </Style.Triggers>
+        <ToggleButton x:Name = "Polygon" Content = "Polygon" Grid.Column="1" VerticalAlignment="Top" Background="#FFDA4B4B" Click="Polygon_Click" Margin="454,47,292,0" >
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="5"/>
+                        </Trigger>
+                    </Style.Triggers>
 
-        </Style>
-      </ToggleButton.Style>
-    </ToggleButton>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
 
-    <TextBox x:Name="tbxAngleNumber" HorizontalAlignment="Left" Margin="454,76,0,0" Text="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="54" TextChanged="tbxAngleNumber_Changed" Grid.Column="1"/>
-    <Label x:Name="ddd" Content="Label" Grid.Column="1" HorizontalAlignment="Left" Margin="656,23,0,0" VerticalAlignment="Top"/>
-    <!--<ToggleButton x:Name = "tbCircle" Content = "Toggle"
+        <TextBox x:Name="tbxAngleNumber" HorizontalAlignment="Left" Margin="454,76,0,0" Text="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="54" TextChanged="tbxAngleNumber_Changed" Grid.Column="1"/>
+        <Label x:Name="ddd" Content="Label" Grid.Column="1" HorizontalAlignment="Left" Margin="656,23,0,0" VerticalAlignment="Top"/>
+        <Slider x:Name="sliderToPencilSize" IsSelectionRangeEnabled="true" TickFrequency="4" TickPlacement="BottomRight" Grid.Column="1" Value="1" Minimum="1" Maximum="4" HorizontalAlignment="Left" Margin="244,37,0,0" VerticalAlignment="Top" Width="100" ValueChanged="sliderToPencilSize_ValueChanged"/>
+        <!--<ToggleButton x:Name = "tbCircle" Content = "Toggle"
          Width = "108" HorizontalAlignment = "Left" Background="#FFDA4B4B" Click="tbCircle_Clicked" Margin="138,23,0,97" Grid.Column="1" >
             <ToggleButton.Style>
                 <Style TargetType="{x:Type ToggleButton}">
@@ -213,6 +213,6 @@
                 </Style>
             </ToggleButton.Style>
         </ToggleButton>-->
-    <!--<Button x:Name="Pencil" Content="Pencil" Grid.Column="2" HorizontalAlignment="Left" Margin="55,361,0,0" VerticalAlignment="Top" Click="Pencil_Click"/>-->
-  </Grid>
+        <!--<Button x:Name="Pencil" Content="Pencil" Grid.Column="2" HorizontalAlignment="Left" Margin="55,361,0,0" VerticalAlignment="Top" Click="Pencil_Click"/>-->
+    </Grid>
 </Window>

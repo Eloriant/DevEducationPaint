@@ -42,12 +42,17 @@ namespace DevEducationPaint
         private FigureEnum currentFigure;
         public MainWindow()
         {
+            currentDrawStrategy = new DrawByLine
+            {
+                CurrentColor = new DrawColor(255, 0, 0, 255),
+                ConcreteThickness = new BoldThickness()
+            };
             InitializeComponent();
             SuperBitmap.Instance = new WriteableBitmap(730,
-              800, 96, 96, PixelFormats.Bgra32, null);
+              850, 96, 96, PixelFormats.Bgra32, null);
             WriteableBitmap instance = SuperBitmap.Instance;
             writeableBitmap = new WriteableBitmap(730,
-              800, 96, 96, PixelFormats.Bgra32, null);
+              850, 96, 96, PixelFormats.Bgra32, null);
 
             Int32.TryParse(tbxAngleNumber.Text as string, out int nValue);
             angleNumber = nValue;
@@ -59,11 +64,6 @@ namespace DevEducationPaint
 
             DrawWindow.Source = writeableBitmap;
             point = prev;
-            currentDrawStrategy = new DrawByLine
-            {
-                CurrentColor = new DrawColor(255, 0, 0, 255),
-                ConcreteThickness = new DefaultThickness()
-            };
 
 
         }
@@ -72,8 +72,8 @@ namespace DevEducationPaint
             isDrawingFigure = true;
             // prev = e.GetPosition(sender as IInputElement);
             ////SetPixel(prev);
-            if (e.LeftButton != MouseButtonState.Pressed) return;
-            var temp = e.GetPosition(sender as IInputElement);
+            //if (e.LeftButton != MouseButtonState.Pressed) return;
+            var temp = e.GetPosition(this.DrawWindow);
             prev = new Point((int)temp.X, (int)temp.Y);
             ddd.Content = $"{prev.X} {prev.Y}";
             //===============================
@@ -84,7 +84,7 @@ namespace DevEducationPaint
 
             //};
 
-            currentDrawStrategy.DrawLineWithThickness(new Point(), new Point());
+            //currentDrawStrategy.DrawLineWithThickness(new Point(), new Point());
         }
 
         private void Image_MouseMove(object sender, MouseEventArgs e)
@@ -93,7 +93,8 @@ namespace DevEducationPaint
             FigureCreator currentCreator = null;
 
             SuperBitmap.CopyInstance();
-
+            var pos = e.GetPosition(this.DrawWindow);
+            ddd.Content = $"{(int)pos.X}:{(int)pos.Y}";
             switch (currentFigure)
             {
                 case FigureEnum.Circle:
@@ -115,12 +116,12 @@ namespace DevEducationPaint
 
             if (currentCreator == null) return;
             //if (e.LeftButton != MouseButtonState.Pressed) return;
-            var temp = e.GetPosition(sender as IInputElement);
+            var temp = e.GetPosition(this.DrawWindow);
             //prev = new Point((int)temp.X, (int)temp.Y);
 
             if (prev.X != 0 && prev.Y != 0)
             {
-                temp = e.GetPosition(sender as IInputElement);
+                temp = e.GetPosition(this.DrawWindow);
                 position = new Point((int)temp.X, (int)temp.Y);
                 ddd.Content = $"{position.X} {position.Y}";
                 resultFigure = currentCreator.CreateFigure(prev, position);
@@ -204,31 +205,7 @@ namespace DevEducationPaint
                                                                     cp.SelectedColor.Value.B);
             }
         }
-        private void tbxPencilSize_Changed(object sender, TextChangedEventArgs e)
-        {
-            int penciLSize = Convert.ToInt32(tbxPencilSize.Text);
-            if (tbxPencilSize.Text != null)
-            {
-                int.TryParse(tbxPencilSize.Text as string, out int pencilSize);
-
-            }
-            //currentDrawStrategy = new DrawByLine
-            currentDrawStrategy = new DrawByLine();
-
-
-            switch (penciLSize)
-            {
-                case '1':
-                    currentDrawStrategy.ConcreteThickness = new DefaultThickness();
-                    break;
-                case '2':
-                    currentDrawStrategy.ConcreteThickness = new MediumThickness();
-                    break;
-                case '3':
-                    currentDrawStrategy.ConcreteThickness = new BoldThickness();
-                    break;
-            }
-        }
+        
 
         private void buttonLine_Click(object sender, RoutedEventArgs e)
         {
@@ -325,6 +302,28 @@ namespace DevEducationPaint
                   cp.SelectedColor.Value.R,
                   cp.SelectedColor.Value.G,
                   cp.SelectedColor.Value.B);
+            }
+        }
+
+        private void sliderToPencilSize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            ((Slider)sender).SelectionEnd = e.NewValue;
+            
+            
+            switch (sliderToPencilSize.Value)
+            {
+                case 1:
+                    currentDrawStrategy.ConcreteThickness = new DefaultThickness();
+                    break;
+                case 2:
+                    currentDrawStrategy.ConcreteThickness = new MediumThickness();
+                    break;
+                case 3:
+                    currentDrawStrategy.ConcreteThickness = new BoldThickness();
+                    break;
+                case 4:
+                    currentDrawStrategy.ConcreteThickness = new ExtraThickness();
+                    break;
             }
         }
     }

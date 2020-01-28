@@ -26,6 +26,7 @@ namespace DevEducationPaint.Drawers
             byte[] colorData = { pencilColor.B, pencilColor.G, pencilColor.R, pencilColor.A };
             var rect = new Int32Rect((int)pixelPoint.X, (int)pixelPoint.Y, 1, 1);
             bmp?.WritePixels(rect, colorData, 4, 0); //если битмап не нулевой, записываем пиксель
+            
             return bmp;
         }
 

@@ -39,8 +39,8 @@ namespace DevEducationPaint.FigureCreators
             trianglePoints.Add(end);
             Point high1 = GetPointHigh(start, end);
             trianglePoints.Add(high1);
-            Point startXY = new Point(start.X, start.Y);
-            trianglePoints.Add(startXY);
+            //Point startXY = new Point(start.X, start.Y);
+            //trianglePoints.Add(startXY);
 
             return new TriangleFigure(trianglePoints);
         }
