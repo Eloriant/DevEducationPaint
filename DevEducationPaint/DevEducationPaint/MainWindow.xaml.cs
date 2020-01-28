@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,9 +49,11 @@ namespace DevEducationPaint
                 ConcreteThickness = new BoldThickness()
             };
             InitializeComponent();
+            var colors = new List<System.Windows.Media.Color> { Colors.Black, Colors.Black, Colors.Black };
+            BitmapPalette myPalette = new BitmapPalette(colors);
             SuperBitmap.Instance = new WriteableBitmap((int)DrawWindow.Width,
-              (int)DrawWindow.Height, 96, 96, PixelFormats.Bgra32, null);
-
+              (int)DrawWindow.Height, 96, 96, PixelFormats.Bgra32, myPalette);
+            
             Int32.TryParse(tbxAngleNumber.Text as string, out int nValue);
             angleNumber = nValue;
 
@@ -58,7 +61,7 @@ namespace DevEducationPaint
             //drawer = RastrDrawer.GetDrawer();
             ////таким видмом ему можно задать цвет, который он будет использовать для рисования всего, что нам нужно
             //drawer.pencilColor = System.Drawing.Color.Black;
-
+            FillWhite();
             DrawWindow.Source = SuperBitmap.Instance;
             point = prev;
 
@@ -82,6 +85,24 @@ namespace DevEducationPaint
             //};
 
             //currentDrawStrategy.DrawLineWithThickness(new Point(), new Point());
+        }
+
+        private void FillWhite()
+        {
+            int width = (int)DrawWindow.Width;
+            int height = (int)DrawWindow.Height;
+            int stride = width / 8;
+            byte[] pixels = new byte[height * stride];
+
+            var color = new DrawColor(255, 255, 255, 255);
+            for(int i = 0; i < width; i++)
+            {
+                for(int k = 0; k < height; k++)
+                {
+                    var rect = new Int32Rect(i, k, 1, 1);
+                    SuperBitmap.Instance.WritePixels(rect, color.Instance, 4, 0);
+                }
+            }
         }
 
         private void Image_MouseMove(object sender, MouseEventArgs e)
