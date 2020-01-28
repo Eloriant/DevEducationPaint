@@ -20,9 +20,11 @@ using DevEducationPaint.Figures;
 using DevEducationPaint.Share;
 using DevEducationPaint.Strategies;
 using DevEducationPaint.Thicknesses;
-using Color = System.Drawing.Color;
+using Xceed.Wpf.Toolkit;
+//using Color = System.Drawing.Color;
 using Figure = DevEducationPaint.Figures.Figure;
 using Point = System.Drawing.Point;
+
 
 namespace DevEducationPaint
 {
@@ -116,7 +118,7 @@ namespace DevEducationPaint
             var temp = e.GetPosition(this.DrawWindow);
             //prev = new Point((int)temp.X, (int)temp.Y);
 
-            if (prev.X != 0 && prev.Y != 0)
+            if (isDrawingFigure && prev.X != 0 && prev.Y != 0)
             {
                 temp = e.GetPosition(this.DrawWindow);
                 position = new Point((int)temp.X, (int)temp.Y);
@@ -138,7 +140,7 @@ namespace DevEducationPaint
             //prev.Y = 0;
             //position.X = 0;
             //position.Y = 0;
-            if (prev.X != 0 && prev.Y != 0)
+            if (isDrawingFigure && prev.X != 0 && prev.Y != 0)
             {
                 //var temp = e.GetPosition(sender as IInputElement);
                 //temp = e.GetPosition(sender as IInputElement);
@@ -192,7 +194,7 @@ namespace DevEducationPaint
 
             DrawWindow.RenderTransform = new MatrixTransform(m);
         }
-        private void cp_SelectedColorChanged_1(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        private void cp_SelectedColorChanged_1(object sender, RoutedPropertyChangedEventArgs<System.Drawing.Color?> e)
         {
             if (cp.SelectedColor.HasValue)
             {
@@ -249,11 +251,6 @@ namespace DevEducationPaint
             angleNumber = value;
         }
 
-        private void Eraser_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Fill_Checked(object sender, RoutedEventArgs e)
         {
 
@@ -265,40 +262,40 @@ namespace DevEducationPaint
         }
 
 
-        //private void tbCircle_Clicked(object sender, RoutedEventArgs e)
-        //{
-        //    SetState(FigureEnum.Circle);
-        //}
+        private void Circle_Clicked(object sender, RoutedEventArgs e)
+        {
+            SetState(FigureEnum.Circle);
+        }
 
-        //private void tbTriangle_Clicked(object sender, RoutedEventArgs e)
-        //{
-        //    SetState(FigureEnum.Triangle);
-        //}
+        private void Triangle_Clicked(object sender, RoutedEventArgs e)
+        {
+            SetState(FigureEnum.Triangle);
+        }
 
-        //private void SetState(FigureEnum pressedButton)
-        //{
-        //    tbTriangle.IsChecked = false;
-        //    tbCircle.IsChecked = false;
+        private void SetState(FigureEnum pressedButton)
+        {
+            Triangle.IsChecked = false;
+            Circle.IsChecked = false;
 
-        //    switch (pressedButton)
-        //    {
-        //        case FigureEnum.Circle:
-        //            tbCircle.IsChecked = true;
-        //            break;
-        //        case FigureEnum.Triangle:
-        //            tbTriangle.IsChecked = true;
-        //            break;
-        //    }
-        //}
+            switch (pressedButton)
+            {
+                case FigureEnum.Circle:
+                    Circle.IsChecked = true;
+                    break;
+                case FigureEnum.Triangle:
+                    Triangle.IsChecked = true;
+                    break;
+            }
+        } 
 
         private void Cp_OnSelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
         {
             if (cp.SelectedColor.HasValue)
             {
-                currentDrawStrategy.CurrentColor = new DrawColor(cp.SelectedColor.Value.A,
-                  cp.SelectedColor.Value.R,
+                currentDrawStrategy.CurrentColor = new DrawColor(cp.SelectedColor.Value.B,
                   cp.SelectedColor.Value.G,
-                  cp.SelectedColor.Value.B);
+                  cp.SelectedColor.Value.R,
+                  cp.SelectedColor.Value.A);
             }
         }
 
@@ -322,6 +319,26 @@ namespace DevEducationPaint
                     currentDrawStrategy.ConcreteThickness = new ExtraThickness();
                     break;
             }
+        }
+
+        private byte[] GetPixelColorData(WriteableBitmap bmp, Point prev)
+        {
+            int bytePerPixel = 4;
+            int stride = 4 * Convert.ToInt32(bmp.Width);
+            byte[] bitmapBytes = new byte[bmp.PixelWidth * bmp.PixelHeight * 4];
+            bmp.CopyPixels(bitmapBytes, stride, 0);
+            int currentByte = (int)prev.X * bytePerPixel + (stride * (int)prev.Y);
+            byte[] color = new byte[] { bitmapBytes[currentByte], bitmapBytes[currentByte + 1], bitmapBytes[currentByte + 2], 0 };
+            return color;
+        }
+
+        private void ColourPicker_Checked(object sender, RoutedEventArgs e)
+        {
+            isDrawingFigure = false;
+            byte[] color = GetPixelColorData(writeableBitmap, prev);
+           
+            cp.AvailableColors.Add(new ColorItem(System.Windows.Media.Color.FromArgb(color[0], color[1], color[2], color[3]), "kuhhiuh"));
+            currentDrawStrategy.CurrentColor = new DrawColor(color[0], color[1], color[2], color[3]);
         }
     }
 }
