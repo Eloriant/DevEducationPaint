@@ -31,10 +31,6 @@ namespace DevEducationPaint
 {
     public partial class MainWindow : Window
     {
-        private WriteableBitmap writeableBitmap;
-        private WriteableBitmap copy;
-
-        private RastrDrawer drawer;
         private DrawStrategy currentDrawStrategy;
 
         private int angleNumber = 5;
@@ -60,17 +56,10 @@ namespace DevEducationPaint
             Int32.TryParse(tbxAngleNumber.Text as string, out int nValue);
             angleNumber = nValue;
 
-            ////Тут получаем синглтон рисовальщика
-            //drawer = RastrDrawer.GetDrawer();
-            ////таким видмом ему можно задать цвет, который он будет использовать для рисования всего, что нам нужно
-            //drawer.pencilColor = System.Drawing.Color.Black;
             FillWhite();
             DrawWindow.Source = SuperBitmap.Instance;
             point = prev;
-
-
         }
-
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -91,16 +80,6 @@ namespace DevEducationPaint
                 SetState(FigureEnum.Picker);
 
             }
-
-            //===============================
-            //currentDrawStrategy = new DrawByLine
-            //{
-            //    CurrentColor = new DrawColor(255, 0, 0, 255),
-            //    ConcreteThickness = new BoldThickness()
-
-            //};
-
-            //currentDrawStrategy.DrawLineWithThickness(new Point(), new Point());
         }
 
         private void FillWhite()
@@ -120,7 +99,6 @@ namespace DevEducationPaint
                 }
             }
         }
-
         private void Image_MouseMove(object sender, MouseEventArgs e)
         {
             Figure resultFigure;
@@ -144,7 +122,7 @@ namespace DevEducationPaint
                     currentCreator = new SquareCreator();
                     break;
                 case FigureEnum.Polygon:
-                    //currentCreator = new PolygonCreator();
+                    currentCreator = new PolygonCreator(Convert.ToInt32(tbxAngleNumber.Text));
                     break;
             }
 
@@ -187,7 +165,6 @@ namespace DevEducationPaint
                 position.X = 0;
                 position.Y = 0;
             }
-            //}
         }
 
         //
@@ -239,14 +216,11 @@ namespace DevEducationPaint
                                                                     cp.SelectedColor.Value.B);
             }
         }
-        
-
         private void buttonLine_Click(object sender, RoutedEventArgs e)
         {
             SetState(FigureEnum.Line);
             isDrawingFigure = true;
             currentFigure = FigureEnum.Line;
-
         }
 
         private void Pencil_Click(object sender, RoutedEventArgs e)
