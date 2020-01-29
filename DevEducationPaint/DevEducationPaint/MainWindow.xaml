@@ -21,6 +21,7 @@
 
         <toolkit:ColorPicker Name="cp"
                          DisplayColorAndName="True" 
+                         SelectedColor="Black"
                          SelectedColorChanged="Cp_OnSelectedColorChanged"
                          AvailableColorsSortingMode="HueSaturationBrightness"
                          HorizontalAlignment="Left"
