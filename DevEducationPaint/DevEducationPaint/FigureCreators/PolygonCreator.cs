@@ -34,31 +34,31 @@ namespace DevEducationPaint.FigureCreators
             return circuitsPoints;
         }
 
-        //public List<Point> GetPointsWithShift(List<Point> circuitsPoints, Point start, int diametr)
-        //{
-        //    List<Point> polygonPoints = new List<Point>();
-        //    for (int idx = 0; idx < circuitsPoints.Count; idx++)
-        //    {
-        //        polygonPoints.Add(new Point(
-        //            circuitsPoints[idx].X + start.X,
-        //            circuitsPoints[idx].Y + start.Y - diametr / 2
-        //        ));
-        //    };
-        //    return polygonPoints;
-        //}
-
-        public List<Point> GetPointsWithShift(List<Point> circuitsPoints, Point start)
+        public List<Point> GetPointsWithShift(List<Point> circuitsPoints, Point start, int diametr)
         {
             List<Point> polygonPoints = new List<Point>();
             for (int idx = 0; idx < circuitsPoints.Count; idx++)
             {
                 polygonPoints.Add(new Point(
                     circuitsPoints[idx].X + start.X,
-                    Math.Abs(circuitsPoints[idx].Y - start.Y / 2)
+                    circuitsPoints[idx].Y + start.Y - diametr / 2
                 ));
             };
             return polygonPoints;
         }
+
+        //public List<Point> GetPointsWithShift(List<Point> circuitsPoints, Point start)
+        //{
+        //    List<Point> polygonPoints = new List<Point>();
+        //    for (int idx = 0; idx < circuitsPoints.Count; idx++)
+        //    {
+        //        polygonPoints.Add(new Point(
+        //            circuitsPoints[idx].X + start.X,
+        //            Math.Abs(circuitsPoints[idx].Y - start.Y / 2)
+        //        ));
+        //    };
+        //    return polygonPoints;
+        //}
 
         public override Figure CreateFigure(Point start, Point end)
         {
@@ -66,7 +66,7 @@ namespace DevEducationPaint.FigureCreators
             Point polygonsTop = new Point(0, diametr / 2);
             double angle = 2 * Math.PI / angleNumber;
             List<Point> circuitsPoints = GetPointsByAngle(angle, angleNumber, polygonsTop);
-            List<Point> polygonPoints = GetPointsWithShift(circuitsPoints, start);
+            List<Point> polygonPoints = GetPointsWithShift(circuitsPoints, start, diametr);
             return new PolygonFigure(polygonPoints);
         }
     }
