@@ -10,7 +10,7 @@ using Point = System.Drawing.Point;
 
 namespace DevEducationPaint.Figures
 {
-    class LineFigure : Figure
+    public class LineFigure : Figure
     {
         public LineFigure(List<Point> points)
         {

@@ -10,7 +10,7 @@ using Point = System.Drawing.Point;
 
 namespace DevEducationPaint.Figures
 {
-    class TriangleFigure : Figure
+    public class TriangleFigure : Figure
     {
         public TriangleFigure(List<Point> points)
         {

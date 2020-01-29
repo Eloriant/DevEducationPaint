@@ -45,7 +45,7 @@ namespace DevEducationPaint.FigureCreators
             return new TriangleFigure(trianglePoints);
         }
 
-        Point GetPointHigh(Point startPoint, Point endPoint)
+        public Point GetPointHigh(Point startPoint, Point endPoint)
         {
             Double weigth = Math.Abs(endPoint.X - startPoint.X);
             Double high = Math.Abs(endPoint.Y - startPoint.Y);
