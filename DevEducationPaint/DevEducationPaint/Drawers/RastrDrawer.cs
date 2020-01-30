@@ -185,10 +185,10 @@ namespace DevEducationPaint.Drawers
       return quarter;
     }
 
-    public WriteableBitmap DrawFigure(WriteableBitmap bitmap, Point startPoint, Point endPoint, int angleNumber = -1)
-    {
-      bitmap = FigureStrategy.DrawAlgorithm(bitmap, startPoint, endPoint, angleNumber);
-      return bitmap;
-    }
+    //public WriteableBitmap DrawFigure(WriteableBitmap bitmap, Point startPoint, Point endPoint, int angleNumber = -1)
+    //{
+    //  bitmap = FigureStrategy.DrawAlgorithm(bitmap, startPoint, endPoint, angleNumber);
+    //  return bitmap;
+    //}
   }
 }

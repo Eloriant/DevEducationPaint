@@ -16,14 +16,7 @@ namespace DevEducationPaint.Figures
         {
             FigurePoints = points;
         }
-        private RastrDrawer drawer = RastrDrawer.GetDrawer();
-
-        public WriteableBitmap DrawAlgorithm(WriteableBitmap bitmap, Point startPoint, Point endPoint, int angleNumber = -1)
-        {
-            bitmap = drawer.DrawLine(startPoint, endPoint, bitmap);
-            return bitmap;
-        }
-
+        
 
     }
 }

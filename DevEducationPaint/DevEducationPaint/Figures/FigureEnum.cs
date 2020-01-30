@@ -12,7 +12,8 @@ namespace DevEducationPaint.Figures
         Triangle,
         Polygon,
         Pencil,
-        Picker
+        Picker,
+        BrokenLine
 ,
     }
 }

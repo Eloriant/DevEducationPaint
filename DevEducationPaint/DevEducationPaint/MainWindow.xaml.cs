@@ -32,7 +32,10 @@ namespace DevEducationPaint
     public partial class MainWindow : Window
     {
         private DrawStrategy currentDrawStrategy;
-
+        private bool isFirstClicked = true;
+        private bool isDoubleClicked = false;
+        private Point pStaticStart = new Point();
+        private Point firstClick = new Point();
         private int angleNumber = 5;
         private Point prev = new Point(0, 0);
         private Point position = new Point(0, 0);
@@ -63,6 +66,22 @@ namespace DevEducationPaint
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
+
+            if (isDoubleClicked && currentFigure == FigureEnum.BrokenLine)
+            {
+               // position = e.GetPosition()
+                SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
+                FigureCreator creator = new LineCreator();
+                Figure figure = creator.CreateFigure(prev, pStaticStart);
+                currentDrawStrategy.ConcreteThickness = new DefaultThickness();
+                // SuperBitmap.CopyInstance();
+                figure.Draw();
+                DrawWindow.Source = SuperBitmap.Instance;
+                isDoubleClicked = false;
+                isDrawingFigure = false;
+                isFirstClicked = true;
+            }
+
             isDrawingFigure = true;
             // prev = e.GetPosition(sender as IInputElement);
             ////SetPixel(prev);
@@ -80,6 +99,7 @@ namespace DevEducationPaint
                 SetState(FigureEnum.Picker);
 
             }
+         
         }
 
         private void FillWhite()
@@ -124,6 +144,9 @@ namespace DevEducationPaint
                 case FigureEnum.Polygon:
                     currentCreator = new PolygonCreator(Convert.ToInt32(tbxAngleNumber.Text));
                     break;
+                case FigureEnum.BrokenLine:
+                    currentCreator = new BrokenLineCreator();
+                    break;
             }
 
             if (currentCreator == null) return;
@@ -153,7 +176,34 @@ namespace DevEducationPaint
             //prev.Y = 0;
             //position.X = 0;
             //position.Y = 0;
-            if (isDrawingFigure && prev.X != 0 && prev.Y != 0)
+            if (isFirstClicked && currentFigure == FigureEnum.BrokenLine)
+            {
+
+                pStaticStart = prev;
+                isFirstClicked = false;
+            }
+
+            if (!isDoubleClicked && currentFigure == FigureEnum.BrokenLine)
+            {
+                SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
+                isDrawingFigure = true;
+                prev = position;
+            }
+
+            else if (isDoubleClicked && currentFigure ==  FigureEnum.BrokenLine)
+            {
+                SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
+                FigureCreator creator = new LineCreator();
+                Figure figure = creator.CreateFigure(position, pStaticStart);
+                currentDrawStrategy.ConcreteThickness = new DefaultThickness();
+               // SuperBitmap.CopyInstance();
+                figure.Draw();
+                DrawWindow.Source = SuperBitmap.Instance;
+                isDoubleClicked = false;
+                isDrawingFigure = false;
+                isFirstClicked = true;
+            }
+            else if (isDrawingFigure && prev.X != 0 && prev.Y != 0)
             {
                 //var temp = e.GetPosition(sender as IInputElement);
                 //temp = e.GetPosition(sender as IInputElement);
@@ -165,6 +215,7 @@ namespace DevEducationPaint
                 position.X = 0;
                 position.Y = 0;
             }
+
         }
 
         //
@@ -295,6 +346,7 @@ namespace DevEducationPaint
             Polygon.IsChecked = false;
             Pencil.IsChecked = false;
             Picker.IsChecked = false;
+            Brokenline.IsChecked = false;
 
             switch (pressedButton)
             {
@@ -315,6 +367,9 @@ namespace DevEducationPaint
                     break;
                 case FigureEnum.Pencil:
                     Pencil.IsChecked = true;
+                    break;
+                case FigureEnum.BrokenLine:
+                    Brokenline.IsChecked = true;
                     break;
 
             }
@@ -373,6 +428,20 @@ namespace DevEducationPaint
             //byte[] color = GetPixelColorData(SuperBitmap.Instance, prev);
             //cp.AvailableColors.Add(new ColorItem(System.Windows.Media.Color.FromArgb(color[0], color[1], color[2], color[3]), "kuhhiuh"));
             //currentDrawStrategy.CurrentColor = new DrawColor(color[0], color[1], color[2], color[3]);
+        }
+
+        private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            isDoubleClicked = true;
+            // DrawByLine.DrawLine(position, prev);
+            //isDrawingFigure = false;
+        }
+
+        private void BrokenLine_Click (object sender, RoutedEventArgs e)
+        {
+            SetState(FigureEnum.BrokenLine);
+            isDrawingFigure = true;
+            currentFigure = FigureEnum.BrokenLine;
         }
     }
 }
