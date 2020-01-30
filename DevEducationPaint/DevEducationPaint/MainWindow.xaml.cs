@@ -54,8 +54,8 @@ namespace DevEducationPaint
             var colors = new List<System.Windows.Media.Color> { Colors.Black, Colors.Black, Colors.Black };
             BitmapPalette myPalette = new BitmapPalette(colors);
             SuperBitmap.Instance = new WriteableBitmap((int)DrawWindow.Width,
-              (int)DrawWindow.Height, 96, 96, PixelFormats.Bgra32, myPalette);
-            
+              (int)DrawWindow.Height, 96, 96, PixelFormats.Bgra32, null);
+
             Int32.TryParse(tbxAngleNumber.Text as string, out int nValue);
             angleNumber = nValue;
 
@@ -69,7 +69,7 @@ namespace DevEducationPaint
 
             if (isDoubleClicked && currentFigure == FigureEnum.BrokenLine)
             {
-               // position = e.GetPosition()
+                // position = e.GetPosition()
                 SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
                 FigureCreator creator = new LineCreator();
                 Figure figure = creator.CreateFigure(prev, pStaticStart);
@@ -82,13 +82,23 @@ namespace DevEducationPaint
                 isFirstClicked = true;
             }
 
-            isDrawingFigure = true;
+            //isDrawingFigure = true;
             // prev = e.GetPosition(sender as IInputElement);
             ////SetPixel(prev);
             //if (e.LeftButton != MouseButtonState.Pressed) return;
-            var temp = e.GetPosition(this.DrawWindow);
-            prev = new Point((int)temp.X, (int)temp.Y);
-            ddd.Content = $"{prev.X} {prev.Y}";
+            if (isDrawingFigure)
+            {
+                var temp = e.GetPosition(this.DrawWindow);
+                prev = new Point((int)temp.X, (int)temp.Y);
+                ddd.Content = $"{prev.X} {prev.Y}";
+            }
+            else
+            {
+                var temp = e.GetPosition(this.DrawWindow);
+                prev = new Point((int)temp.X, (int)temp.Y);
+                position = prev;
+            }
+
             if (picker)
             {
                 byte[] color = GetPixelColorData(SuperBitmap.Instance, prev);
@@ -99,7 +109,7 @@ namespace DevEducationPaint
                 SetState(FigureEnum.Picker);
 
             }
-         
+
         }
 
         private void FillWhite()
@@ -110,9 +120,9 @@ namespace DevEducationPaint
             byte[] pixels = new byte[height * stride];
 
             var color = new DrawColor(255, 255, 255, 255);
-            for(int i = 0; i < width; i++)
+            for (int i = 0; i < width; i++)
             {
-                for(int k = 0; k < height; k++)
+                for (int k = 0; k < height; k++)
                 {
                     var rect = new Int32Rect(i, k, 1, 1);
                     SuperBitmap.Instance.WritePixels(rect, color.Instance, 4, 0);
@@ -129,6 +139,9 @@ namespace DevEducationPaint
             ddd.Content = $"{(int)pos.X}:{(int)pos.Y}";
             switch (currentFigure)
             {
+                case FigureEnum.Pencil:
+                    currentCreator = new PencilCreator();
+                    break;
                 case FigureEnum.Circle:
                     currentCreator = new CircleCreator();
                     break;
@@ -165,6 +178,23 @@ namespace DevEducationPaint
                 DrawWindow.Source = SuperBitmap.GetInstanceCopy();
                 //isDrawingFigure = false;
             }
+            if (!isDrawingFigure)
+            {
+                if (e.LeftButton != MouseButtonState.Pressed) return;
+                temp = e.GetPosition(this.DrawWindow);
+                //if(prev == position)
+                //{
+                //    temp = e.GetPosition(this.DrawWindow);
+
+                //}
+                prev = position;
+                position = new Point((int)temp.X, (int)temp.Y);
+                resultFigure = currentCreator.CreateFigure(prev, position);
+                resultFigure.ConcreteDraw = currentDrawStrategy;
+                resultFigure.Draw();
+                SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
+                DrawWindow.Source = SuperBitmap.Instance;
+            }
         }
         private void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -190,13 +220,13 @@ namespace DevEducationPaint
                 prev = position;
             }
 
-            else if (isDoubleClicked && currentFigure ==  FigureEnum.BrokenLine)
+            else if (isDoubleClicked && currentFigure == FigureEnum.BrokenLine)
             {
                 SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
                 FigureCreator creator = new LineCreator();
                 Figure figure = creator.CreateFigure(position, pStaticStart);
                 currentDrawStrategy.ConcreteThickness = new DefaultThickness();
-               // SuperBitmap.CopyInstance();
+                // SuperBitmap.CopyInstance();
                 figure.Draw();
                 DrawWindow.Source = SuperBitmap.Instance;
                 isDoubleClicked = false;
@@ -208,7 +238,7 @@ namespace DevEducationPaint
                 //var temp = e.GetPosition(sender as IInputElement);
                 //temp = e.GetPosition(sender as IInputElement);
                 //position = new Point((int)temp.X, (int)temp.Y);
-                isDrawingFigure = false;
+                //isDrawingFigure = false;
                 SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
                 prev.X = 0;
                 prev.Y = 0;
@@ -323,19 +353,23 @@ namespace DevEducationPaint
 
         private void Clear_Checked(object sender, RoutedEventArgs e)
         {
+            SuperBitmap.Instance = new WriteableBitmap((int)DrawWindow.Width,
+              (int)DrawWindow.Height, 96, 96, PixelFormats.Bgra32, null);
+            DrawWindow.Source = SuperBitmap.Instance;
+
 
         }
 
 
-       // private void Circle_Clicked(object sender, RoutedEventArgs e)
-       // {
-       //     SetState(FigureEnum.Circle);
-       // }
-       //
-       // private void Triangle_Clicked(object sender, RoutedEventArgs e)
-       // {
-       //     SetState(FigureEnum.Triangle);
-       // }
+        // private void Circle_Clicked(object sender, RoutedEventArgs e)
+        // {
+        //     SetState(FigureEnum.Circle);
+        // }
+        //
+        // private void Triangle_Clicked(object sender, RoutedEventArgs e)
+        // {
+        //     SetState(FigureEnum.Triangle);
+        // }
 
         private void SetState(FigureEnum pressedButton)
         {
@@ -373,7 +407,7 @@ namespace DevEducationPaint
                     break;
 
             }
-        } 
+        }
 
         private void Cp_OnSelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
         {
@@ -389,8 +423,8 @@ namespace DevEducationPaint
         private void sliderToPencilSize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             ((Slider)sender).SelectionEnd = e.NewValue;
-            
-            
+
+
             switch (sliderToPencilSize.Value)
             {
                 case 1:
@@ -411,11 +445,13 @@ namespace DevEducationPaint
         private byte[] GetPixelColorData(WriteableBitmap bmp, Point prev)
         {
             int bytePerPixel = 4;
+            System.Windows.Media.Color returnColor = new System.Windows.Media.Color();
+
             int stride = 4 * Convert.ToInt32(bmp.Width);
             byte[] bitmapBytes = new byte[bmp.PixelWidth * bmp.PixelHeight * 4];
             bmp.CopyPixels(bitmapBytes, stride, 0);
             int currentByte = (int)prev.X * bytePerPixel + (stride * (int)prev.Y);
-            byte[] color = new byte[] {bitmapBytes[currentByte], bitmapBytes[currentByte + 1], bitmapBytes[currentByte + 2],  255 };
+            byte[] color = new byte[] { bitmapBytes[currentByte], bitmapBytes[currentByte + 1], bitmapBytes[currentByte + 2], 255 };
             return color;
         }
 
@@ -423,7 +459,7 @@ namespace DevEducationPaint
         {
             picker = true;
             isDrawingFigure = false;
-            
+
             //IsChecked = false;
             //byte[] color = GetPixelColorData(SuperBitmap.Instance, prev);
             //cp.AvailableColors.Add(new ColorItem(System.Windows.Media.Color.FromArgb(color[0], color[1], color[2], color[3]), "kuhhiuh"));
@@ -437,7 +473,7 @@ namespace DevEducationPaint
             //isDrawingFigure = false;
         }
 
-        private void BrokenLine_Click (object sender, RoutedEventArgs e)
+        private void BrokenLine_Click(object sender, RoutedEventArgs e)
         {
             SetState(FigureEnum.BrokenLine);
             isDrawingFigure = true;

@@ -17,7 +17,6 @@ namespace DevEducationPaint.Figures
             {
                 ConcreteDraw.DrawLineWithThickness(FigurePoints[i], i + 1 >= FigurePoints.Count ? FigurePoints[0] : FigurePoints[i + 1]);
             }
-
         }
     }
 }
