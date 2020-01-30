@@ -57,7 +57,14 @@
 
 
         <!--Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="68" Margin="357,23,0,0" Stroke="#FF8B8B8B" VerticalAlignment="Top" Width="244" Fill="White"/>-->
-        <Label  Content="Thinckness" HorizontalAlignment="Left" Margin="10,354,0,0" VerticalAlignment="Top" Grid.Row="1" Width="72"/>
+        <!--<Label  Content="Thinckness" HorizontalAlignment="Left" Margin="10,354,0,0" VerticalAlignment="Top" Grid.Row="1" Width="72"/>-->
+        <StackPanel Grid.Row="1" Margin="10,354,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="80">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Thickness: "/>
+                <Label Content="{Binding Value, ElementName=sliderToPencilSize}" ContentStringFormat="{}{0:N0}"/>
+            </StackPanel>
+            <Slider x:Name="sliderToPencilSize" IsSnapToTickEnabled="True"  TickFrequency="1" TickPlacement="BottomRight" Maximum="4" Minimum="1" Value="1" ValueChanged="sliderToPencilSize_ValueChanged"/>
+        </StackPanel>
 
         <ToggleButton x:Name = "Pencil" Content = ""
          Width = "40" Height="40" HorizontalAlignment = "Left" VerticalAlignment="Top" Background="Transparent" Click="Pencil_Click" Margin="5,5,0,0" Panel.ZIndex="1" BorderBrush="{x:Null}" Grid.Row="1" Opacity="0.3" >
@@ -203,14 +210,6 @@
                 </Style>
             </ToggleButton.Style>
         </ToggleButton>
-
-        <StackPanel Grid.Column="1" Margin="260,10,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="100">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Thickness: "/>
-                <Label Content="{Binding Value, ElementName=sliderToPencilSize}" ContentStringFormat="{}{0:N0}"/>
-            </StackPanel>
-            <Slider x:Name="sliderToPencilSize" IsSnapToTickEnabled="True"  TickFrequency="1" TickPlacement="BottomRight" Maximum="4" Minimum="1" Value="1" ValueChanged="sliderToPencilSize_ValueChanged"/>
-        </StackPanel>
 
         <TextBox x:Name="tbxAngleNumber" HorizontalAlignment="Left" Margin="57,241,0,0" Text="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="28" TextChanged="tbxAngleNumber_Changed" Panel.ZIndex="10" Grid.Row="1"/>
         <Label x:Name="ddd" Content="Label" Grid.Column="1" HorizontalAlignment="Left" Margin="742,21,0,0" VerticalAlignment="Top"/>
