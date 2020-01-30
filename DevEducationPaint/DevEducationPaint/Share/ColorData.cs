@@ -6,5 +6,6 @@ namespace DevEducationPaint.Functions
 {
     class ColorData
     {
+
     }
 }

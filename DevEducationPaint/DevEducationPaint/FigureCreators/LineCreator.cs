@@ -12,12 +12,8 @@ namespace DevEducationPaint.FigureCreators
         public override Figure CreateFigure(Point start, Point end)
         {
             List<Point> linePoints = new List<Point>();
-
-           // Point one = new Point(start.X, start.Y);
             linePoints.Add(start);
             linePoints.Add(end);
-
-
             return new LineFigure(linePoints);
         }
     }
