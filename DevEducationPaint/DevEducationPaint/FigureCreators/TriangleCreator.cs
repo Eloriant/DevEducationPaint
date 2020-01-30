@@ -8,41 +8,51 @@ namespace DevEducationPaint.FigureCreators
 {
     public class TriangleCreator : FigureCreator
     {
+
+        bool shiftPressed;
+        bool ctlrPressed;
+        public TriangleCreator(bool shiftPressed, bool ctlrPressed)
+        {
+            this.shiftPressed = shiftPressed;
+            this.ctlrPressed = ctlrPressed;
+        }
         public override Figure CreateFigure(Point start, Point end)
         {
-            /* Прямоугольный треугольник
-            Point high = new Point(start.X, end.Y);  // код для прямоугольного треугольника
+            if (shiftPressed)
+            {
+                Point high = new Point(start.X, end.Y);  // код для прямоугольного треугольника
 
-            List<Point> trianglePoints = new List<Point> ();
+                List<Point> trianglePoints = new List<Point>();
 
-            trianglePoints.Add(start);
-            trianglePoints.Add(end);
-            trianglePoints.Add(high);
+                trianglePoints.Add(start);
+                trianglePoints.Add(end);
+                trianglePoints.Add(high);
 
-            return new TriangleFigure(trianglePoints); */
+                return new TriangleFigure(trianglePoints);
+            }
+           else if (ctlrPressed)
+            {
+                Point high = new Point(start.X - (end.X - start.X), end.Y);//Равнобедренный треугольник
 
-            /*Равнобедренный треугольник
-            Point high = new Point(start.X - (end.X - start.X), end.Y);
+                List<Point> trianglePoints = new List<Point>();
 
-            List<Point> trianglePoints = new List<Point>();
+                trianglePoints.Add(start);
+                trianglePoints.Add(end);
+                trianglePoints.Add(high);
 
-            trianglePoints.Add(start);
-            trianglePoints.Add(end);
-            trianglePoints.Add(high);
+                return new TriangleFigure(trianglePoints);
+            }
 
-            return new TriangleFigure(trianglePoints);  */
+            else
+            {
+                List<Point> trianglePoints = new List<Point>();// код для равностороннего треугольника + метод для поиска третьей вершины треугольника через поворот
 
-            // код для равностороннего треугольника + метод для поиска третьей вершины треугольника через поворот
-            List<Point> trianglePoints = new List<Point>();
-
-            trianglePoints.Add(start);
-            trianglePoints.Add(end);
-            Point high1 = GetPointHigh(start, end);
-            trianglePoints.Add(high1);
-            //Point startXY = new Point(start.X, start.Y);
-            //trianglePoints.Add(startXY);
-
-            return new TriangleFigure(trianglePoints);
+                trianglePoints.Add(start);
+                trianglePoints.Add(end);
+                Point high1 = GetPointHigh(start, end);
+                trianglePoints.Add(high1);
+                return new TriangleFigure(trianglePoints);
+            }
         }
 
         public Point GetPointHigh(Point startPoint, Point endPoint)
@@ -86,11 +96,8 @@ namespace DevEducationPaint.FigureCreators
                     findY = Convert.ToInt32(startPoint.Y - (weigth * Math.Sin(Math.PI / 3) + high * Math.Cos(Math.PI / 3)));
                 }
             }
-
             return new Point(findX, findY);
-
         }
-
     }
 }
 

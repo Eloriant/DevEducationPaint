@@ -47,19 +47,6 @@ namespace DevEducationPaint.FigureCreators
             return polygonPoints;
         }
 
-        //public List<Point> GetPointsWithShift(List<Point> circuitsPoints, Point start)
-        //{
-        //    List<Point> polygonPoints = new List<Point>();
-        //    for (int idx = 0; idx < circuitsPoints.Count; idx++)
-        //    {
-        //        polygonPoints.Add(new Point(
-        //            circuitsPoints[idx].X + start.X,
-        //            Math.Abs(circuitsPoints[idx].Y - start.Y / 2)
-        //        ));
-        //    };
-        //    return polygonPoints;
-        //}
-
         public override Figure CreateFigure(Point start, Point end)
         {
             int diametr = GetFigureDiametr(start, end);

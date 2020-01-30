@@ -15,7 +15,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DevEducationPaint.Bitmap;
-using DevEducationPaint.Drawers;
 using DevEducationPaint.FigureCreators;
 using DevEducationPaint.Figures;
 using DevEducationPaint.Share;
@@ -145,6 +144,10 @@ namespace DevEducationPaint
             SuperBitmap.CopyInstance();
             var pos = e.GetPosition(this.DrawWindow);
             ddd.Content = $"{(int)pos.X}:{(int)pos.Y}";
+
+            bool isShiftPressed = Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
+            bool isCtrlPressed = Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
+
             switch (currentFigure)
             {
                 case FigureEnum.Pencil:
@@ -154,13 +157,13 @@ namespace DevEducationPaint
                     currentCreator = new CircleCreator();
                     break;
                 case FigureEnum.Triangle:
-                    currentCreator = new TriangleCreator();
+                    currentCreator = new TriangleCreator(isShiftPressed, isCtrlPressed);
                     break;
                 case FigureEnum.Line:
                     currentCreator = new LineCreator();
                     break;
                 case FigureEnum.Square:
-                    currentCreator = new SquareCreator();
+                    currentCreator = new SquareCreator(isShiftPressed);
                     break;
                 case FigureEnum.Polygon:
                     currentCreator = new PolygonCreator(Convert.ToInt32(tbxAngleNumber.Text));

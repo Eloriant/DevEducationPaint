@@ -9,62 +9,94 @@ namespace DevEducationPaint.FigureCreators
 {
     public class SquareCreator : FigureCreator
     {
+        bool shiftPressed;
+        public SquareCreator(bool shiftPressed)
+        {
+            this.shiftPressed = shiftPressed;
+        }
         public override Figure CreateFigure(Point start, Point end)
         {
-          /*  Прямоугольник 
-            Point leftDownPoint = new Point(start.X, end.Y);
-            Point rightUpPoint = new Point(end.X, start.Y);
-
             List<Point> squarePoints = new List<Point>();
-
-            squarePoints.Add(start);
-            squarePoints.Add(rightUpPoint);
-            squarePoints.Add(end);
-            squarePoints.Add(leftDownPoint);
-
-            return new SquareFigure(squarePoints); */
-
-
-            // Квадрат
-
-            Point leftDownPoint = new Point(start.X, end.Y);
-            Point rightUpPoint = new Point(end.X, start.Y);
-
-            List<Point> squarePoints = new List<Point>();
-
-            if (end.X < start.X && end.Y < start.Y)
+            if (shiftPressed)//квадрат
             {
-                if (Math.Abs(start.X - end.X) < Math.Abs(start.Y - end.Y))
+                //вправо вверх
+                if (end.X > start.X && end.Y < start.Y)
                 {
-                    leftDownPoint = new Point(start.X, Math.Abs(start.Y - Math.Abs(start.X - end.X)));
-                    end = new Point(end.X, Math.Abs(start.Y - Math.Abs(start.X - end.X)));
+                    int deltaX = end.X - start.X;
+                    int deltaY = start.Y - end.Y;
+                    int deltaCurrent = deltaX <= deltaY ? deltaX : deltaY;
+                    Point point1 = new Point(start.X, start.Y - deltaCurrent);
+                    Point point2 = new Point(start.X + deltaCurrent, start.Y);
+                    Point pointEnd = new Point(start.X + deltaCurrent, start.Y - deltaCurrent);
+                    squarePoints.Add(start);
+                    squarePoints.Add(point1);
+                    squarePoints.Add(pointEnd);
+                    squarePoints.Add(point2);
+                    return new SquareFigure(squarePoints);
                 }
-                else if (Math.Abs(start.X - end.X) > Math.Abs(start.Y - end.Y))
+                //влево вверх
+                else if (end.X < start.X && end.Y < start.Y)
                 {
-                    rightUpPoint = new Point((start.X - Math.Abs(start.Y - end.Y)), start.Y);
-                    end = new Point((start.X - Math.Abs(start.Y - end.Y)), end.Y);
+                    int deltaX = start.X - end.X;
+                    int deltaY = start.Y - end.Y;
+                    int deltaCurrent = deltaX <= deltaY ? deltaX : deltaY;
+                    Point point1 = new Point(start.X, start.Y - deltaCurrent);
+                    Point point2 = new Point(start.X - deltaCurrent, start.Y);
+                    Point pointEnd = new Point(start.X - deltaCurrent, start.Y - deltaCurrent);
+                    squarePoints.Add(point2);
+                    squarePoints.Add(pointEnd);
+                    squarePoints.Add(point1);
+                    squarePoints.Add(start);
+                    return new SquareFigure(squarePoints);
+                }
+                //вправо вниз
+                else if (end.X > start.X && end.Y > start.Y)
+                {
+                    int deltaX = end.X - start.X;
+                    int deltaY = end.Y - start.Y;
+                    int deltaCurrent = deltaX <= deltaY ? deltaX : deltaY;
+                    Point point1 = new Point(start.X + deltaCurrent, start.Y);
+                    Point point2 = new Point(start.X, start.Y + deltaCurrent);
+                    Point pointEnd = new Point(start.X + deltaCurrent, start.Y + deltaCurrent);
+                    squarePoints.Add(point2);
+                    squarePoints.Add(start);
+                    squarePoints.Add(point1);
+                    squarePoints.Add(pointEnd);
+                    return new SquareFigure(squarePoints);
+                }
+                //влево вниз
+                else if (end.X < start.X && end.Y > start.Y)
+                {
+                    int deltaX = start.X - end.X;
+                    int deltaY = end.Y - start.Y;
+                    int deltaCurrent = deltaX <= deltaY ? deltaX : deltaY;
+                    Point point1 = new Point(start.X, start.Y + deltaCurrent);
+                    Point point2 = new Point(start.X - deltaCurrent, start.Y);
+                    Point pointEnd = new Point(start.X - deltaCurrent, start.Y + deltaCurrent);
+                    squarePoints.Add(pointEnd);
+                    squarePoints.Add(point2);
+                    squarePoints.Add(start);
+                    squarePoints.Add(point1);
+                    return new SquareFigure(squarePoints);
+                }
+                else
+                {
+                    return new SquareFigure(squarePoints);
                 }
             }
-            else
+            else//прямоугольник
             {
-                if (Math.Abs(end.X - start.X) < Math.Abs(end.Y - start.Y))
-                {
-                    leftDownPoint = new Point(start.X, (start.Y + Math.Abs(end.X - start.X)));
-                    end = new Point(end.X, (start.Y + Math.Abs(end.X - start.X)));
-                }
-                else if (Math.Abs(end.X - start.X) > Math.Abs(end.Y - start.Y))
-                {
-                    rightUpPoint = new Point((start.X + Math.Abs(end.Y - start.Y)), start.Y);
-                    end = new Point((start.X + Math.Abs(end.Y - start.Y)), end.Y);
-                }
-            }
-            squarePoints.Add(start);
-            squarePoints.Add(rightUpPoint);
-            squarePoints.Add(end);
-            squarePoints.Add(leftDownPoint);
+                Point leftDownPoint = new Point(start.X, end.Y);
+                Point rightUpPoint = new Point(end.X, start.Y);
 
-            return new SquareFigure(squarePoints);
+                squarePoints.Add(start);
+                squarePoints.Add(rightUpPoint);
+                squarePoints.Add(end);
+                squarePoints.Add(leftDownPoint);
+
+                return new SquareFigure(squarePoints);
+            }
         }
-
     }
 }
+
