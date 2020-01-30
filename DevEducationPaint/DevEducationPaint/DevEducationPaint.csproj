@@ -7,7 +7,41 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="brokenLine.png" />
+    <None Remove="circle.png" />
+    <None Remove="clear.png" />
+    <None Remove="filler.png" />
+    <None Remove="line.png" />
+    <None Remove="pencil.png" />
+    <None Remove="picker.png" />
+    <None Remove="polygon.png" />
+    <None Remove="rect.png" />
+    <None Remove="thin1.png" />
+    <None Remove="thin2.png" />
+    <None Remove="thin3.png" />
+    <None Remove="thin4.png" />
+    <None Remove="triangle.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="3.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="brokenLine.png" />
+    <Resource Include="circle.png" />
+    <Resource Include="clear.png" />
+    <Resource Include="filler.png" />
+    <Resource Include="line.png" />
+    <Resource Include="pencil.png" />
+    <Resource Include="picker.png" />
+    <Resource Include="polygon.png" />
+    <Resource Include="rect.png" />
+    <Resource Include="thin1.png" />
+    <Resource Include="thin2.png" />
+    <Resource Include="thin3.png" />
+    <Resource Include="thin4.png" />
+    <Resource Include="triangle.png" />
   </ItemGroup>
 
 </Project>

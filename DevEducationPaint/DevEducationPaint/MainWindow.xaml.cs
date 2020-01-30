@@ -116,6 +116,7 @@ namespace DevEducationPaint
             {
                 Filling(prev);
                 filler = false;
+                Fill.IsChecked = false;
             }
 
         }
@@ -376,6 +377,7 @@ namespace DevEducationPaint
             SuperBitmap.Instance = new WriteableBitmap((int)DrawWindow.Width,
               (int)DrawWindow.Height, 96, 96, PixelFormats.Bgra32, null);
             DrawWindow.Source = SuperBitmap.Instance;
+            Clear.IsChecked = false;
 
 
         }
@@ -582,9 +584,5 @@ namespace DevEducationPaint
             currentFigure = FigureEnum.BrokenLine;
         }
 
-        private void Brokenline_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
