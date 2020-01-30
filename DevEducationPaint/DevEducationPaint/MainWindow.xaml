@@ -59,7 +59,6 @@
         <!--Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="68" Margin="357,23,0,0" Stroke="#FF8B8B8B" VerticalAlignment="Top" Width="244" Fill="White"/>-->
 
         <Label Content="Colour" Grid.Column="1" HorizontalAlignment="Left" Margin="189,10,0,0" VerticalAlignment="Top"/>
-        <Label  Content="Thinckness" HorizontalAlignment="Left" Margin="260,10,0,0" VerticalAlignment="Top" Grid.Column="1"/>
 
         <ToggleButton x:Name = "Pencil" Content = "Pencil" Grid.Column="1"
          Width = "53" HorizontalAlignment = "Left" Background="#FFDA4B4B" Click="Pencil_Click" Margin="10,11,0,69" >
@@ -197,7 +196,13 @@
             </ToggleButton.Style>
         </ToggleButton>
 
-        <Slider x:Name="sliderToPencilSize" IsSelectionRangeEnabled="true" TickFrequency="4" TickPlacement="BottomRight" Grid.Column="1" Value="1" Minimum="1" Maximum="4" HorizontalAlignment="Left" Margin="260,37,0,0" VerticalAlignment="Top" Width="100" ValueChanged="sliderToPencilSize_ValueChanged"/>
+        <StackPanel Grid.Column="1" Margin="260,10,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="100">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Thickness: "/>
+                <Label Content="{Binding Value, ElementName=sliderToPencilSize}" ContentStringFormat="{}{0:N0}"/>
+            </StackPanel>
+            <Slider x:Name="sliderToPencilSize" IsSnapToTickEnabled="True"  TickFrequency="1" TickPlacement="BottomRight" Maximum="4" Minimum="1" Value="1" ValueChanged="sliderToPencilSize_ValueChanged"/>
+        </StackPanel>
 
         <TextBox x:Name="tbxAngleNumber" HorizontalAlignment="Left" Margin="454,76,0,0" Text="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="54" TextChanged="tbxAngleNumber_Changed" Grid.Column="1"/>
         <Label x:Name="ddd" Content="Label" Grid.Column="1" HorizontalAlignment="Left" Margin="656,23,0,0" VerticalAlignment="Top"/>
