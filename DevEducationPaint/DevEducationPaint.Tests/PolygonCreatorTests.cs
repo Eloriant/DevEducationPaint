@@ -3,13 +3,11 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 using DevEducationPaint.Figures;
 using DevEducationPaint.Strategies;
 using DevEducationPaint.FigureCreators;
 
 namespace DevEducationPaint.Tests
-
 {
     [TestFixture]
     public class PolygonCreatorTests

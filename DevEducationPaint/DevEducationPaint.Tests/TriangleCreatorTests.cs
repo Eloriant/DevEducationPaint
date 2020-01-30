@@ -29,12 +29,11 @@ namespace DevEducationPaint.Tests
                     return new Point(9, 6);
                 case "expectedPoint1":
                     return new Point(7, 8);
-                //case "pointEnd2":
-                //    return new Point(2, 21);
                 default:
                     return new Point();
             }
         }
+
 
         public TriangleFigure GetTriangleByName(string name)
         {
@@ -61,10 +60,10 @@ namespace DevEducationPaint.Tests
             }
         }
 
-        [TestCase("pointStart", "pointEnd", "expectedPoint")]
-        public void GetPointHighTest(string pointStart, string pointEnd, string expectedPoint)
+        [TestCase("pointStart", "pointEnd", "expectedPoint", false, false)]
+        public void GetPointHighTest(string pointStart, string pointEnd, string expectedPoint,bool isShiftPressed, bool isCtrlPressed)
         {
-            TriangleCreator triangleCreator = new TriangleCreator();
+            TriangleCreator triangleCreator = new TriangleCreator(false, false);
             Point start = GetPointByName("pointStart");
             Point end = GetPointByName("pointEnd");
             Point expected = GetPointByName(expectedPoint);
@@ -75,7 +74,7 @@ namespace DevEducationPaint.Tests
         [TestCase("pointStart1", "pointEnd1", "expectedPoint1")]
         public void GetPointHighTest1(string pointStart1, string pointEnd1, string expectedPoint1)
         {
-            TriangleCreator triangleCreator = new TriangleCreator();
+            TriangleCreator triangleCreator = new TriangleCreator(false, false);
             Point start = GetPointByName("pointStart1");
             Point end = GetPointByName("pointEnd1");
             Point expected = GetPointByName(expectedPoint1);
