@@ -12,13 +12,20 @@ namespace DevEducationPaint.FigureCreators
         public override Figure CreateFigure(Point start, Point end)
         {
             int cx =  start.X;
-            int cy =  start.Y;
-            int r =  Math.Abs(end.X - start.X);
+            int cy = start.Y;
+            int r = Convert.ToInt32(Math.Sqrt((end.X - start.X)* (end.X - start.X)+ (end.Y - start.Y)* (end.Y - start.Y)));
 
             List<Point> arcPoints = new List<Point>();
-            for (int i = 0; i <= r; i++)
+
+            int arcMidPoint = (int)(r * 0.707);
+            for (int i = 0; i <= arcMidPoint; i++)
             {
                 arcPoints.Add(new Point(i, Convert.ToInt32(Math.Round(Math.Sqrt(r * r - i * i)))));
+            }
+
+            for (int i = arcPoints.Count-2; i >=0; i--)
+            {
+                arcPoints.Add(new Point(arcPoints[i].Y, arcPoints[i].X));
             }
 
             List<Point> circlePoints = new List<Point>();
@@ -29,9 +36,9 @@ namespace DevEducationPaint.FigureCreators
             for (int i = 1; i < arcPoints.Count; i++)
             {
                 circlePoints1.Add(new Point(arcPoints[i].X + cx, arcPoints[i].Y + cy));
-                circlePoints2.Add(new Point(arcPoints[arcPoints.Count - i - 1].X + cx, Math.Abs(arcPoints[arcPoints.Count - i - 1].Y - cy)));
-                circlePoints3.Add(new Point(Math.Abs(arcPoints[i - 1].X - cx), Math.Abs(arcPoints[i - 1].Y - cy)));
-                circlePoints4.Add(new Point(Math.Abs(arcPoints[arcPoints.Count - i - 1].X - cx), Math.Abs(arcPoints[arcPoints.Count - i - 1].Y + cy)));
+                circlePoints2.Add(new Point(arcPoints[arcPoints.Count - i - 1].X + cx, cy - arcPoints[arcPoints.Count - i - 1].Y));
+                circlePoints3.Add(new Point(cx -arcPoints[i - 1].X, cy - arcPoints[i - 1].Y));
+                circlePoints4.Add(new Point(cx - arcPoints[arcPoints.Count - i - 1].X, arcPoints[arcPoints.Count - i - 1].Y + cy));
             }
             circlePoints.AddRange(circlePoints1);
             circlePoints.AddRange(circlePoints2);
