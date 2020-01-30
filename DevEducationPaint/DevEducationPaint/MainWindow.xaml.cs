@@ -42,6 +42,7 @@ namespace DevEducationPaint
         Point point = new Point(0, 0);
         private bool isDrawingFigure = false; //флаг сигнализирующий
         private bool picker = false;
+        private bool filler = false;
         private FigureEnum currentFigure;
         public MainWindow()
         {
@@ -108,6 +109,12 @@ namespace DevEducationPaint
                 picker = false;
                 SetState(FigureEnum.Picker);
 
+            }
+
+            if (filler)
+            {
+                Filling(prev);
+                filler = false;
             }
 
         }
@@ -348,7 +355,8 @@ namespace DevEducationPaint
 
         private void Fill_Checked(object sender, RoutedEventArgs e)
         {
-
+            filler = true;
+            isDrawingFigure = false;
         }
 
         private void Clear_Checked(object sender, RoutedEventArgs e)
@@ -445,7 +453,7 @@ namespace DevEducationPaint
         private byte[] GetPixelColorData(WriteableBitmap bmp, Point prev)
         {
             int bytePerPixel = 4;
-            System.Windows.Media.Color returnColor = new System.Windows.Media.Color();
+            //System.Windows.Media.Color returnColor = new System.Windows.Media.Color();
 
             int stride = 4 * Convert.ToInt32(bmp.Width);
             byte[] bitmapBytes = new byte[bmp.PixelWidth * bmp.PixelHeight * 4];
@@ -454,7 +462,70 @@ namespace DevEducationPaint
             byte[] color = new byte[] { bitmapBytes[currentByte], bitmapBytes[currentByte + 1], bitmapBytes[currentByte + 2], 255 };
             return color;
         }
+        private string GetPixelColor(WriteableBitmap bmp, Point prev)
+        {
+            int bytePerPixel = 4;
+            int stride = 4 * Convert.ToInt32(bmp.Width);
+            byte[] bitmapBytes = new byte[bmp.PixelWidth * bmp.PixelHeight * 4];
+            bmp.CopyPixels(bitmapBytes, stride, 0);
+            int currentByte = (int)prev.X * bytePerPixel + (stride * (int)prev.Y);
+            byte[] color = new byte[] { bitmapBytes[currentByte], bitmapBytes[currentByte + 1], bitmapBytes[currentByte + 2], 255 };
+            string colorString = "";
+            for (int i = 0; i < 4; i++)
+            {
+                colorString += color[i];
+            }
+            return colorString;
+        }
 
+        private void Filling(Point prev)
+        {
+            WriteableBitmap bmp = SuperBitmap.GetInstanceCopy();
+            string startPixelColor = GetPixelColor(bmp, prev);
+            Point tmp = prev;
+            //tmp.X = prev.X + 1;
+
+            //  Находим границу слева
+            while (tmp.X >= 1 && (GetPixelColor(bmp, tmp) == startPixelColor))
+            {
+                tmp.X = tmp.X - 1;
+            }
+
+            tmp.X = tmp.X + 1;
+            Point currentLeft = tmp;
+
+            //  Топаем по строке от левой границы вправо
+            while (tmp.X < bmp.PixelWidth && (GetPixelColor(bmp, tmp) == startPixelColor))
+            {
+                SetPixel(tmp);
+                tmp.X = tmp.X + 1;
+            }
+            Point currentRight = tmp;
+            int row = currentLeft.Y;
+
+            DrawWindow.Source = SuperBitmap.GetInstanceCopy();
+
+
+            for (int i = currentLeft.X; i < currentRight.X; i++)
+            {
+
+                if (row < bmp.PixelHeight && GetPixelColor(bmp, new Point(i, row + 1)) == startPixelColor)
+                {
+                    Filling(new Point(i, row + 1));
+
+                }
+                if (row > 1 && GetPixelColor(bmp, new Point(i, row - 1)) == startPixelColor)
+                {
+                    Filling(new Point(i, row - 1));
+                }
+            }
+
+        }
+        private void SetPixel(Point pixelPoint)
+        {
+            var rect = new System.Windows.Int32Rect(pixelPoint.X, pixelPoint.Y, 1, 1);
+            SuperBitmap.GetInstanceCopy().WritePixels(rect, currentDrawStrategy.CurrentColor.Instance, 4, 0);
+        }
         private void Eraser_Checked(object sender, RoutedEventArgs e)
         {
             picker = true;
