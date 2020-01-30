@@ -99,16 +99,16 @@ namespace DevEducationPaint.Tests
             CollectionAssert.AreEqual(circuitsPointsExpected, circuitsPoints);
         }
 
-        [TestCase("expectedList", "pointStart1", "listWithShiftExpected")]
-        public void GetPointsWithShiftTest(string expectedList, string pointStart1, string listWithShiftExpected)
-        {
-            PolygonCreator polygonCreator = new PolygonCreator(6);
-            List<Point> circuitsPoints = GetListPointByName(expectedList);
-            Point start = GetPointByName("pointStart1");
-            List<Point> listExpected = GetListPointByName(listWithShiftExpected);
-            List<Point> list = polygonCreator.GetPointsWithShift(circuitsPoints, start);
-            CollectionAssert.AreEqual(listExpected, list);
-        }
+        //[TestCase("expectedList", "pointStart1", "listWithShiftExpected")]
+        //public void GetPointsWithShiftTest(string expectedList, string pointStart1, string listWithShiftExpected)
+        //{
+        //    PolygonCreator polygonCreator = new PolygonCreator(6);
+        //    List<Point> circuitsPoints = GetListPointByName(expectedList);
+        //    Point start = GetPointByName("pointStart1");
+        //    List<Point> listExpected = GetListPointByName(listWithShiftExpected);
+        //    List<Point> list = polygonCreator.GetPointsWithShift(circuitsPoints, start);
+        //    CollectionAssert.AreEqual(listExpected, list);
+        //}
 
         [TestCase("pointStart1", "pointEnd1", "expectedPolygon")]
         public void PolygonCreateTest(string pointStart1, string pointEnd1, string expectedPolygon)

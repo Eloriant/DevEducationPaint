@@ -32,10 +32,12 @@ namespace DevEducationPaint
     public partial class MainWindow : Window
     {
         private DrawStrategy currentDrawStrategy;
+        Figure resultFigure;
+        FigureCreator currentCreator = null;
         private bool isFirstClicked = true;
         private bool isDoubleClicked = false;
         private Point pStaticStart = new Point();
-        private Point firstClick = new Point();
+        private int countClick = 0;
         private int angleNumber = 5;
         private Point prev = new Point(0, 0);
         private Point position = new Point(0, 0);
@@ -67,6 +69,14 @@ namespace DevEducationPaint
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            //if ((countClick < 2) && currentFigure == FigureEnum.BrokenLine)
+            //{
+            //    countClick++;
+            //}
+            // if (countClick == 1 && currentFigure == FigureEnum.BrokenLine)
+            //{
+            //    currentCreator = new BrokenLineCreator();
+            //}
 
             if (isDoubleClicked && currentFigure == FigureEnum.BrokenLine)
             {
@@ -87,19 +97,10 @@ namespace DevEducationPaint
             // prev = e.GetPosition(sender as IInputElement);
             ////SetPixel(prev);
             //if (e.LeftButton != MouseButtonState.Pressed) return;
-            if (isDrawingFigure)
-            {
-                var temp = e.GetPosition(this.DrawWindow);
-                prev = new Point((int)temp.X, (int)temp.Y);
-                ddd.Content = $"{prev.X} {prev.Y}";
-            }
-            else
-            {
-                var temp = e.GetPosition(this.DrawWindow);
-                prev = new Point((int)temp.X, (int)temp.Y);
-                position = prev;
-            }
-
+            isDoubleClicked = false;
+            var temp = e.GetPosition(this.DrawWindow);
+            prev = new Point((int)temp.X, (int)temp.Y);
+            ddd.Content = $"{prev.X} {prev.Y}";
             if (picker)
             {
                 byte[] color = GetPixelColorData(SuperBitmap.Instance, prev);
@@ -138,9 +139,8 @@ namespace DevEducationPaint
         }
         private void Image_MouseMove(object sender, MouseEventArgs e)
         {
-            Figure resultFigure;
-            FigureCreator currentCreator = null;
-
+            //Figure resultFigure;
+            //FigureCreator currentCreator = null;
             SuperBitmap.CopyInstance();
             var pos = e.GetPosition(this.DrawWindow);
             ddd.Content = $"{(int)pos.X}:{(int)pos.Y}";
@@ -215,25 +215,37 @@ namespace DevEducationPaint
             //position.Y = 0;
             if (isFirstClicked && currentFigure == FigureEnum.BrokenLine)
             {
-
                 pStaticStart = prev;
                 isFirstClicked = false;
             }
 
             if (!isDoubleClicked && currentFigure == FigureEnum.BrokenLine)
             {
+                
                 SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
                 isDrawingFigure = true;
                 prev = position;
             }
+            //else if (countClick > 1 && currentFigure == FigureEnum.BrokenLine)
+            //{
+            //    SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
+            //    FigureCreator creator = new LineCreator();
+            //    Figure figure = creator.CreateFigure(position, pStaticStart);
+            //    currentDrawStrategy.ConcreteThickness = new DefaultThickness();
+            //    // SuperBitmap.CopyInstance();
+            //    figure.Draw();
+            //    DrawWindow.Source = SuperBitmap.Instance;
+            //    isDoubleClicked = false;
+            //    isDrawingFigure = false;
+            //    isFirstClicked = true;
 
-            else if (isDoubleClicked && currentFigure == FigureEnum.BrokenLine)
+            else if (isDoubleClicked && currentFigure ==  FigureEnum.BrokenLine)
             {
                 SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
                 FigureCreator creator = new LineCreator();
                 Figure figure = creator.CreateFigure(position, pStaticStart);
                 currentDrawStrategy.ConcreteThickness = new DefaultThickness();
-                // SuperBitmap.CopyInstance();
+               // SuperBitmap.CopyInstance();
                 figure.Draw();
                 DrawWindow.Source = SuperBitmap.Instance;
                 isDoubleClicked = false;
@@ -540,6 +552,24 @@ namespace DevEducationPaint
         private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             isDoubleClicked = true;
+            if (currentFigure == FigureEnum.BrokenLine)
+            {
+                // position = e.GetPosition()
+                //SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
+                //FigureCreator creator = new LineCreator();
+                var resultCreator = currentCreator.CreateFigure(prev, pStaticStart);
+                resultCreator.ConcreteDraw = currentDrawStrategy;
+                resultCreator.Draw();
+                //currentDrawStrategy.ConcreteThickness = new DefaultThickness();
+                // SuperBitmap.CopyInstance();
+                //currentCreator.Draw();
+                DrawWindow.Source = SuperBitmap.GetInstanceCopy();
+                isFirstClicked = true;
+                prev.X = 0;
+                prev.Y = 0;
+                currentFigure = FigureEnum.Pencil;
+                isDrawingFigure = true;
+            }
             // DrawByLine.DrawLine(position, prev);
             //isDrawingFigure = false;
         }
@@ -548,7 +578,13 @@ namespace DevEducationPaint
         {
             SetState(FigureEnum.BrokenLine);
             isDrawingFigure = true;
+            isFirstClicked = true;
             currentFigure = FigureEnum.BrokenLine;
+        }
+
+        private void Brokenline_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

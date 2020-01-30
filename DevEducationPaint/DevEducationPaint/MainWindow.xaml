@@ -8,7 +8,7 @@
         xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="DevEducationPaint" Height="880" Width="900" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"  Background="#FFECECEC" MouseDoubleClick="Window_MouseDoubleClick">
-    <Grid>
+    <Grid x:Name="_double">
         <Grid.RowDefinitions>
             <RowDefinition Height="120"></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -201,7 +201,7 @@
 
         <TextBox x:Name="tbxAngleNumber" HorizontalAlignment="Left" Margin="454,76,0,0" Text="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="54" TextChanged="tbxAngleNumber_Changed" Grid.Column="1"/>
         <Label x:Name="ddd" Content="Label" Grid.Column="1" HorizontalAlignment="Left" Margin="656,23,0,0" VerticalAlignment="Top"/>
-        <ToggleButton x:Name="Brokenline" Content = "Broken line" VerticalAlignment="Top"  Background="#FFDA4B4B" Margin="287,73,437,0" RenderTransformOrigin="-1.712,2.156" Grid.Column="1" Click="BrokenLine_Click">
+        <ToggleButton x:Name="Brokenline" Content = "Broken line" VerticalAlignment="Top"  Background="#FFDA4B4B" Margin="287,73,437,0" RenderTransformOrigin="-1.712,2.156" Grid.Column="1" Click="BrokenLine_Click" Checked="Brokenline_Checked">
             <ToggleButton.Style>
                 <Style TargetType="{x:Type ToggleButton}">
                     <Setter Property="Background" Value="Green"/>
