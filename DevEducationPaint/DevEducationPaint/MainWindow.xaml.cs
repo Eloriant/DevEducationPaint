@@ -270,6 +270,13 @@ namespace DevEducationPaint
                 position.X = 0;
                 position.Y = 0;
             }
+            else if (isDrawingFigure!=true)
+            {
+                prev.X = 0;
+                prev.Y = 0;
+                position.X = 0;
+                position.Y = 0;
+            }
 
         }
 
