@@ -96,10 +96,14 @@ namespace DevEducationPaint
             // prev = e.GetPosition(sender as IInputElement);
             ////SetPixel(prev);
             //if (e.LeftButton != MouseButtonState.Pressed) return;
+
+            //***
             isDoubleClicked = false;
             var temp = e.GetPosition(this.DrawWindow);
             prev = new Point((int)temp.X, (int)temp.Y);
             ddd.Content = $"{prev.X} {prev.Y}";
+            //***
+
             if (picker)
             {
                 byte[] color = GetPixelColorData(SuperBitmap.Instance, prev);
@@ -142,8 +146,8 @@ namespace DevEducationPaint
             //Figure resultFigure;
             //FigureCreator currentCreator = null;
             SuperBitmap.CopyInstance();
-            var pos = e.GetPosition(this.DrawWindow);
-            ddd.Content = $"{(int)pos.X}:{(int)pos.Y}";
+            //var pos = e.GetPosition(this.DrawWindow);
+            //ddd.Content = $"{(int)pos.X}:{(int)pos.Y}";
 
             bool isShiftPressed = Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
             bool isCtrlPressed = Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
@@ -175,11 +179,12 @@ namespace DevEducationPaint
 
             if (currentCreator == null) return;
             //if (e.LeftButton != MouseButtonState.Pressed) return;
-            var temp = e.GetPosition(this.DrawWindow);
+            
             //prev = new Point((int)temp.X, (int)temp.Y);
 
             if (isDrawingFigure && prev.X != 0 && prev.Y != 0)
             {
+                var temp = e.GetPosition(this.DrawWindow);
                 temp = e.GetPosition(this.DrawWindow);
                 position = new Point((int)temp.X, (int)temp.Y);
                 ddd.Content = $"{position.X} {position.Y}";
@@ -192,19 +197,16 @@ namespace DevEducationPaint
             if (!isDrawingFigure)
             {
                 if (e.LeftButton != MouseButtonState.Pressed) return;
-                temp = e.GetPosition(this.DrawWindow);
-                //if(prev == position)
-                //{
-                //    temp = e.GetPosition(this.DrawWindow);
-
-                //}
-                prev = position;
-                position = new Point((int)temp.X, (int)temp.Y);
+                var temp1 = e.GetPosition(this.DrawWindow);
+                ddd.Content = $"{(int)temp1.X}:{(int)temp1.Y}";
+                position = new Point((int)temp1.X, (int)temp1.Y);
                 resultFigure = currentCreator.CreateFigure(prev, position);
                 resultFigure.ConcreteDraw = currentDrawStrategy;
                 resultFigure.Draw();
                 SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
                 DrawWindow.Source = SuperBitmap.Instance;
+                prev = position;
+                
             }
         }
         private void Window_MouseUp(object sender, MouseButtonEventArgs e)
