@@ -40,11 +40,11 @@
             Grid.Row="2"
             Background="White">
 
-            <Image x:Name="DrawWindow" 
+            <!--<Image x:Name="DrawWindow" 
              Height="580" 
              Width="800"
              MouseMove="Image_MouseMove"
-             MouseWheel="Image_MouseWheel"/>
+             MouseWheel="Image_MouseWheel"/>-->
 
             <Border.Effect>
                 <DropShadowEffect Opacity="0.15" ShadowDepth="10"/>
@@ -336,6 +336,26 @@
         <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="351,10,0,0" VerticalAlignment="Top" Width="25" Fill="#FF83197F"/>
         <Rectangle HorizontalAlignment="Center" Height="40" Width="85" Margin="0,230,0,0" VerticalAlignment="Top" Grid.Row="1" Fill="White" />
         <Label x:Name="angles" Content="Angles" HorizontalAlignment="Left" Margin="8,237,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <TabControl Margin="99,57,0,41" SelectionChanged="TabControl_SelectionChanged" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <TabItem Name="Rastr" Height="8" Width="30">
+
+                <Image x:Name="DrawWindow"       
+             Height="580"
+             Width="800"
+             MouseMove="Image_MouseMove"
+             MouseWheel="Image_MouseWheel">
+                </Image>
+            </TabItem>
+            <TabItem Name="Vector" Height="8" Width="30" HorizontalAlignment="Right" >
+                <Canvas x:Name="DrawWindow1"
+             Height="580" 
+             Width="800"
+             MouseMove="Image_MouseMove"
+             MouseWheel="Image_MouseWheel">
+                </Canvas>
+
+            </TabItem>
+        </TabControl>
         <!--<ToggleButton x:Name = "tbCircle" Content = "Toggle"
          Width = "108" HorizontalAlignment = "Left" Background="#FFDA4B4B" Click="tbCircle_Clicked" Margin="138,23,0,97" Grid.Column="1" >
             <ToggleButton.Style>

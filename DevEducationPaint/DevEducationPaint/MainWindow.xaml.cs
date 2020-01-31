@@ -596,5 +596,9 @@ namespace DevEducationPaint
             currentFigure = FigureEnum.BrokenLine;
         }
 
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
