@@ -124,8 +124,10 @@ namespace DevEducationPaint
                     break;
                 }
                 Filling(prev);
+                SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
                 filler = false;
                 Fill.IsChecked = false;
+                
             }
 
         }
