@@ -63,7 +63,7 @@
                 <Label Content="Thickness: "/>
                 <Label Content="{Binding Value, ElementName=sliderToPencilSize}" ContentStringFormat="{}{0:N0}"/>
             </StackPanel>
-            <Slider x:Name="sliderToPencilSize" IsSnapToTickEnabled="True"  TickFrequency="1" TickPlacement="BottomRight" Maximum="4" Minimum="1" Value="1" ValueChanged="sliderToPencilSize_ValueChanged"/>
+            <Slider x:Name="sliderToPencilSize" IsSnapToTickEnabled="True"  TickFrequency="1" TickPlacement="BottomRight" Maximum="5" Minimum="1" Value="1" ValueChanged="sliderToPencilSize_ValueChanged"/>
         </StackPanel>
 
         <ToggleButton x:Name = "Pencil" Content = ""

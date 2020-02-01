@@ -479,6 +479,9 @@ namespace DevEducationPaint
                 case 4:
                     currentDrawStrategy.ConcreteThickness = new ExtraThickness();
                     break;
+                case 5:
+                    currentDrawStrategy.ConcreteThickness = new MegaThickness();
+                    break;
             }
         }
 
