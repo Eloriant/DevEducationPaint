@@ -14,7 +14,8 @@ namespace DevEducationPaint.Figures
         Pencil,
         Picker,
         BrokenLine,
-        Eraser
+        Eraser,
+        Fill
 ,
     }
 }

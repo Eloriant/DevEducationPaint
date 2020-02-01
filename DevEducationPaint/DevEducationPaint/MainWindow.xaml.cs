@@ -115,8 +115,14 @@ namespace DevEducationPaint
 
             }
 
-            if (Fill.IsChecked)
+            while (filler)
             {
+                if (prev.X <= 0 || prev.Y <= 0 || prev.X >= SuperBitmap.Instance.PixelWidth || prev.Y >= SuperBitmap.Instance.PixelHeight)
+                {
+                    filler = false;
+                    Fill.IsChecked = false;
+                    break;
+                }
                 Filling(prev);
                 filler = false;
                 Fill.IsChecked = false;
@@ -219,6 +225,7 @@ namespace DevEducationPaint
             //prev.Y = 0;
             //position.X = 0;
             //position.Y = 0;
+
             if (isFirstClicked && currentFigure == FigureEnum.BrokenLine)
             {
                 pStaticStart = prev;
@@ -383,6 +390,8 @@ namespace DevEducationPaint
         {
             filler = true;
             isDrawingFigure = false;
+            SetState(FigureEnum.Fill);
+
         }
 
         private void Clear_Checked(object sender, RoutedEventArgs e)
@@ -415,6 +424,7 @@ namespace DevEducationPaint
             Picker.IsChecked = false;
             Brokenline.IsChecked = false;
             Eraser.IsChecked = false;
+            
 
             switch (pressedButton)
             {
@@ -441,6 +451,8 @@ namespace DevEducationPaint
                     break;
                 case FigureEnum.Eraser:
                     Eraser.IsChecked = true;
+                    break;
+                case FigureEnum.Fill:
                     break;
 
             }
@@ -480,9 +492,6 @@ namespace DevEducationPaint
                     break;
                 case 4:
                     currentDrawStrategy.ConcreteThickness = new ExtraThickness();
-                    break;
-                case 5:
-                    currentDrawStrategy.ConcreteThickness = new MegaThickness();
                     break;
             }
         }
