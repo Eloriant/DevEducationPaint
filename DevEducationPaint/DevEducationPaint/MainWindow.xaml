@@ -227,75 +227,75 @@
         </ToggleButton>
         <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="5,5,0,0" VerticalAlignment="Top" Grid.Row="1" >
             <Rectangle.Fill>
-                <ImageBrush ImageSource="pencil.png"/>
+                <ImageBrush ImageSource="Icons/pencil.png"/>
             </Rectangle.Fill>
             <Rectangle.Stroke>
-                <ImageBrush ImageSource="pencil.png"/>
+                <ImageBrush ImageSource="Icons/pencil.png"/>
             </Rectangle.Stroke>
         </Rectangle>
         <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="50,5,0,0" VerticalAlignment="Top" Grid.Row="1" >
             <Rectangle.Fill>
-                <ImageBrush ImageSource="filler.png"/>
+                <ImageBrush ImageSource="Icons/filler.png"/>
             </Rectangle.Fill>
         </Rectangle>
         <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="5,50,0,0" VerticalAlignment="Top" Grid.Row="1" >
             <Rectangle.Fill>
-                <ImageBrush ImageSource="picker.png"/>
+                <ImageBrush ImageSource="Icons/picker.png"/>
             </Rectangle.Fill>
         </Rectangle>
         <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="50,50,0,0" VerticalAlignment="Top" Grid.Row="1" >
             <Rectangle.Fill>
-                <ImageBrush ImageSource="clear.png"/>
+                <ImageBrush ImageSource="Icons/clear.png"/>
             </Rectangle.Fill>
         </Rectangle>
         <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="5,95,0,0" VerticalAlignment="Top" Grid.Row="1" >
             <Rectangle.Fill>
-                <ImageBrush ImageSource="line.png"/>
+                <ImageBrush ImageSource="Icons/line.png"/>
             </Rectangle.Fill>
         </Rectangle>
         <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="50,95,0,0" VerticalAlignment="Top" Grid.Row="1" >
             <Rectangle.Fill>
-                <ImageBrush ImageSource="brokenLine.png"/>
+                <ImageBrush ImageSource="Icons/brokenLine.png"/>
             </Rectangle.Fill>
         </Rectangle>
         <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="5,140,0,0" VerticalAlignment="Top" Grid.Row="1" >
             <Rectangle.Fill>
-                <ImageBrush ImageSource="rect.png"/>
+                <ImageBrush ImageSource="Icons/rect.png"/>
             </Rectangle.Fill>
         </Rectangle>
         <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="50,140,0,0" VerticalAlignment="Top" Grid.Row="1" >
             <Rectangle.Fill>
-                <ImageBrush ImageSource="circle.png"/>
+                <ImageBrush ImageSource="Icons/circle.png"/>
             </Rectangle.Fill>
         </Rectangle>
         <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="5,185,0,0" VerticalAlignment="Top" Grid.Row="1" >
             <Rectangle.Fill>
-                <ImageBrush ImageSource="triangle.png"/>
+                <ImageBrush ImageSource="Icons/triangle.png"/>
             </Rectangle.Fill>
         </Rectangle>
         <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="50,185,0,0" VerticalAlignment="Top" Grid.Row="1" >
             <Rectangle.Fill>
-                <ImageBrush ImageSource="polygon.png"/>
+                <ImageBrush ImageSource="Icons/polygon.png"/>
             </Rectangle.Fill>
         </Rectangle>
         <Rectangle HorizontalAlignment="Center" Height="20" Width="85" Margin="0,272,0,0" VerticalAlignment="Top" Grid.Row="1" Panel.ZIndex="1" >
             <Rectangle.Fill>
-                <ImageBrush ImageSource="thin1.png"/>
+                <ImageBrush ImageSource="Icons/thin1.png"/>
             </Rectangle.Fill>
         </Rectangle>
         <Rectangle HorizontalAlignment="Center" Height="20" Width="85" Margin="0,292,0,0" VerticalAlignment="Top" Grid.Row="1" >
             <Rectangle.Fill>
-                <ImageBrush ImageSource="thin2.png"/>
+                <ImageBrush ImageSource="Icons/thin2.png"/>
             </Rectangle.Fill>
         </Rectangle>
         <Rectangle HorizontalAlignment="Center" Height="20" Width="85" Margin="0,312,0,0" VerticalAlignment="Top" Grid.Row="1" >
             <Rectangle.Fill>
-                <ImageBrush ImageSource="thin3.png"/>
+                <ImageBrush ImageSource="Icons/thin3.png"/>
             </Rectangle.Fill>
         </Rectangle>
         <Rectangle HorizontalAlignment="Center" Height="20" Width="85" Margin="0,332,0,0" VerticalAlignment="Top" Grid.Row="1" >
             <Rectangle.Fill>
-                <ImageBrush ImageSource="thin4.png"/>
+                <ImageBrush ImageSource="Icons/thin4.png"/>
             </Rectangle.Fill>
         </Rectangle>
 
@@ -363,7 +363,7 @@
                 <Style TargetType="{x:Type ToggleButton}">
                     <Setter Property="Background" Value="Green"/>
                     <Style.Triggers>
-                        <Trigger Property="IsChecked" Value="true">
+                        <Trigger Property="IsChecked" Value="true"> 
                             <Setter Property="BorderThickness" Value="5"/>
                         </Trigger>
                     </Style.Triggers>
