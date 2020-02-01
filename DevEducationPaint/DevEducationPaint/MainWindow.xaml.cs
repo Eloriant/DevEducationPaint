@@ -645,5 +645,13 @@ namespace DevEducationPaint
             SuperBitmap.OpenFileDialog();
             DrawWindow.Source = SuperBitmap.Instance;
         }
+
+        private void BtnCreate_Click(object sender, RoutedEventArgs e)
+        {
+            CreateBitmapWindow bitmapWindow = new CreateBitmapWindow();
+
+            bitmapWindow.Show();
+
+        }
     }
 }
