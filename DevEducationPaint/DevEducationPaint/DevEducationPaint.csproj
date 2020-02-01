@@ -28,20 +28,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="brokenLine.png" />
-    <Resource Include="circle.png" />
-    <Resource Include="clear.png" />
-    <Resource Include="filler.png" />
-    <Resource Include="line.png" />
-    <Resource Include="pencil.png" />
-    <Resource Include="picker.png" />
-    <Resource Include="polygon.png" />
-    <Resource Include="rect.png" />
-    <Resource Include="thin1.png" />
-    <Resource Include="thin2.png" />
-    <Resource Include="thin3.png" />
-    <Resource Include="thin4.png" />
-    <Resource Include="triangle.png" />
+    <Resource Include="Icons\brokenLine.png" />
+    <Resource Include="Icons\circle.png" />
+    <Resource Include="Icons\clear.png" />
+    <Resource Include="Icons\filler.png" />
+    <Resource Include="Icons\line.png" />
+    <Resource Include="Icons\pencil.png" />
+    <Resource Include="Icons\picker.png" />
+    <Resource Include="Icons\polygon.png" />
+    <Resource Include="Icons\rect.png" />
+    <Resource Include="Icons\thin1.png" />
+    <Resource Include="Icons\thin2.png" />
+    <Resource Include="Icons\thin3.png" />
+    <Resource Include="Icons\thin4.png" />
+    <Resource Include="Icons\triangle.png" />
   </ItemGroup>
 
 </Project>
