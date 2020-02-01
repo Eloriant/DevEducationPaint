@@ -338,6 +338,7 @@ namespace DevEducationPaint
 
         private void Pencil_Click(object sender, RoutedEventArgs e)
         {
+            PickColor();
             SetState(FigureEnum.Pencil);
             isDrawingFigure = false;
             currentFigure = FigureEnum.Pencil;
@@ -389,9 +390,7 @@ namespace DevEducationPaint
             SuperBitmap.Instance = new WriteableBitmap((int)DrawWindow.Width,
               (int)DrawWindow.Height, 96, 96, PixelFormats.Bgra32, null);
             DrawWindow.Source = SuperBitmap.Instance;
-            Clear.IsChecked = false;
-
-
+            //Clear.IsChecked = false;
         }
 
 
@@ -444,6 +443,11 @@ namespace DevEducationPaint
         }
 
         private void Cp_OnSelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
+        {
+            PickColor();
+        }
+
+        private void PickColor()
         {
             if (cp.SelectedColor.HasValue)
             {
@@ -599,6 +603,14 @@ namespace DevEducationPaint
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void BtnEraser_Click(object sender, RoutedEventArgs e)
+        {
+            currentDrawStrategy.CurrentColor = new DrawColor(255, 255, 255, 255);
+            SetState(FigureEnum.Pencil);
+            isDrawingFigure = false;
+            currentFigure = FigureEnum.Pencil;
         }
     }
 }
