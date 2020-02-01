@@ -7,10 +7,13 @@ using Point = System.Drawing.Point;
 
 namespace DevEducationPaint.Strategies
 {
-    public class DrawByLine : DrawStrategy
+    public class DrawByLine : IDrawStrategy
     {
-        public override void DrawLineWithThickness(Point p1, Point p2)
+        public ISurfaceStrategy SurfaceStrategy { get; set; }
+
+        public void DrawLine(Point p1, Point p2)
         {
+
             List<Point> points1 = ConcreteThickness.GetPoints(p1);
             List<Point> points2 = ConcreteThickness.GetPoints(p2);
 

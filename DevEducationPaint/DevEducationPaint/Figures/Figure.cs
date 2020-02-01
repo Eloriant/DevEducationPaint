@@ -10,12 +10,12 @@ namespace DevEducationPaint.Figures
     public abstract class Figure
     {
         public List<Point> FigurePoints { get; set; }
-        public DrawStrategy ConcreteDraw { get; set; }
+        public IDrawStrategy ConcreteDraw { get; set; }
         public void Draw()
         {
             for (int i = 0; i < FigurePoints.Count; i++)
             {
-                ConcreteDraw.DrawLineWithThickness(FigurePoints[i], i + 1 >= FigurePoints.Count ? FigurePoints[0] : FigurePoints[i + 1]);
+                ConcreteDraw.DrawLine(FigurePoints[i], i + 1 >= FigurePoints.Count ? FigurePoints[0] : FigurePoints[i + 1]);
             }
         }
     }

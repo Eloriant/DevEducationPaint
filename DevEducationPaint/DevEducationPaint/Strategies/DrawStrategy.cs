@@ -1,5 +1,6 @@
 ﻿using DevEducationPaint.Bitmap;
 using DevEducationPaint.Share;
+using DevEducationPaint.Surface_Strategy;
 using DevEducationPaint.Thicknesses;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,11 +8,17 @@ using Point = System.Drawing.Point;
 
 namespace DevEducationPaint.Strategies
 {
-  public abstract class DrawStrategy
+  public interface IDrawStrategy    ///   это стратегия говорит о том, какие именно линии мы рисуем - пунктирные, сплошные, волнистые
   {
-        public abstract void DrawLineWithThickness(Point p1, Point p2);
-        public DrawColor CurrentColor { get; set; }
-        public ThicknessStrategy ConcreteThickness { get; set; }
+        public void DrawLine(Point p1, Point p2);
+        public ISurfaceStrategy SurfaceStrategy { get; set; }
+
+
+
+        //это должно быть нутри серфэйс стрэтежджи upd: перенесла
+        //public DrawColor CurrentColor { get; set; }
+        //public ThicknessStrategy ConcreteThickness { get; set; }
+        //
 
         protected int FindQuarter(Point prev, Point position)
         {
@@ -38,7 +45,7 @@ namespace DevEducationPaint.Strategies
         protected void SetPixel(Point pixelPoint)
         {
             var rect = new System.Windows.Int32Rect(pixelPoint.X, pixelPoint.Y, 1, 1);
-            SuperBitmap.GetInstanceCopy().WritePixels(rect, CurrentColor.Instance, 4, 0);
+            SuperBitmap.GetInstanceCopy().WritePixels(rect, SurfaceStrategy.CurrentColor.Instance, 4, 0);
         }
     }
 }
