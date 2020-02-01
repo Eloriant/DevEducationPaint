@@ -1,4 +1,5 @@
 ﻿using DevEducationPaint.Share;
+using DevEducationPaint.Surface_Strategy;
 using DevEducationPaint.Thicknesses;
 using System;
 using System.Collections.Generic;

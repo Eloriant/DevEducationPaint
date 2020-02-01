@@ -1,5 +1,6 @@
 ﻿using DevEducationPaint.Bitmap;
 using DevEducationPaint.Share;
+using DevEducationPaint.Surface_Strategy;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -19,7 +20,7 @@ namespace DevEducationPaint.Strategies
 
             for (int i = 0; i < points1.Count; i++)
             {
-                DrawLine(points1[i], points2[i]);
+                SurfaceStrategy.DrawLine(points1[i], points2[i]);//остановилась тут!*****
             }
             //реализация метода
         }
