@@ -13,7 +13,8 @@ namespace DevEducationPaint.Figures
         Polygon,
         Pencil,
         Picker,
-        BrokenLine
+        BrokenLine,
+        Eraser
 ,
     }
 }

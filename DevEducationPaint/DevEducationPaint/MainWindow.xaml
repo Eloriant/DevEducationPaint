@@ -111,14 +111,14 @@
             </ToggleButton.Style>
         </ToggleButton>
 
-        <ToggleButton x:Name ="BtnEraser" Content = ""
-         Width = "40" HorizontalAlignment = "Left" VerticalAlignment="Top" Background="Transparent" Click="BtnEraser_Click" Margin="50,50,0,0" Checked="BtnEraser_Click" Panel.ZIndex="1" BorderBrush="{x:Null}" Grid.Row="1" Height="40" Opacity="0.29" >
+        <ToggleButton x:Name ="Eraser" Content = ""
+         Width = "40" HorizontalAlignment = "Left" VerticalAlignment="Top" Background="Transparent" Click="Eraser_Click" Margin="50,50,0,0" Panel.ZIndex="1" BorderBrush="{x:Null}" Grid.Row="1" Height="40" Opacity="0.29" >
             <ToggleButton.Style>
                 <Style TargetType="{x:Type ToggleButton}">
                     <Setter Property="Background" Value="Green"/>
                     <Style.Triggers>
                         <Trigger Property="IsChecked" Value="true">
-                            <Setter Property="BorderThickness" Value="5"/>
+                            <Setter Property="BorderThickness" Value="3"/>
                         </Trigger>
                     </Style.Triggers>
 

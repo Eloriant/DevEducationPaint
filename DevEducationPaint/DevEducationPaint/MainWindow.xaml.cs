@@ -64,8 +64,6 @@ namespace DevEducationPaint
             FillWhite();
             DrawWindow.Source = SuperBitmap.Instance;
             point = prev;
-
-            Pencil.IsChecked = true;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -117,7 +115,7 @@ namespace DevEducationPaint
 
             }
 
-            if (filler)
+            if (Fill.IsChecked)
             {
                 Filling(prev);
                 filler = false;
@@ -416,6 +414,7 @@ namespace DevEducationPaint
             Pencil.IsChecked = false;
             Picker.IsChecked = false;
             Brokenline.IsChecked = false;
+            Eraser.IsChecked = false;
 
             switch (pressedButton)
             {
@@ -439,6 +438,9 @@ namespace DevEducationPaint
                     break;
                 case FigureEnum.BrokenLine:
                     Brokenline.IsChecked = true;
+                    break;
+                case FigureEnum.Eraser:
+                    Eraser.IsChecked = true;
                     break;
 
             }
@@ -610,10 +612,11 @@ namespace DevEducationPaint
 
         }
 
-        private void BtnEraser_Click(object sender, RoutedEventArgs e)
+        private void Eraser_Click(object sender, RoutedEventArgs e)
         {
+            cp.SelectedColor = System.Windows.Media.Color.FromArgb(255, 255, 255, 255);
             currentDrawStrategy.CurrentColor = new DrawColor(255, 255, 255, 255);
-            SetState(FigureEnum.Pencil);
+            SetState(FigureEnum.Eraser);
             isDrawingFigure = false;
             currentFigure = FigureEnum.Pencil;
         }
