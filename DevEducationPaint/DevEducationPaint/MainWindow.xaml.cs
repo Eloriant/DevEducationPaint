@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using DevEducationPaint.Bitmap;
 using DevEducationPaint.FigureCreators;
 using DevEducationPaint.Figures;
+using DevEducationPaint.Services;
 using DevEducationPaint.Share;
 using DevEducationPaint.Strategies;
 using DevEducationPaint.Thicknesses;
@@ -630,6 +631,19 @@ namespace DevEducationPaint
             SetState(FigureEnum.Eraser);
             isDrawingFigure = false;
             currentFigure = FigureEnum.Pencil;
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            //IDialogService fileDialog = new DefaultDialogService();
+            //fileDialog.OpenFileDialog();
+            SuperBitmap.SaveFileDialog();
+        }
+
+        private void BtnOpen_Click(object sender, RoutedEventArgs e)
+        {
+            SuperBitmap.OpenFileDialog();
+            DrawWindow.Source = SuperBitmap.Instance;
         }
     }
 }
