@@ -228,6 +228,9 @@ namespace DevEducationPaint
             //prev.Y = 0;
             //position.X = 0;
             //position.Y = 0;
+            
+            SuperBitmap.Copies.Add(SuperBitmap.Instance);
+            
 
             if (isFirstClicked && currentFigure == FigureEnum.BrokenLine)
             {
@@ -644,6 +647,14 @@ namespace DevEducationPaint
         {
             SuperBitmap.OpenFileDialog();
             DrawWindow.Source = SuperBitmap.Instance;
+        }
+
+        private void Next_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = SuperBitmap.Copies.Count; i >= 0; i--)
+            {
+                SuperBitmap.Instance = SuperBitmap.Copies[i];
+            }
         }
     }
 }
