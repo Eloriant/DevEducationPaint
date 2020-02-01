@@ -336,14 +336,14 @@
         <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="351,10,0,0" VerticalAlignment="Top" Width="25" Fill="#FF83197F"/>
         <Rectangle HorizontalAlignment="Center" Height="40" Width="85" Margin="0,230,0,0" VerticalAlignment="Top" Grid.Row="1" Fill="White" />
         <Label x:Name="angles" Content="Angles" HorizontalAlignment="Left" Margin="8,237,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <TabControl Margin="99,45,0,20" SelectionChanged="TabControl_SelectionChanged" Grid.RowSpan="2" Grid.ColumnSpan="2" TabStripPlacement="Top" FlowDirection="RightToLeft">
+        <TabControl Margin="99,47,0,0" VerticalAlignment="Top" SelectionChanged="TabControl_SelectionChanged" Grid.RowSpan="2" Grid.ColumnSpan="2" TabStripPlacement="Top" FlowDirection="RightToLeft" BorderBrush="{x:Null}">
             <TabItem Header="Rastr"  Name="Rastr" Height="20" Width="50">
 
                 <Image x:Name="DrawWindow"       
-             Height="580"
+             Height="580" 
              Width="800"
              MouseMove="Image_MouseMove"
-             MouseWheel="Image_MouseWheel">
+             MouseWheel="Image_MouseWheel" Margin="-3,0,-2,0">
                 </Image>
             </TabItem>
             <TabItem Header="Vector" Name="Vector" Height="20" Width="50" HorizontalAlignment="Right" >

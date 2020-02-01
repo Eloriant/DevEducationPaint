@@ -64,6 +64,8 @@ namespace DevEducationPaint
             FillWhite();
             DrawWindow.Source = SuperBitmap.Instance;
             point = prev;
+
+            Pencil.IsChecked = true;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
