@@ -7,34 +7,377 @@
         xmlns:local="clr-namespace:DevEducationPaint"
         xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="DevEducationPaint" Height="450" Width="800">
-  <Grid>
-    <toolkit:ColorPicker Name="cp"
-                         DisplayColorAndName="True" 
-                         SelectedColorChanged="cp_SelectedColorChanged_1" 
+        Title="DevEducationPaint" Height="710" Width="920" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"  Background="#FFE7EAEA" MouseDoubleClick="Window_MouseDoubleClick">
+    <Grid x:Name="_double">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"></ColumnDefinition>
+            <ColumnDefinition Width="800"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <toolkit:ColorPicker Name="cp"
+                         DisplayColorAndName="False" 
+                         SelectedColor="Black"
+                         SelectedColorChanged="Cp_OnSelectedColorChanged"
                          AvailableColorsSortingMode="HueSaturationBrightness"
-                         HorizontalAlignment="Left"
-                         Width="40"
-                         Height="25"
-                         Margin="742,41,2,342" />
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Top"
+                         Width="60"
+                         Height="24"
+                         Margin="0,23,0,0" />
+        <Label Content="Цвет" HorizontalAlignment="Left" Margin="47,0,0,398" VerticalAlignment="Bottom" Grid.Column="2"/>
+        <Border x:Name="BorderImage" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Top"
+            Height="580"
+            Width="800"
+            Margin="0,0,0,0" 
+            Grid.Column="1" 
+            Grid.Row="2"
+            Background="White">
 
-    <Label Content="Цвет" HorizontalAlignment="Left" Margin="746,0,0,385" VerticalAlignment="Bottom"/>
-    <Border x:Name="BorderImage" 
-            BorderBrush="LightBlue" 
-            BorderThickness="5" 
-            HorizontalAlignment="left" 
-            Height="Auto"
-            Width="730"
-            VerticalAlignment="Stretch"
-            Margin="5,5,0,0" >
-
-      <Image x:Name="DrawWindow" 
-             Height="Auto" 
-             Width="Auto"
+            <!--<Image x:Name="DrawWindow" 
+             Height="580" 
+             Width="800"
              MouseMove="Image_MouseMove"
-             MouseWheel="Image_MouseWheel"/>
-    </Border>
-    <Label  Content="Размер" HorizontalAlignment="Left" Margin="743,100,0,0" VerticalAlignment="Top"/>
-    <TextBox x:Name="tbxPencilSize" HorizontalAlignment="Left" Margin="743,131,0,0" Text="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" TextChanged="tbxPencilSize_Changed"/>
-  </Grid>
+             MouseWheel="Image_MouseWheel"/>-->
+
+            <Border.Effect>
+                <DropShadowEffect Opacity="0.15" ShadowDepth="10"/>
+            </Border.Effect>
+
+        </Border>
+
+
+
+
+
+        <!--Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="68" Margin="357,23,0,0" Stroke="#FF8B8B8B" VerticalAlignment="Top" Width="244" Fill="White"/>-->
+        <!--<Label  Content="Thinckness" HorizontalAlignment="Left" Margin="10,354,0,0" VerticalAlignment="Top" Grid.Row="1" Width="72"/>-->
+        <StackPanel Grid.Row="1" Margin="10,354,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="80">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Thickness: "/>
+                <Label Content="{Binding Value, ElementName=sliderToPencilSize}" ContentStringFormat="{}{0:N0}"/>
+            </StackPanel>
+            <Slider x:Name="sliderToPencilSize" IsSnapToTickEnabled="True"  TickFrequency="1" TickPlacement="BottomRight" Maximum="5" Minimum="1" Value="1" ValueChanged="sliderToPencilSize_ValueChanged"/>
+        </StackPanel>
+
+        <ToggleButton x:Name = "Pencil" Content = ""
+         Width = "40" Height="40" HorizontalAlignment = "Left" VerticalAlignment="Top" Background="Transparent" Click="Pencil_Click" Margin="5,5,0,0" Panel.ZIndex="1" BorderBrush="{x:Null}" Grid.Row="1" Opacity="0.3" >
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="3
+                                     "/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+
+        <ToggleButton x:Name = "Fill" Content = ""
+         Width = "40" HorizontalAlignment = "Left" VerticalAlignment="Top" Background="Transparent" Margin="50,5,0,0" Checked="Fill_Checked" Panel.ZIndex="1" BorderBrush="{x:Null}" Grid.Row="1" Height="40" Opacity="0.3" >
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="5"/>
+                        </Trigger>
+                    </Style.Triggers>
+
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+
+        <ToggleButton x:Name = "Picker" Content = ""
+         Width = "40" HorizontalAlignment = "Left" VerticalAlignment="Top" Background="Transparent" Click="Eraser_Checked" Margin="5,50,0,0" Panel.ZIndex="1" BorderBrush="{x:Null}" Grid.Row="1" Height="40" Opacity="0.3" >
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="5"/>
+                        </Trigger>
+                    </Style.Triggers>
+
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+
+        <ToggleButton x:Name ="Eraser" Content = ""
+         Width = "40" HorizontalAlignment = "Left" VerticalAlignment="Top" Background="Transparent" Click="Eraser_Click" Margin="50,50,0,0" Panel.ZIndex="1" BorderBrush="{x:Null}" Grid.Row="1" Height="40" Opacity="0.29" >
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="3"/>
+                        </Trigger>
+                    </Style.Triggers>
+
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+
+        <ToggleButton x:Name = "Line" Content = "" VerticalAlignment="Top" Background="Transparent" Click="buttonLine_Click" Margin="5,95,50,0" Grid.Row="1" Panel.ZIndex="1" Height="40" Foreground="{x:Null}" BorderBrush="{x:Null}" Opacity="0.3">
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="3"/>
+                        </Trigger>
+                    </Style.Triggers>
+
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+
+        <ToggleButton x:Name = "Triangle" Content = "" VerticalAlignment="Top"  Background="Transparent" Margin="5,185,50,0" Click="Triangle_Click" RenderTransformOrigin="0.5,0.5" Grid.Row="1" Panel.ZIndex="1" Height="40" BorderBrush="{x:Null}" Opacity="0.3" >
+            <ToggleButton.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="0"/>
+                    <RotateTransform Angle="0"/>
+                    <TranslateTransform X="0"/>
+                </TransformGroup>
+            </ToggleButton.RenderTransform>
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="3"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+
+        <ToggleButton x:Name = "Square" Content = "" VerticalAlignment="Top" Background="Transparent" Click="Square_Click" Margin="5,140,50,0" Grid.Row="1" Panel.ZIndex="6" RenderTransformOrigin="0.5,0.5" Height="40" BorderBrush="{x:Null}" Opacity="0.3" >
+            <ToggleButton.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="0"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="0"/>
+                </TransformGroup>
+            </ToggleButton.RenderTransform>
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="3"/>
+                        </Trigger>
+                    </Style.Triggers>
+
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+
+        <ToggleButton x:Name = "Circle" Content = "" VerticalAlignment="Top" Background="Transparent" Click="Circle_Click" Margin="50,140,5,0" Grid.Row="1" Panel.ZIndex="1" Height="40" BorderBrush="{x:Null}" Opacity="0.3" >
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="3"/>
+                        </Trigger>
+                    </Style.Triggers>
+
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+
+        <ToggleButton x:Name = "Polygon" Content = "" VerticalAlignment="Top" Background="Transparent" Click="Polygon_Click" Margin="50,185,5,0" Grid.Row="1" Panel.ZIndex="2" Height="40" BorderBrush="{x:Null}" Opacity="0.3" >
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="3"/>
+                        </Trigger>
+                    </Style.Triggers>
+
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+
+        <TextBox x:Name="tbxAngleNumber" HorizontalAlignment="Left" Margin="57,241,0,0" Text="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="28" TextChanged="tbxAngleNumber_Changed" Panel.ZIndex="10" Grid.Row="1"/>
+        <Label x:Name="ddd" Content="Label" Grid.Column="1" HorizontalAlignment="Left" Margin="742,21,0,0" VerticalAlignment="Top"/>
+        <ToggleButton x:Name="Brokenline" Content = "" VerticalAlignment="Top"  Background="Transparent" Margin="50,95,5,0" RenderTransformOrigin="-1.712,2.156" Click="BrokenLine_Click" Grid.Row="1" Panel.ZIndex="1" Height="40" Opacity="0.3" BorderBrush="{x:Null}">
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" Value="3"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+        <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="5,5,0,0" VerticalAlignment="Top" Grid.Row="1" >
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="Icons/pencil.png"/>
+            </Rectangle.Fill>
+            <Rectangle.Stroke>
+                <ImageBrush ImageSource="Icons/pencil.png"/>
+            </Rectangle.Stroke>
+        </Rectangle>
+        <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="50,5,0,0" VerticalAlignment="Top" Grid.Row="1" >
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="Icons/filler.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="5,50,0,0" VerticalAlignment="Top" Grid.Row="1" >
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="Icons/picker.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="50,50,0,0" VerticalAlignment="Top" Grid.Row="1" >
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="Icons/clear.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="5,95,0,0" VerticalAlignment="Top" Grid.Row="1" >
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="Icons/line.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="50,95,0,0" VerticalAlignment="Top" Grid.Row="1" >
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="Icons/brokenLine.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="5,140,0,0" VerticalAlignment="Top" Grid.Row="1" >
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="Icons/rect.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="50,140,0,0" VerticalAlignment="Top" Grid.Row="1" >
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="Icons/circle.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="5,185,0,0" VerticalAlignment="Top" Grid.Row="1" >
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="Icons/triangle.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle HorizontalAlignment="Left" Height="40" Width="40" Margin="50,185,0,0" VerticalAlignment="Top" Grid.Row="1" >
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="Icons/polygon.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle HorizontalAlignment="Center" Height="20" Width="85" Margin="0,272,0,0" VerticalAlignment="Top" Grid.Row="1" Panel.ZIndex="1" >
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="Icons/thin1.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle HorizontalAlignment="Center" Height="20" Width="85" Margin="0,292,0,0" VerticalAlignment="Top" Grid.Row="1" >
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="Icons/thin2.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle HorizontalAlignment="Center" Height="20" Width="85" Margin="0,312,0,0" VerticalAlignment="Top" Grid.Row="1" >
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="Icons/thin3.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle HorizontalAlignment="Center" Height="20" Width="85" Margin="0,332,0,0" VerticalAlignment="Top" Grid.Row="1" >
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="Icons/thin4.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <!--<Border x:Name="BorderThin" Grid.Row="1" Margin="5,237,5,347" >
+            <Border.Effect>
+                <DropShadowEffect Opacity="0.9" ShadowDepth="50"/>
+            </Border.Effect>
+        </Border>-->
+        <Rectangle HorizontalAlignment="Left" Height="25" Margin="1,35,0,0" VerticalAlignment="Top" Width="25" Fill="#FFBF0A0A" Grid.Column="1"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="26,35,0,0" VerticalAlignment="Top" Width="25" Fill="#FFB92D0E"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="51,35,0,0" VerticalAlignment="Top" Width="25" Fill="#FFD49100"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="76,35,0,0" VerticalAlignment="Top" Width="25" Fill="#FFBBA200"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="101,35,0,0" VerticalAlignment="Top" Width="25" Fill="#FFA8BB28"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="126,35,0,0" VerticalAlignment="Top" Width="25" Fill="#FF74B626"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="151,35,0,0" VerticalAlignment="Top" Width="25" Fill="#FF51A64D"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="176,35,0,0" VerticalAlignment="Top" Width="25" Fill="#FF3F976F"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="201,35,0,0" VerticalAlignment="Top" Width="25" Fill="#FF33A3A8"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="226,35,0,0" VerticalAlignment="Top" Width="25" Fill="#FF4187A8"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="251,35,0,0" VerticalAlignment="Top" Width="25" Fill="#FF385595"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="276,35,0,0" VerticalAlignment="Top" Width="25" Fill="#FF463995"/>
+        <Rectangle HorizontalAlignment="Left" Height="25" Margin="1,10,0,0" VerticalAlignment="Top" Width="25" Fill="#FFF32424" Grid.Column="1"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="26,10,0,0" VerticalAlignment="Top" Width="25" Fill="#FFFF5D00"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="51,10,0,0" VerticalAlignment="Top" Width="25" Fill="#FFFFB900"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="76,10,0,0" VerticalAlignment="Top" Width="25" Fill="#FFFFDC00"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="101,10,0,0" VerticalAlignment="Top" Width="25" Fill="#FFCBE237"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="126,10,0,0" VerticalAlignment="Top" Width="25" Fill="#FF94E237"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="151,10,0,0" VerticalAlignment="Top" Width="25" Fill="#FF6ACF65"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="176,10,0,0" VerticalAlignment="Top" Width="25" Fill="#FF65CF9F"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="201,10,0,0" VerticalAlignment="Top" Width="25" Fill="#FF55DAE0"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="226,10,0,0" VerticalAlignment="Top" Width="25" Fill="#FF55B4E0"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="251,10,0,0" VerticalAlignment="Top" Width="25" Fill="#FF5581E0"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="276,10,0,0" VerticalAlignment="Top" Width="25" Fill="#FF6855E0"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="301,35,0,0" VerticalAlignment="Top" Width="25" Fill="#FF5C3385"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="326,35,0,0" VerticalAlignment="Top" Width="25" Fill="#FF952F83"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="351,35,0,0" VerticalAlignment="Top" Width="25" Fill="#FF5B0B58"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="301,10,0,0" VerticalAlignment="Top" Width="25" Fill="#FF9A55E0"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="326,10,0,0" VerticalAlignment="Top" Width="25" Fill="#FFE055C7"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="351,10,0,0" VerticalAlignment="Top" Width="25" Fill="#FF83197F"/>
+        <Rectangle HorizontalAlignment="Center" Height="40" Width="85" Margin="0,230,0,0" VerticalAlignment="Top" Grid.Row="1" Fill="White" />
+        <Label x:Name="angles" Content="Angles" HorizontalAlignment="Left" Margin="8,237,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <TabControl Margin="99,47,0,0" VerticalAlignment="Top" SelectionChanged="TabControl_SelectionChanged" Grid.RowSpan="2" Grid.ColumnSpan="2" TabStripPlacement="Top" FlowDirection="RightToLeft" BorderBrush="{x:Null}">
+            <TabItem Header="Rastr"  Name="Rastr" Height="20" Width="50">
+
+                <Image x:Name="DrawWindow"       
+             Height="580" 
+             Width="800"
+             MouseMove="Image_MouseMove"
+             MouseWheel="Image_MouseWheel" Margin="-3,0,-2,0">
+                </Image>
+            </TabItem>
+            <TabItem Header="Vector" Name="Vector" Height="20" Width="50" HorizontalAlignment="Right" >
+                <Canvas x:Name="DrawWindow1"
+             Height="580" 
+             Width="800"
+             MouseMove="Image_MouseMove"
+             MouseWheel="Image_MouseWheel">
+                </Canvas>
+
+            </TabItem>
+        </TabControl>
+        <Button x:Name="Clear"  Content="Clear All" HorizontalAlignment="Left" Margin="28,425,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Clear_Checked"/>
+        <Button x:Name="BtnSave" Content="Save" Grid.Column="1" HorizontalAlignment="Left" Margin="454,5,0,0" VerticalAlignment="Top" Click="BtnSave_Click"/>
+        <Button x:Name="BtnOpen" Content="Open" Grid.Column="1" HorizontalAlignment="Left" Margin="502,5,0,0" VerticalAlignment="Top" Click="BtnOpen_Click"/>
+        <Button x:Name="BtnCreate" Content="Create" Grid.Column="1" HorizontalAlignment="Left" Margin="559,6,0,0" VerticalAlignment="Top" Click="BtnCreate_Click"/>
+        <Button x:Name="Clear_Copy"  Content="Clear All" HorizontalAlignment="Left" Margin="28,425,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Clear_Checked"/>
+        <Button x:Name="Line_On_Canvas"  Content="Line" HorizontalAlignment="Left" Margin="20,489,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Line_Click"/>
+        <!--<ToggleButton x:Name = "tbCircle" Content = "Toggle"
+         Width = "108" HorizontalAlignment = "Left" Background="#FFDA4B4B" Click="tbCircle_Clicked" Margin="138,23,0,97" Grid.Column="1" >
+            <ToggleButton.Style>
+                <Style TargetType="{x:Type ToggleButton}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="true"> 
+                            <Setter Property="BorderThickness" Value="5"/>
+                        </Trigger>
+                    </Style.Triggers>
+
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>-->
+        <!--<Button x:Name="Pencil" Content="Pencil" Grid.Column="2" HorizontalAlignment="Left" Margin="55,361,0,0" VerticalAlignment="Top" Click="Pencil_Click"/>-->
+    </Grid>
 </Window>
+    
+    
