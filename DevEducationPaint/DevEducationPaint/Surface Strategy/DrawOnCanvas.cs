@@ -18,7 +18,7 @@ namespace DevEducationPaint.Surface_Strategy
         public void DrawLine(Point p1, Point p2)
         {
             Line myLine = new Line();
-            myLine.Stroke = ThicknessStrategy.
+            //myLine.Stroke = ThicknessStrategy.
             myLine.X1 = p1.X;
             myLine.X2 = p2.X;
             myLine.Y1 = p1.Y;
