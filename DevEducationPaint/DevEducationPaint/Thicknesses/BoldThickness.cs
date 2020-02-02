@@ -7,8 +7,7 @@ namespace DevEducationPaint.Thicknesses
 {
     public class BoldThickness : ThicknessStrategy
     {
-
-      public override List<Point> GetPoints(Point point)
+        public override List<Point> GetPoints(Point point)
         {
             List<Point> result = new List<Point>();
             result.Add(point);
