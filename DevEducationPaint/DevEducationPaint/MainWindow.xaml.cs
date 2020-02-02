@@ -558,6 +558,12 @@ namespace DevEducationPaint
     }
     #endregion
 
-    //сложила аналогичную по функционалу логику в regions, но поломался ластик, отвалилась проверка на белый цвет. сумею - починю. 
+        private void BtnCreate_Click(object sender, RoutedEventArgs e)
+        {
+            CreateBitmapWindow bitmapWindow = new CreateBitmapWindow();
+
+            bitmapWindow.Show();
+
+        }
     }
 }
