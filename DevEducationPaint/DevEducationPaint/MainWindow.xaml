@@ -343,7 +343,7 @@
              Height="580" 
              Width="800"
              MouseMove="Image_MouseMove"
-             MouseWheel="Image_MouseWheel" Margin="-3,0,-2,0">
+             MouseWheel="Image_MouseWheel">
                 </Image>
             </TabItem>
             <TabItem Header="Vector" Name="Vector" Height="20" Width="50" HorizontalAlignment="Right" >
@@ -357,11 +357,8 @@
             </TabItem>
         </TabControl>
         <Button x:Name="Clear"  Content="Clear All" HorizontalAlignment="Left" Margin="28,425,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Clear_Checked"/>
-        <Button x:Name="BtnSave" Content="Save" Grid.Column="1" HorizontalAlignment="Left" Margin="454,5,0,0" VerticalAlignment="Top" Click="BtnSave_Click"/>
-        <Button x:Name="BtnOpen" Content="Open" Grid.Column="1" HorizontalAlignment="Left" Margin="502,5,0,0" VerticalAlignment="Top" Click="BtnOpen_Click"/>
-        <Button x:Name="BtnCreate" Content="Create" Grid.Column="1" HorizontalAlignment="Left" Margin="559,6,0,0" VerticalAlignment="Top" Click="BtnCreate_Click"/>
-        <Button x:Name="Clear_Copy"  Content="Clear All" HorizontalAlignment="Left" Margin="28,425,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Clear_Checked"/>
-        <Button x:Name="Line_On_Canvas"  Content="Line" HorizontalAlignment="Left" Margin="20,489,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Line_Click"/>
+        <Button x:Name="Prev" Content="Prev" Grid.Column="1" HorizontalAlignment="Left" Margin="611,23,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="Next" Content="Next" Grid.Column="1" HorizontalAlignment="Left" Margin="577,23,0,0" VerticalAlignment="Top" Click="Next_Click"/>
         <!--<ToggleButton x:Name = "tbCircle" Content = "Toggle"
          Width = "108" HorizontalAlignment = "Left" Background="#FFDA4B4B" Click="tbCircle_Clicked" Margin="138,23,0,97" Grid.Column="1" >
             <ToggleButton.Style>

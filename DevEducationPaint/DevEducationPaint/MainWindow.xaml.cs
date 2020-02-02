@@ -254,16 +254,16 @@ namespace DevEducationPaint
         if (currentCreator == null) return;
         if (isDrawingFigure && prev.X != 0 && prev.Y != 0)//алгоритм рисования в растровом режиме для всех фигур, кроме карандаша
         {
-            var temp = e.GetPosition(this.DrawWindow);
-            temp = e.GetPosition(this.DrawWindow);
-            position = new Point((int)temp.X, (int)temp.Y);
-            ddd.Content = $"{position.X} {position.Y}";
-            resultFigure = currentCreator.CreateFigure(prev, position);
-            resultFigure.ConcreteDraw = drawStrategy;
-            resultFigure.Draw();
-            DrawWindow.Source = SuperBitmap.GetInstanceCopy();
-        }
-        if (!isDrawingFigure)//алгоритм рисования в растровом режиме для карандаша
+            //if (isDrawingFigure)
+            //{
+            //writeableBitmap = copy;
+            //isDrawingFigure = false;
+            //prev.X = 0;
+            //prev.Y = 0;
+            //position.X = 0;
+            //position.Y = 0;
+
+            if (isFirstClicked && currentFigure == FigureEnum.BrokenLine)
             {
             if (e.LeftButton != MouseButtonState.Pressed) return;
             var temp1 = e.GetPosition(this.DrawWindow);
@@ -564,6 +564,13 @@ namespace DevEducationPaint
 
             bitmapWindow.Show();
 
+        }
+        private void Next_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = SuperBitmap.Copies.Count; i >= 0; i--)
+            {
+                SuperBitmap.Instance = SuperBitmap.Copies[i];
+            }
         }
     }
 }

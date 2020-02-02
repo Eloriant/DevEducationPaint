@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Media.Imaging;
 
@@ -7,6 +8,8 @@ namespace DevEducationPaint.Bitmap
 {
     public class SuperBitmap
     {
+
+        private static List<WriteableBitmap> copies;
         private static WriteableBitmap instance;
         private static WriteableBitmap instanceCopy;
 
@@ -14,9 +17,26 @@ namespace DevEducationPaint.Bitmap
         {
             get => instance; 
             set
+
             {
                 instance = value;
                 instanceCopy = new WriteableBitmap(value);
+            }
+        }
+        public static List<WriteableBitmap> Copies
+        {
+            get
+            {
+                if (copies == null)
+                {
+                    copies = new List<WriteableBitmap>();
+                }
+                return copies;
+            }
+            set
+
+            {
+                copies = value;
             }
         }
 
