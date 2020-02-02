@@ -15,7 +15,7 @@ namespace DevEducationPaint.Figures
         {
             for (int i = 0; i < FigurePoints.Count; i++)
             {
-                ConcreteDraw.DrawLine(FigurePoints[i], i + 1 >= FigurePoints.Count ? FigurePoints[0] : FigurePoints[i + 1]);
+                ConcreteDraw.CalculatePointsForDrawMethod(FigurePoints[i], i + 1 >= FigurePoints.Count ? FigurePoints[0] : FigurePoints[i + 1]);
             }
         }
     }

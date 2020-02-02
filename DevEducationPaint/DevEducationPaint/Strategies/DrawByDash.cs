@@ -10,9 +10,8 @@ namespace DevEducationPaint.Strategies
 {
     public class DrawByDash : IDrawStrategy
     {
-        public ISurfaceStrategy SurfaceStrategy { get; set; }
 
-        public void DrawLine(Point p1, Point p2)
+      public override void CalculatePointsForDrawMethod(Point p1, Point p2)
         {
             throw new NotImplementedException();
         }
