@@ -46,7 +46,10 @@ namespace DevEducationPaint
 
         private void BtnOK_Click(object sender, RoutedEventArgs e)
         {
-            
+            //this.Owner.DrawWindow.Height = Convert.ToInt32(Height.Text);
+            //this.Owner.DrawWindow1.Height = Convert.ToInt32(Height.Text);
+            //this.Owner.DrawWindow.Width = Convert.ToInt32(Width.Text);
+            //this.Owner.DrawWindow1.Width = Convert.ToInt32(Width.Text);
         }
 
     }
