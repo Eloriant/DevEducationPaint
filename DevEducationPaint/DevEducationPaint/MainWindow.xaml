@@ -363,7 +363,9 @@
         <Button x:Name="BtnOpen" Content="Open" Grid.Column="1" HorizontalAlignment="Left" Margin="502,5,0,0" VerticalAlignment="Top" Click="BtnOpen_Click"/>
         <Button x:Name="BtnCreate" Content="Create" Grid.Column="1" HorizontalAlignment="Left" Margin="559,6,0,0" VerticalAlignment="Top" Click="BtnCreate_Click"/>
         <Button x:Name="Clear_Copy"  Content="Clear All" HorizontalAlignment="Left" Margin="28,425,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Clear_Checked"/>
-        <Button x:Name="Line_On_Canvas"  Content="Line" HorizontalAlignment="Left" Margin="20,489,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Line_Click"/>
+        <Button x:Name="Line_On_Canvas"  Content="Line" HorizontalAlignment="Left" Margin="10,521,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Line_Click"/>
+        <Button x:Name="Back" Content="back" HorizontalAlignment="Left" Margin="29,455,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Back_Click"/>
+        <Button x:Name="Next" Content="next" HorizontalAlignment="Left" Margin="29,482,0,0" Grid.Row="1" VerticalAlignment="Top" Width="29" Click="Next_Click"/>
         <!--<ToggleButton x:Name = "tbCircle" Content = "Toggle"
          Width = "108" HorizontalAlignment = "Left" Background="#FFDA4B4B" Click="tbCircle_Clicked" Margin="138,23,0,97" Grid.Column="1" >
             <ToggleButton.Style>

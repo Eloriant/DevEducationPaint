@@ -50,6 +50,7 @@ namespace DevEducationPaint
         private FigureEnum currentFigure;
         private bool vector = false;
         private static int counterToTabControl = 0;
+        private int countClick = -1;
         #endregion
 
         public MainWindow()
@@ -72,6 +73,10 @@ namespace DevEducationPaint
             FillWhite();
             DrawWindow.Source = SuperBitmap.Instance;
             point = prev;
+
+            SuperBitmap.Instance = SuperBitmap.GetInstanceCopy(); // делаем копию пустого холста, чтобы можно было к нему откатиться через кнопку back
+            SuperBitmap.Copies.Add(SuperBitmap.Instance);
+            countClick = SuperBitmap.Copies.Count;
         }//инициализация окна для режима растрового рисования
 
         private void FillWhite()
@@ -170,6 +175,29 @@ namespace DevEducationPaint
             isDrawingFigure = true;
             currentFigure = FigureEnum.Square;
         }
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            if (countClick > 0)
+            {
+                --countClick;
+                SuperBitmap.Instance = SuperBitmap.Copies[countClick];
+                DrawWindow.Source = SuperBitmap.Instance;
+            }
+        }
+
+        private void Next_Click(object sender, RoutedEventArgs e)
+        {
+            if (countClick < SuperBitmap.Copies.Count - 1)
+            {
+                ++countClick;
+                SuperBitmap.Instance = SuperBitmap.Copies[countClick];
+                DrawWindow.Source = SuperBitmap.Instance;
+            }
+        }
+
+
+
+
         #endregion
 
         #region Mouse Methods
@@ -279,6 +307,9 @@ namespace DevEducationPaint
         }
         private void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            SuperBitmap.Copies.Add(SuperBitmap.Instance);
+            countClick = SuperBitmap.Copies.Count;
+
             if (isFirstClicked && currentFigure == FigureEnum.BrokenLine)
             {
                 pStaticStart = prev;
@@ -752,5 +783,6 @@ namespace DevEducationPaint
             CreateBitmapWindow bitmapWindow = new CreateBitmapWindow();
             bitmapWindow.Show();
         }
+
     }
 }
