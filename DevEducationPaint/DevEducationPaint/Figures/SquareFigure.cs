@@ -9,7 +9,7 @@ using Point = System.Drawing.Point;
 
 namespace DevEducationPaint.Figures
 {
-    class SquareFigure : Figure
+    public class SquareFigure : Figure
     {
         public SquareFigure(List<Point> points)
         {

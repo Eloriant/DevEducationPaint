@@ -198,14 +198,19 @@ namespace DevEducationPaint
         DrawWindow.Source = SuperBitmap.Instance;
       }
     }
+        private void BtnCreate_Click(object sender, RoutedEventArgs e)
+        {
+            CreateBitmapWindow bitmapWindow = new CreateBitmapWindow();
+            bitmapWindow.Show();
+        }
 
 
 
 
-    #endregion
+        #endregion
 
     #region Mouse Methods
-    private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
     {
       if (vector)
       {
@@ -782,11 +787,6 @@ namespace DevEducationPaint
     }
     #endregion
 
-    private void BtnCreate_Click(object sender, RoutedEventArgs e)
-    {
-      CreateBitmapWindow bitmapWindow = new CreateBitmapWindow();
-      bitmapWindow.Show();
-    }
 
   }
 }

@@ -63,12 +63,12 @@ namespace DevEducationPaint.Tests
                     return new PolygonFigure(
                         new List<Point>
                         {
-                            new Point(5,0),
-                            new Point(0,3),
-                            new Point(0,9),
                             new Point(5,12),
-                            new Point(10,9),
-                            new Point(10,3)
+                            new Point(0,9),
+                            new Point(0,3),
+                            new Point(5,0),
+                            new Point(10,3),
+                            new Point(10,9)
                         }
                     );
                 default:
@@ -80,8 +80,8 @@ namespace DevEducationPaint.Tests
         public void GetFigureDiametrTest(string pointStart1, string pointEnd1, int expected)
         {
             PolygonCreator polygonCreator = new PolygonCreator(6);
-            Point start = GetPointByName("pointStart1");
-            Point end = GetPointByName("pointEnd1");
+            Point start = GetPointByName(pointStart1);
+            Point end = GetPointByName(pointEnd1);
             int actual = polygonCreator.GetFigureDiametr(start, end);
             Assert.AreEqual(expected, actual);
         }
@@ -91,7 +91,7 @@ namespace DevEducationPaint.Tests
         public void GetPointsByAngleTest(double angle, int angleNumber, string polygonsTop, string expectedList)
         {
             PolygonCreator polygonCreator = new PolygonCreator(6);
-            Point polygonTop = GetPointByName("polygonsTop");
+            Point polygonTop = GetPointByName(polygonsTop);
             List<Point> circuitsPoints = polygonCreator.GetPointsByAngle(angle, angleNumber, polygonTop);
             List<Point> circuitsPointsExpected = GetListPointByName(expectedList);
             CollectionAssert.AreEqual(circuitsPointsExpected, circuitsPoints);
@@ -113,8 +113,8 @@ namespace DevEducationPaint.Tests
         {
             PolygonCreator polygonCreator = new PolygonCreator(6);
             PolygonFigure expected = GetPolygonByName(expectedPolygon);
-            Point start = GetPointByName("pointStart1");
-            Point end = GetPointByName("pointEnd1");
+            Point start = GetPointByName(pointStart1);
+            Point end = GetPointByName(pointEnd1);
             Figure actual = polygonCreator.CreateFigure(start, end);
             CollectionAssert.AreEqual(expected.FigurePoints, actual.FigurePoints);
         }

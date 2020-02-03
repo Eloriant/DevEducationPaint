@@ -60,8 +60,8 @@ namespace DevEducationPaint.Tests
         {
             LineCreator lineCreator = new LineCreator();
             LineFigure expected = GetLineByName(expectedLine);
-            Point start = GetPointByName("pointStart1");
-            Point end = GetPointByName("pointEnd1");
+            Point start = GetPointByName(pointStart1);
+            Point end = GetPointByName(pointEnd1);
             Figure actual = lineCreator.CreateFigure(start, end);
             CollectionAssert.AreEqual(expected.FigurePoints, actual.FigurePoints);
         }
@@ -71,8 +71,8 @@ namespace DevEducationPaint.Tests
         {
             LineCreator lineCreator = new LineCreator();
             LineFigure expected = GetLineByName(expectedLine1);
-            Point start = GetPointByName("pointStart2");
-            Point end = GetPointByName("pointEnd2");
+            Point start = GetPointByName(pointStart2);
+            Point end = GetPointByName(pointEnd2);
             Figure actual = lineCreator.CreateFigure(start, end);
             CollectionAssert.AreEqual(expected.FigurePoints, actual.FigurePoints);
         }

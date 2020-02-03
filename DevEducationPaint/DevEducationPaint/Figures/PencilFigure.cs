@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DevEducationPaint.Figures
 {
-    class PencilFigure : Figure
+    public class PencilFigure : Figure
     {
         public PencilFigure(List<Point> points)
         {

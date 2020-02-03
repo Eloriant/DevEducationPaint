@@ -29,6 +29,10 @@ namespace DevEducationPaint.Tests
                     return new Point(9, 6);
                 case "expectedPoint1":
                     return new Point(7, 8);
+                case "pointStart2":
+                    return new Point(373, 303);
+                case "pointEnd2":
+                    return new Point(373, 302);
                 default:
                     return new Point();
             }
@@ -55,6 +59,15 @@ namespace DevEducationPaint.Tests
                             new Point(2,21)
                         }
                     );
+                case "expectedTriangle2":
+                    return new TriangleFigure(
+                        new List<Point>
+                        {
+                            new Point(373, 303),
+                            new Point(373, 302),
+                            new Point(373, 302)
+                        }
+                    );
                 default:
                     return new TriangleFigure(new List<Point>());
             }
@@ -64,8 +77,8 @@ namespace DevEducationPaint.Tests
         public void GetPointHighTest(string pointStart, string pointEnd, string expectedPoint,bool isShiftPressed, bool isCtrlPressed)
         {
             TriangleCreator triangleCreator = new TriangleCreator(false, false);
-            Point start = GetPointByName("pointStart");
-            Point end = GetPointByName("pointEnd");
+            Point start = GetPointByName(pointStart);
+            Point end = GetPointByName(pointEnd);
             Point expected = GetPointByName(expectedPoint);
             Point actual = triangleCreator.GetPointHigh(start, end);
             Assert.AreEqual(expected, actual);
@@ -75,11 +88,23 @@ namespace DevEducationPaint.Tests
         public void GetPointHighTest1(string pointStart1, string pointEnd1, string expectedPoint1)
         {
             TriangleCreator triangleCreator = new TriangleCreator(false, false);
-            Point start = GetPointByName("pointStart1");
-            Point end = GetPointByName("pointEnd1");
+            Point start = GetPointByName(pointStart1);
+            Point end = GetPointByName(pointEnd1);
             Point expected = GetPointByName(expectedPoint1);
             Point actual = triangleCreator.GetPointHigh(start, end);
             Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestCase("pointStart2", "pointEnd2", "expectedTriangle2")]
+        public void GetListOfPoints(string pointStart2, string pointEnd2, string expectedTriangle2)
+        {
+            TriangleCreator triangleCreator = new TriangleCreator(true, false);
+            TriangleFigure expected = GetTriangleByName(expectedTriangle2);
+            Point start = GetPointByName(pointStart2);
+            Point end = GetPointByName(pointEnd2);
+            Figure actual = triangleCreator.CreateFigure(start, end);
+            CollectionAssert.AreEqual(expected.FigurePoints, actual.FigurePoints);
         }
     }
 }

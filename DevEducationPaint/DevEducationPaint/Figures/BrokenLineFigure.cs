@@ -9,7 +9,7 @@ using Point = System.Drawing.Point;
 
 namespace DevEducationPaint.Figures
 {
-    class BrokenLineFigure : Figure
+    public class BrokenLineFigure : Figure
     {
         public BrokenLineFigure(List<Point> points)
         {
