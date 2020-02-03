@@ -347,6 +347,191 @@ namespace DevEducationPaint
             isDrawingFigure = true;
         }
     }
+
+        int point_index = 0;
+        Line currentLine = null;
+        System.Windows.Point currentPoint = new System.Windows.Point();
+        int cnt = 0;
+        bool mp_press;
+
+        public object DrowWindow1 { get; private set; }
+
+        private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            double markerX = -1, markerY = -1;
+            mp_press = true;
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                currentPoint = e.GetPosition(this);
+            }
+
+            Line line;
+
+            foreach (Line line1 in DrawWindow1.Children.OfType<Line>())
+            {
+                line = line1;
+
+                if (Math.Abs(line.X1 - e.GetPosition(this).X) < 5 && Math.Abs(e.GetPosition(this).Y - 5 - line.Y1) < 5)
+                {
+                    point_index = 0;
+                    markerX = line.X1;
+                    markerY = line.Y1;
+                    currentLine = line;
+
+                }
+                else if ((Math.Abs(line.X2 - e.GetPosition(this).X) < 5 && Math.Abs(e.GetPosition(this).Y - 5 - line.Y2) < 5))
+                {
+                    point_index = 1;
+                    markerX = line.X2;
+                    markerY = line.Y2;
+                    currentLine = line;
+                }
+            }
+
+        }
+
+        private void Canvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            double markerX = -1, markerY = -1;
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                Line line = null;
+                if (currentLine != null)
+                {
+                    if (point_index == 0)
+                    {
+                        currentLine.X1 = e.GetPosition(this).X;
+                        currentLine.Y1 = e.GetPosition(this).Y;
+                        markerX = currentLine.X1;
+                        markerY = currentLine.Y1;  
+                    }
+
+                    else
+                    {
+                        currentLine.X2 = e.GetPosition(this).X;
+                        currentLine.Y2 = e.GetPosition(this).Y;
+                        markerX = currentLine.X2;
+                        markerY = currentLine.Y2;
+                    }
+
+                    for (int i=0;i<10;i++)
+                    foreach (System.Windows.Shapes.Rectangle rect1 in DrawWindow1.Children.OfType<System.Windows.Shapes.Rectangle>())
+                        {
+                            DrawWindow1.Children.Remove(rect1);
+                            break;
+                        }
+
+                    System.Windows.Shapes.Rectangle rect;
+                    rect = new System.Windows.Shapes.Rectangle();
+                    rect.Stroke = new SolidColorBrush(Colors.Red);
+                    rect.Fill = new SolidColorBrush(Colors.Transparent);
+                    rect.Width = 10;
+                    rect.Height = 10;
+                    Canvas.SetLeft(rect, markerX - 5);
+                    Canvas.SetTop(rect, markerY - 5);
+                    DrawWindow1.Children.Add(rect);
+                    return;
+                }
+
+                else
+                {
+                    foreach (Line line1 in DrawWindow1.Children.OfType<Line>())
+                    {
+                        line = line1;
+
+                        if (line.Name == "line_" + cnt)
+                        {
+                            break;
+                        }
+                        else
+                            line = null;
+                    }
+
+                }
+
+                // 
+                if (currentLine == null)
+                {
+                    if (line == null)
+                    {
+                        line = new Line();
+
+                        line.Stroke = System.Windows.SystemColors.WindowFrameBrush;
+                        line.X1 = currentPoint.X;
+                        line.Y1 = currentPoint.X;
+                        line.X2 = e.GetPosition(this).X;
+                        line.Y2 = e.GetPosition(this).Y;
+
+                        currentPoint = e.GetPosition(this);
+                        line.Name = "line_" + cnt;
+
+                        DrawWindow1.Children.Add(line);
+                    }
+
+                    else
+                    {
+                        line.X2 = e.GetPosition(this).X;
+                        line.Y2 = e.GetPosition(this).Y;
+                        DrawWindow1.InvalidateVisual();
+                    }
+                }
+            }
+
+            else
+            {
+                Line line = null;
+
+                foreach(Line line1 in DrawWindow1.Children.OfType<Line>())
+                {
+                    line = line1;
+
+                    if (Math.Abs(line.X1 - e.GetPosition(this).X) < 5 && Math.Abs(e.GetPosition(this).Y - 5 - line.Y1) < 5)
+                    {
+                        point_index = 1;
+                        markerX = line.X2;
+                        markerY = line.Y2;
+                        currentLine = line;
+                    }
+                }
+            }
+
+            if (markerX != -1)
+            {
+                System.Windows.Shapes.Rectangle rect;
+                rect = new System.Windows.Shapes.Rectangle();
+                rect.Stroke = new SolidColorBrush(Colors.Red);
+                rect.Fill = new SolidColorBrush(Colors.Transparent);
+                rect.Width = 10;
+                rect.Height = 10;
+                Canvas.SetLeft(rect, markerX - 5);
+                Canvas.SetTop(rect, markerY - 5);
+                DrawWindow1.Children.Add(rect);
+            }
+
+            else
+            {
+                if (e.LeftButton != MouseButtonState.Pressed)
+                {
+                    for (int i = 0; i<10; i++)
+                        foreach (System.Windows.Shapes.Rectangle rect in DrawWindow1.Children.OfType<System.Windows.Shapes.Rectangle>())
+                        {
+                            DrawWindow1.Children.Remove(rect);
+                            currentLine = null;
+                            DrawWindow1.InvalidateVisual();
+                            break;
+                        }
+                }
+            }
+
+
+        }
+             
+        private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            mp_press = false;
+            cnt++;
+        }
+
         #endregion
 
     #region Checks
