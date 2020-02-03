@@ -21,5 +21,33 @@ namespace DevEducationPaint
         {
             InitializeComponent();
         }
+
+        private void Default_Checked(object sender, RoutedEventArgs e)
+        {
+            Height.Text = "580";
+            Width.Text = "800";
+            Height.IsEnabled = false;
+            Width.IsEnabled = false;
+
+        }
+        private void Default_Click(object sender, RoutedEventArgs e)
+        {
+            if (Default.IsChecked == false)
+            {
+                Height.IsEnabled = true;
+                Width.IsEnabled = true;
+            }
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BtnOK_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
     }
 }

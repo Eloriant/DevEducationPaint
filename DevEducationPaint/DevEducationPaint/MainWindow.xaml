@@ -58,7 +58,7 @@
 
         <!--Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="68" Margin="357,23,0,0" Stroke="#FF8B8B8B" VerticalAlignment="Top" Width="244" Fill="White"/>-->
         <!--<Label  Content="Thinckness" HorizontalAlignment="Left" Margin="10,354,0,0" VerticalAlignment="Top" Grid.Row="1" Width="72"/>-->
-        <StackPanel Grid.Row="1" Margin="10,354,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="80">
+        <StackPanel Grid.Row="1" Margin="0,283,0,0" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="80">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Thickness: "/>
                 <Label Content="{Binding Value, ElementName=sliderToPencilSize}" ContentStringFormat="{}{0:N0}"/>
@@ -278,7 +278,7 @@
                 <ImageBrush ImageSource="Icons/polygon.png"/>
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle HorizontalAlignment="Center" Height="20" Width="85" Margin="0,272,0,0" VerticalAlignment="Top" Grid.Row="1" Panel.ZIndex="1" >
+        <!--<Rectangle HorizontalAlignment="Center" Height="20" Width="85" Margin="0,272,0,0" VerticalAlignment="Top" Grid.Row="1" Panel.ZIndex="1" >
             <Rectangle.Fill>
                 <ImageBrush ImageSource="Icons/thin1.png"/>
             </Rectangle.Fill>
@@ -297,7 +297,7 @@
             <Rectangle.Fill>
                 <ImageBrush ImageSource="Icons/thin4.png"/>
             </Rectangle.Fill>
-        </Rectangle>
+        </Rectangle>-->
 
         <!--<Border x:Name="BorderThin" Grid.Row="1" Margin="5,237,5,347" >
             <Border.Effect>
@@ -359,13 +359,14 @@
             </TabItem>
         </TabControl>
         <Button x:Name="Clear"  Content="Clear All" HorizontalAlignment="Left" Margin="28,425,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Clear_Checked"/>
-        <Button x:Name="BtnSave" Content="Save" Grid.Column="1" HorizontalAlignment="Left" Margin="454,5,0,0" VerticalAlignment="Top" Click="BtnSave_Click"/>
-        <Button x:Name="BtnOpen" Content="Open" Grid.Column="1" HorizontalAlignment="Left" Margin="502,5,0,0" VerticalAlignment="Top" Click="BtnOpen_Click"/>
-        <Button x:Name="BtnCreate" Content="Create" Grid.Column="1" HorizontalAlignment="Left" Margin="559,6,0,0" VerticalAlignment="Top" Click="BtnCreate_Click"/>
+        <Button x:Name="BtnSave" Content="Save" Grid.Column="1" HorizontalAlignment="Left" Margin="400,21,0,0" VerticalAlignment="Top" Click="BtnSave_Click" Width="40"/>
+        <Button x:Name="BtnOpen" Content="Open" Grid.Column="1" HorizontalAlignment="Left" Margin="461,21,0,0" VerticalAlignment="Top" Click="BtnOpen_Click" Width="43"/>
+        <Button x:Name="BtnCreate" Content="Create" Grid.Column="1" HorizontalAlignment="Left" Margin="525,21,0,0" VerticalAlignment="Top" Click="BtnCreate_Click" Width="48"/>
         <Button x:Name="Clear_Copy"  Content="Clear All" HorizontalAlignment="Left" Margin="28,425,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Clear_Checked"/>
-        <Button x:Name="Line_On_Canvas"  Content="Line" HorizontalAlignment="Left" Margin="10,521,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Line_Click"/>
-        <Button x:Name="Back" Content="back" HorizontalAlignment="Left" Margin="29,455,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Back_Click"/>
-        <Button x:Name="Next" Content="next" HorizontalAlignment="Left" Margin="29,482,0,0" Grid.Row="1" VerticalAlignment="Top" Width="29" Click="Next_Click"/>
+        <!--<Button x:Name="Line_On_Canvas"  Content="Line" HorizontalAlignment="Left" Margin="10,521,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Line_Click"/>-->
+        <Button x:Name="Back" Content="back" HorizontalAlignment="Left" Margin="10,342,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Back_Click" Height="30" Width="30"/>
+        <Button x:Name="Next" Content="next" HorizontalAlignment="Left" Margin="52,342,0,0" Grid.Row="1" VerticalAlignment="Top" Width="30
+                " Click="Next_Click" Height="30"/>
         <!--<ToggleButton x:Name = "tbCircle" Content = "Toggle"
          Width = "108" HorizontalAlignment = "Left" Background="#FFDA4B4B" Click="tbCircle_Clicked" Margin="138,23,0,97" Grid.Column="1" >
             <ToggleButton.Style>

@@ -201,6 +201,7 @@ namespace DevEducationPaint
         private void BtnCreate_Click(object sender, RoutedEventArgs e)
         {
             CreateBitmapWindow bitmapWindow = new CreateBitmapWindow();
+            bitmapWindow.Owner = this;
             bitmapWindow.Show();
         }
 
