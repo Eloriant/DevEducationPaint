@@ -12,14 +12,14 @@ namespace DevEducationPaint.Thicknesses
         {
             List<Point> result = new List<Point>();
             result.Add(point);
-            Point upPoint = new Point(point.X, point.Y += 1);
+            Point upPoint = new Point(point.X, point.Y + 1);
             result.Add(upPoint);
-            Point downPoint = new Point(point.X, point.Y -= 1);
+            Point downPoint = new Point(point.X, point.Y - 1);
             result.Add(downPoint);
-            Point rightPoint = new Point(point.X += 1, point.Y);
+            Point rightPoint = new Point(point.X + 1, point.Y);
             result.Add(rightPoint);
-            Point leftPoint = new Point(point.X -= 1, point.Y);
-            result.Add(rightPoint);
+            Point leftPoint = new Point(point.X - 1, point.Y);
+            result.Add(leftPoint);
             return result;
         }
     }

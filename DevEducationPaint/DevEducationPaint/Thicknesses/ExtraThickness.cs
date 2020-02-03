@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DevEducationPaint.Thicknesses
 {
-    class ExtraThickness : ThicknessStrategy
+   public class ExtraThickness : ThicknessStrategy
     {
         public override List<Point> GetPoints(Point point)
         {

@@ -33,6 +33,14 @@ namespace DevEducationPaint.Tests
                     return new Point(373, 303);
                 case "pointEnd2":
                     return new Point(373, 302);
+                case "pointStart3":
+                    return new Point(100, 200);
+                case "pointEnd3":
+                    return new Point(150, 250);
+                case "pointStart4":
+                    return new Point(389, 194);
+                case "pointEnd4":
+                    return new Point(390, 196);
                 default:
                     return new Point();
             }
@@ -68,6 +76,24 @@ namespace DevEducationPaint.Tests
                             new Point(373, 302)
                         }
                     );
+                case "expectedTriangle3":
+                    return new TriangleFigure(
+                        new List<Point>
+                        {
+                            new Point(100, 200),
+                            new Point(150, 250),
+                            new Point(50, 250)
+                        }
+                    );
+                case "expectedTriangle4":
+                    return new TriangleFigure(
+                        new List<Point>
+                        {
+                            new Point(389, 194),
+                            new Point(390, 196),
+                            new Point(388, 196)
+                        }
+                    );
                 default:
                     return new TriangleFigure(new List<Point>());
             }
@@ -95,14 +121,36 @@ namespace DevEducationPaint.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase("pointStart4", "pointEnd4", "expectedTriangle4")] // равносторонний треугольник
+        public void GetListOfPoints2(string pointStart4, string pointEnd4, string expectedTriangle4)
+        {
+            TriangleCreator triangleCreator = new TriangleCreator(false, false);
+            TriangleFigure expected = GetTriangleByName(expectedTriangle4);
+            Point start = GetPointByName(pointStart4);
+            Point end = GetPointByName(pointEnd4);
+            Figure actual = triangleCreator.CreateFigure(start, end);
+            CollectionAssert.AreEqual(expected.FigurePoints, actual.FigurePoints);
+        }
 
-        [TestCase("pointStart2", "pointEnd2", "expectedTriangle2")]
+
+        [TestCase("pointStart2", "pointEnd2", "expectedTriangle2")] // прямоугольный треугольник
         public void GetListOfPoints(string pointStart2, string pointEnd2, string expectedTriangle2)
         {
             TriangleCreator triangleCreator = new TriangleCreator(true, false);
             TriangleFigure expected = GetTriangleByName(expectedTriangle2);
             Point start = GetPointByName(pointStart2);
             Point end = GetPointByName(pointEnd2);
+            Figure actual = triangleCreator.CreateFigure(start, end);
+            CollectionAssert.AreEqual(expected.FigurePoints, actual.FigurePoints);
+        }
+
+        [TestCase("pointStart3", "pointEnd3", "expectedTriangle3")] // равнобедренный треугольник
+        public void GetListOfPoints1(string pointStart3, string pointEnd3, string expectedTriangle3)
+        {
+            TriangleCreator triangleCreator = new TriangleCreator(false, true);
+            TriangleFigure expected = GetTriangleByName(expectedTriangle3);
+            Point start = GetPointByName(pointStart3);
+            Point end = GetPointByName(pointEnd3);
             Figure actual = triangleCreator.CreateFigure(start, end);
             CollectionAssert.AreEqual(expected.FigurePoints, actual.FigurePoints);
         }
