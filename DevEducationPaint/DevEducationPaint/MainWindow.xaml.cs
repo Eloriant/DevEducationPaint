@@ -180,7 +180,7 @@ namespace DevEducationPaint
       if(countClick == SuperBitmap.Copies.Count)
         SuperBitmap.Copies.Add(SuperBitmap.Instance);
 
-      if (countClick >= 0)
+      if (countClick > 0)
       {
         --countClick;
         SuperBitmap.Instance = SuperBitmap.Copies[countClick];
@@ -191,7 +191,7 @@ namespace DevEducationPaint
 
     private void Next_Click(object sender, RoutedEventArgs e)
     {
-      if (countClick < SuperBitmap.Copies.Count)
+      if (countClick < SuperBitmap.Copies.Count-1)
       {
         ++countClick;
         SuperBitmap.Instance = SuperBitmap.Copies[countClick];
