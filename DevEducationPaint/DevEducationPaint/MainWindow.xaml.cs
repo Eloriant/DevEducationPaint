@@ -348,49 +348,51 @@ namespace DevEducationPaint
         }
     }
 
-        int point_index = 0;
-        Line currentLine = null;
-        System.Windows.Point currentPoint = new System.Windows.Point();
-        int cnt = 0;
-        bool mp_press;
+    int point_index = 0; // номер точки в фигуре для редактирования
+    Line currentLine = null;
+    System.Windows.Point currentPoint = new System.Windows.Point();
+    int cnt = 0;
+    bool mp_press; 
 
-        public object DrowWindow1 { get; private set; }
+    public object DrowWindow1 { get; private set; }
 
-        private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
+    private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+        double markerX = -1, markerY = -1; //красные маркеры в уголках линий
+
+        mp_press = true;
+
+        if (e.LeftButton == MouseButtonState.Pressed)
         {
-            double markerX = -1, markerY = -1;
-            mp_press = true;
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                currentPoint = e.GetPosition(this);
-            }
-
-            Line line;
-
-            foreach (Line line1 in DrawWindow1.Children.OfType<Line>())
-            {
-                line = line1;
-
-                if (Math.Abs(line.X1 - e.GetPosition(this).X) < 5 && Math.Abs(e.GetPosition(this).Y - 5 - line.Y1) < 5)
-                {
-                    point_index = 0;
-                    markerX = line.X1;
-                    markerY = line.Y1;
-                    currentLine = line;
-
-                }
-                else if ((Math.Abs(line.X2 - e.GetPosition(this).X) < 5 && Math.Abs(e.GetPosition(this).Y - 5 - line.Y2) < 5))
-                {
-                    point_index = 1;
-                    markerX = line.X2;
-                    markerY = line.Y2;
-                    currentLine = line;
-                }
-            }
-
+            currentPoint = e.GetPosition(this);
         }
 
-        private void Canvas_MouseMove(object sender, MouseEventArgs e)
+        Line line;
+
+        foreach (Line line1 in DrawWindow1.Children.OfType<Line>())
+        {
+            line = line1;
+
+            if (Math.Abs(line.X1 - e.GetPosition(this).X) < 5 && Math.Abs(e.GetPosition(this).Y - 5 - line.Y1) < 5)
+            {
+                point_index = 0;
+                markerX = line.X1;
+                markerY = line.Y1;
+                currentLine = line;
+
+            }
+            else if ((Math.Abs(line.X2 - e.GetPosition(this).X) < 5 && Math.Abs(e.GetPosition(this).Y - 5 - line.Y2) < 5))
+            {
+                point_index = 1;
+                markerX = line.X2;
+                markerY = line.Y2;
+                currentLine = line;
+            }
+        }
+
+    }
+
+    private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
             double markerX = -1, markerY = -1;
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -458,7 +460,7 @@ namespace DevEducationPaint
 
                         line.Stroke = System.Windows.SystemColors.WindowFrameBrush;
                         line.X1 = currentPoint.X;
-                        line.Y1 = currentPoint.X;
+                        line.Y1 = currentPoint.Y;
                         line.X2 = e.GetPosition(this).X;
                         line.Y2 = e.GetPosition(this).Y;
 
@@ -486,6 +488,14 @@ namespace DevEducationPaint
                     line = line1;
 
                     if (Math.Abs(line.X1 - e.GetPosition(this).X) < 5 && Math.Abs(e.GetPosition(this).Y - 5 - line.Y1) < 5)
+                    {
+                        point_index = 0;
+                        markerX = line.X1;
+                        markerY = line.Y1;
+                        currentLine = line;
+                    }
+                    else 
+                    if (Math.Abs(line.X2 - e.GetPosition(this).X) < 5 && Math.Abs(e.GetPosition(this).Y - 5 - line.Y2) < 5)
                     {
                         point_index = 1;
                         markerX = line.X2;
@@ -525,14 +535,14 @@ namespace DevEducationPaint
 
 
         }
-             
-        private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            mp_press = false;
-            cnt++;
-        }
+         
+    private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
+    {
+        mp_press = false;
+        cnt++; //номер линии
+    }
 
-        #endregion
+    #endregion
 
     #region Checks
     private void Eraser_Checked(object sender, RoutedEventArgs e)
