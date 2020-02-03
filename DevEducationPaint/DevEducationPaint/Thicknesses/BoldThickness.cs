@@ -11,26 +11,31 @@ namespace DevEducationPaint.Thicknesses
         {
             List<Point> result = new List<Point>();
             result.Add(point);
-            Point upPoint = new Point(point.X, point.Y + 1);
+            Point upPoint = new Point(point.X, point.Y - 1);
             result.Add(upPoint);
-            Point downPoint = new Point(point.X, point.Y - 1);
+            Point downPoint = new Point(point.X, point.Y + 1);
             result.Add(downPoint);
             Point rightPoint = new Point(point.X + 1, point.Y);
             result.Add(rightPoint);
             Point leftPoint = new Point(point.X - 1, point.Y);
-            result.Add(rightPoint);
+            result.Add(leftPoint);
             Point rightUpSquareAnglePoint = new Point(rightPoint.X, rightPoint.Y + 1);
             result.Add(rightUpSquareAnglePoint);
             Point rightDownSquareAnglePoint = new Point(rightPoint.X, rightPoint.Y - 1);
             result.Add(rightDownSquareAnglePoint);
-            Point leftUpSquareAnglePoint = new Point(leftPoint.X, rightPoint.Y + 1);
+            Point leftUpSquareAnglePoint = new Point(leftPoint.X, leftPoint.Y + 1);
             result.Add(leftUpSquareAnglePoint);
-            Point leftDownSquareAnglePoint = new Point(leftPoint.X, rightPoint.Y - 1);
+            Point leftDownSquareAnglePoint = new Point(leftPoint.X, leftPoint.Y - 1);
             result.Add(leftDownSquareAnglePoint);
-            Point extraRightPoint = new Point(rightPoint.X + 1 , rightPoint.Y);
+            Point plusUpPoint = new Point(upPoint.X, upPoint.Y - 1);
+            result.Add(plusUpPoint);
+            Point plusDownPoint = new Point(downPoint.X, downPoint.Y + 1);
+            result.Add(plusDownPoint);
+            Point extraRightPoint = new Point(rightPoint.X + 1, rightPoint.Y);
             result.Add(extraRightPoint);
-            Point extraLeftPoint = new Point(leftPoint.X - 1, rightPoint.Y);
+            Point extraLeftPoint = new Point(leftPoint.X - 1, leftPoint.Y);
             result.Add(extraLeftPoint);
+
             return result;
         }
     }
