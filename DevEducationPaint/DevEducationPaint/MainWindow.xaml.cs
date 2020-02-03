@@ -236,11 +236,20 @@ namespace DevEducationPaint
         ddd.Content = $"{prev.X} {prev.Y}";
         if (picker)
         {
-          byte[] color = GetPixelColorData(SuperBitmap.Instance, prev);
-          cp.SelectedColor = System.Windows.Media.Color.FromArgb(color[3], color[2], color[1], color[0]);
-          drawStrategy.SurfaceStrategy.CurrentColor = new DrawColor(color[3], color[2], color[1], color[0]);
-          picker = false;
-          SetState(FigureEnum.Picker);
+          if (prev.X <= 0 || prev.Y <= 0 || prev.X >= SuperBitmap.Instance.PixelWidth || prev.Y >= SuperBitmap.Instance.PixelHeight)
+          {
+              picker = false;
+              Picker.IsChecked = false;
+          }
+          else
+          {
+              byte[] color = GetPixelColorData(SuperBitmap.Instance, prev);
+              cp.SelectedColor = System.Windows.Media.Color.FromArgb(color[3], color[2], color[1], color[0]);
+              drawStrategy.SurfaceStrategy.CurrentColor = new DrawColor(color[3], color[2], color[1], color[0]);
+              picker = false;
+              SetState(FigureEnum.Picker);
+          }
+          
         }
         while (filler)
         {
