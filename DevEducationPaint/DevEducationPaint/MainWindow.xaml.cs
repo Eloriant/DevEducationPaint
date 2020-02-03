@@ -26,158 +26,174 @@ using Xceed.Wpf.Toolkit;
 //using Color = System.Drawing.Color;
 using Figure = DevEducationPaint.Figures.Figure;
 using Point = System.Drawing.Point;
+using Rectangle = System.Windows.Shapes.Rectangle;
 
 namespace DevEducationPaint
 {
-  public partial class MainWindow : Window
-  {
-    #region Variabls On The Class Level
-    //private Figure drawStrategy;
-    private IDrawStrategy drawStrategy;
-    //private DrawStrategy currentDrawStrategy;
-    Figure resultFigure;
-    FigureCreator currentCreator = null;
-    private bool isFirstClicked = true;
-    private bool isDoubleClicked = false;
-    private Point pStaticStart = new Point();
-    private int angleNumber = 5;
-    private Point prev = new Point(0, 0);
-    private Point position = new Point(0, 0);
-    Point point = new Point(0, 0);
-    private bool isDrawingFigure = false; //флаг сигнализирующий
-    private bool picker = false;
-    private bool filler = false;
-    private FigureEnum currentFigure;
-    private bool vector = false;
-    private static int counterToTabControl = 0;
-    #endregion
+    public partial class MainWindow : Window
+    {
+        #region Variabls On The Class Level
+        //private Figure drawStrategy;
+        private IDrawStrategy drawStrategy;
+        //private DrawStrategy currentDrawStrategy;
+        Figure resultFigure;
+        FigureCreator currentCreator = null;
+        private bool isFirstClicked = true;
+        private bool isDoubleClicked = false;
+        private Point pStaticStart = new Point();
+        private int angleNumber = 5;
+        private Point prev = new Point(0, 0);
+        double prevX = 0;
+        double prevY = 0;
+        double positionX = 0;
+        double positionY = 0;
+        private Point position = new Point(0, 0);
+        Point point = new Point(0, 0);
+        private bool isDrawingFigure = false; //флаг сигнализирующий
+        private bool picker = false;
+        private bool filler = false;
+        private FigureEnum currentFigure;
+        private bool vector = false;
+        private static int counterToTabControl = 0;
+        public double positionVector;
+        #endregion
 
-    public MainWindow()
-{
-    drawStrategy = new DrawByLine
-    {
-    SurfaceStrategy = new DrawOnBitmap
-    {
-        CurrentColor = new DrawColor(255, 0, 0, 255),
-        ConcreteThickness = new BoldThickness()
-    }
-    };
-    InitializeComponent();
-    var colors = new List<System.Windows.Media.Color> { Colors.Black, Colors.Black, Colors.Black };
-    BitmapPalette myPalette = new BitmapPalette(colors);
-    SuperBitmap.Instance = new WriteableBitmap((int)DrawWindow.Width,
-    (int)DrawWindow.Height, 96, 96, PixelFormats.Bgra32, null);
-    Int32.TryParse(tbxAngleNumber.Text as string, out int nValue);
-    angleNumber = nValue;
-    FillWhite();
-    DrawWindow.Source = SuperBitmap.Instance;
-    point = prev;
-}//инициализация окна для режима растрового рисования
+        public MainWindow()
+        {
+            drawStrategy = new DrawByLine
+            {
+                SurfaceStrategy = new DrawOnBitmap
+                {
+                    CurrentColor = new DrawColor(255, 0, 0, 255),
+                    ConcreteThickness = new BoldThickness()
+                }
+            };
+            InitializeComponent();
+            var colors = new List<System.Windows.Media.Color> { Colors.Black, Colors.Black, Colors.Black };
+            BitmapPalette myPalette = new BitmapPalette(colors);
+            SuperBitmap.Instance = new WriteableBitmap((int)DrawWindow.Width,
+            (int)DrawWindow.Height, 96, 96, PixelFormats.Bgra32, null);
+            Int32.TryParse(tbxAngleNumber.Text as string, out int nValue);
+            angleNumber = nValue;
+            FillWhite();
+            DrawWindow.Source = SuperBitmap.Instance;
+            point = prev;
+        }
+        private void FillWhite()
+        {
+            int width = (int)DrawWindow.Width;
+            int height = (int)DrawWindow.Height;
+            int stride = width / 8;
+            byte[] pixels = new byte[height * stride];
 
-    private void FillWhite()
-{
-    int width = (int)DrawWindow.Width;
-    int height = (int)DrawWindow.Height;
-    int stride = width / 8;
-    byte[] pixels = new byte[height * stride];
+            var color = new DrawColor(255, 255, 255, 255);
+            for (int i = 0; i < width; i++)
+            {
+                for (int k = 0; k < height; k++)
+                {
+                    var rect = new Int32Rect(i, k, 1, 1);
+                    SuperBitmap.Instance.WritePixels(rect, color.Instance, 4, 0);
+                }
+            }
+        }
 
-    var color = new DrawColor(255, 255, 255, 255);
-    for (int i = 0; i < width; i++)
-    {
-    for (int k = 0; k < height; k++)
-    {
-        var rect = new Int32Rect(i, k, 1, 1);
-        SuperBitmap.Instance.WritePixels(rect, color.Instance, 4, 0);
-    }
-    }
-}
+        #region Clicks
+    
+        private void Line_Click(object sender, RoutedEventArgs e)//тестовая кнопка при написании вектора, в текущей версии отключена
+        {
 
-    #region Clicks
-    private void Line_Click(object sender, RoutedEventArgs e)//тестовая кнопка при написании вектора
-    {
-        Line myLine = new Line();
-        myLine.Stroke = System.Windows.Media.Brushes.LightSteelBlue;
-        myLine.X1 = 1;
-        myLine.X2 = 50;
-        myLine.Y1 = 1;
-        myLine.Y2 = 50;
-        myLine.HorizontalAlignment = HorizontalAlignment.Left;
-        myLine.VerticalAlignment = VerticalAlignment.Center;
-        myLine.StrokeThickness = 2;
-        DrawWindow1.Children.Add(myLine);
-    }
-    private void BtnOpen_Click(object sender, RoutedEventArgs e)
-    {
-        SuperBitmap.OpenFileDialog();
-        DrawWindow.Source = SuperBitmap.Instance;
-    }
-    private void BtnSave_Click(object sender, RoutedEventArgs e)
-    {
-        //IDialogService fileDialog = new DefaultDialogService();
-        //fileDialog.OpenFileDialog();
-        SuperBitmap.SaveFileDialog();
-    }
-    private void Eraser_Click(object sender, RoutedEventArgs e)
-    {
-        // cp.SelectedColor = System.Windows.Media.Color.FromArgb(255, 255, 255, 255);
-        drawStrategy.SurfaceStrategy.CurrentColor = new DrawColor(255, 255, 255, 255);
-        SetState(FigureEnum.Eraser);
-        isDrawingFigure = false;
-        currentFigure = FigureEnum.Pencil;
-    }
-    private void BrokenLine_Click(object sender, RoutedEventArgs e)
-    {
-        SetState(FigureEnum.BrokenLine);
-        isDrawingFigure = true;
-        isFirstClicked = true;
-        currentFigure = FigureEnum.BrokenLine;
-    }
-    private void Polygon_Click(object sender, RoutedEventArgs e)
-    {
-        SetState(FigureEnum.Polygon);
-        isDrawingFigure = true;
-        currentFigure = FigureEnum.Polygon;
-    }
-    private void buttonLine_Click(object sender, RoutedEventArgs e)
-    {
-        SetState(FigureEnum.Line);
-        isDrawingFigure = true;
-        currentFigure = FigureEnum.Line;
-    }
-    private void Pencil_Click(object sender, RoutedEventArgs e)
-    {
-        PickColor();
-        SetState(FigureEnum.Pencil);
-        isDrawingFigure = false;
-        currentFigure = FigureEnum.Pencil;
-    }
-    private void Triangle_Click(object sender, RoutedEventArgs e)
-    {
-        SetState(FigureEnum.Triangle);
-        isDrawingFigure = true;
-        currentFigure = FigureEnum.Triangle;
-    }
-    private void Circle_Click(object sender, RoutedEventArgs e)
-    {
-        //tbCircle.IsChecked = true;
-        SetState(FigureEnum.Circle);
-        isDrawingFigure = true;
-        currentFigure = FigureEnum.Circle;
-    }
-    private void Square_Click(object sender, RoutedEventArgs e)
-    {
-        SetState(FigureEnum.Square);
-        isDrawingFigure = true;
-        currentFigure = FigureEnum.Square;
-    }
-    #endregion
+        }
+        private void BtnOpen_Click(object sender, RoutedEventArgs e)
+        {
+            SuperBitmap.OpenFileDialog();
+            DrawWindow.Source = SuperBitmap.Instance;
+        }
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            //IDialogService fileDialog = new DefaultDialogService();
+            //fileDialog.OpenFileDialog();
+            SuperBitmap.SaveFileDialog();
+        }
+        private void Eraser_Click(object sender, RoutedEventArgs e)
+        {
+            // cp.SelectedColor = System.Windows.Media.Color.FromArgb(255, 255, 255, 255);
+            drawStrategy.SurfaceStrategy.CurrentColor = new DrawColor(255, 255, 255, 255);
+            SetState(FigureEnum.Eraser);
+            isDrawingFigure = false;
+            currentFigure = FigureEnum.Pencil;
+        }
+        private void BrokenLine_Click(object sender, RoutedEventArgs e)
+        {
+            SetState(FigureEnum.BrokenLine);
+            isDrawingFigure = true;
+            isFirstClicked = true;
+            currentFigure = FigureEnum.BrokenLine;
+        }
+        private void Polygon_Click(object sender, RoutedEventArgs e)
+        {
+            SetState(FigureEnum.Polygon);
+            if (vector)
+            {
 
-    #region Mouse Methods
+            }
+            else if (vector == false)
+            {
+                isDrawingFigure = true;
+                currentFigure = FigureEnum.Polygon;
+            }
+        }
+        private void buttonLine_Click(object sender, RoutedEventArgs e)
+        {
+            SetState(FigureEnum.Line);
+            isDrawingFigure = true;
+            currentFigure = FigureEnum.Line;
+        }
+        private void Pencil_Click(object sender, RoutedEventArgs e)
+        {
+            PickColor();
+            SetState(FigureEnum.Pencil);
+            isDrawingFigure = false;
+            currentFigure = FigureEnum.Pencil;
+        }
+        private void Triangle_Click(object sender, RoutedEventArgs e)
+        {
+            SetState(FigureEnum.Triangle);
+            isDrawingFigure = true;
+            currentFigure = FigureEnum.Triangle;
+        }
+        private void Circle_Click(object sender, RoutedEventArgs e)
+        {
+            //tbCircle.IsChecked = true;
+            SetState(FigureEnum.Circle);
+            isDrawingFigure = true;
+            currentFigure = FigureEnum.Circle;
+        }
+        private void Square_Click(object sender, RoutedEventArgs e)
+        {
+            SetState(FigureEnum.Square);
+            isDrawingFigure = true;
+            currentFigure = FigureEnum.Square;
+        }
+        #endregion
+
+        #region Mouse Methods
     private void Window_MouseDown(object sender, MouseButtonEventArgs e)
     {
         if (vector)
         {
-            
+            var temp = e.GetPosition(this.DrawWindow1);
+            prevX = temp.X;
+            prevY = temp.Y;
+            ddd.Content = $"{prevX} {prevY}";
+            System.Windows.Shapes.Rectangle rect;
+            rect = new System.Windows.Shapes.Rectangle();
+            rect.Stroke = new SolidColorBrush(Colors.Black);
+            rect.Fill = new SolidColorBrush(Colors.Black);
+            rect.Width = 20;
+            rect.Height = 20;
+            Canvas.SetLeft(rect, prevX);
+            Canvas.SetTop(rect, prevY);
+            DrawWindow1.Children.Add(rect);
         }
         else if (vector == false)
         {
@@ -219,64 +235,78 @@ namespace DevEducationPaint
                 Fill.IsChecked = false;
             }
         }
-        
     }
     private void Image_MouseMove(object sender, MouseEventArgs e)
     {
-        SuperBitmap.CopyInstance();
-        bool isShiftPressed = Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
-        bool isCtrlPressed = Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
-        switch (currentFigure)
+        if (vector)
         {
-            case FigureEnum.Pencil:
-                currentCreator = new PencilCreator();
-                break;
-            case FigureEnum.Circle:
-                currentCreator = new CircleCreator();
-                break;
-            case FigureEnum.Triangle:
-                currentCreator = new TriangleCreator(isShiftPressed, isCtrlPressed);
-                break;
-            case FigureEnum.Line:
-                currentCreator = new LineCreator();
-                break;
-            case FigureEnum.Square:
-                currentCreator = new SquareCreator(isShiftPressed);
-                break;
-            case FigureEnum.Polygon:
-                currentCreator = new PolygonCreator(Convert.ToInt32(tbxAngleNumber.Text));
-                break;
-            case FigureEnum.BrokenLine:
-                currentCreator = new BrokenLineCreator();
-                break;
-        }
-
-        if (currentCreator == null) return;
-        if (isDrawingFigure && prev.X != 0 && prev.Y != 0)//алгоритм рисования в растровом режиме для всех фигур, кроме карандаша
-        {
-            var temp = e.GetPosition(this.DrawWindow);
-            temp = e.GetPosition(this.DrawWindow);
-            position = new Point((int)temp.X, (int)temp.Y);
+            var temp = e.GetPosition(this.DrawWindow1);
+            positionX = temp.X;
+            positionY = temp.Y;
             ddd.Content = $"{position.X} {position.Y}";
-            resultFigure = currentCreator.CreateFigure(prev, position);
-            resultFigure.ConcreteDraw = drawStrategy;
-            resultFigure.Draw();
-            DrawWindow.Source = SuperBitmap.GetInstanceCopy();
         }
-        if (!isDrawingFigure)//алгоритм рисования в растровом режиме для карандаша
+        else if (vector == false)
+        {
+            SuperBitmap.CopyInstance();
+            bool isShiftPressed = Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
+            bool isCtrlPressed = Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
+            switch (currentFigure)
             {
-            if (e.LeftButton != MouseButtonState.Pressed) return;
-            var temp1 = e.GetPosition(this.DrawWindow);
-            ddd.Content = $"{(int)temp1.X}:{(int)temp1.Y}";
-            position = new Point((int)temp1.X, (int)temp1.Y);
-            resultFigure = currentCreator.CreateFigure(prev, position);
-            resultFigure.ConcreteDraw = drawStrategy;
-            resultFigure.Draw();
-            SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
-            DrawWindow.Source = SuperBitmap.Instance;
-            prev = position;
+                case FigureEnum.Pencil:
+                    currentCreator = new PencilCreator();
+                    break;
+                case FigureEnum.Circle:
+                    currentCreator = new CircleCreator();
+                    break;
+                case FigureEnum.Triangle:
+                    currentCreator = new TriangleCreator(isShiftPressed, isCtrlPressed);
+                    break;
+                case FigureEnum.Line:
+                    currentCreator = new LineCreator();
+                    break;
+                case FigureEnum.Square:
+                    currentCreator = new SquareCreator(isShiftPressed);
+                    break;
+                case FigureEnum.Polygon:
+                    currentCreator = new PolygonCreator(Convert.ToInt32(tbxAngleNumber.Text));
+                    break;
+                case FigureEnum.BrokenLine:
+                    currentCreator = new BrokenLineCreator();
+                    break;
+            }
+
+            if (currentCreator == null) return;
+            if (isDrawingFigure && prev.X != 0 && prev.Y != 0)//алгоритм рисования в растровом режиме для всех фигур, кроме карандаша
+            {
+                var temp = e.GetPosition(this.DrawWindow);
+                temp = e.GetPosition(this.DrawWindow);
+                position = new Point((int)temp.X, (int)temp.Y);
+                ddd.Content = $"{position.X} {position.Y}";
+                resultFigure = currentCreator.CreateFigure(prev, position);
+                resultFigure.ConcreteDraw = drawStrategy;
+                resultFigure.Draw();
+                DrawWindow.Source = SuperBitmap.GetInstanceCopy();
+            }
+            if (!isDrawingFigure)//алгоритм рисования в растровом режиме для карандаша
+            {
+                if (e.LeftButton != MouseButtonState.Pressed) return;
+                var temp1 = e.GetPosition(this.DrawWindow);
+                ddd.Content = $"{(int)temp1.X}:{(int)temp1.Y}";
+                position = new Point((int)temp1.X, (int)temp1.Y);
+                resultFigure = currentCreator.CreateFigure(prev, position);
+                resultFigure.ConcreteDraw = drawStrategy;
+                resultFigure.Draw();
+                SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
+                DrawWindow.Source = SuperBitmap.Instance;
+                prev = position;
+            }
         }
-    }
+        
+    }//MouseMove для работы с растром
+    private void Canvas_MouseMove(object sender, MouseEventArgs e)
+    {
+
+    }//пока что нерабочий маусмув для работы с вектором, не факт, что вообще нужен
     private void Window_MouseUp(object sender, MouseButtonEventArgs e)
     {
         if (isFirstClicked && currentFigure == FigureEnum.BrokenLine)
@@ -331,25 +361,38 @@ namespace DevEducationPaint
 
         DrawWindow.RenderTransform = new MatrixTransform(m);
     }
-    private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    private void Canvas_MouseWheel(object sender, MouseWheelEventArgs e)
     {
-        isDoubleClicked = true;
-        if (currentFigure == FigureEnum.BrokenLine)
-        {
-            var resultCreator = currentCreator.CreateFigure(prev, pStaticStart);
-            resultCreator.ConcreteDraw = drawStrategy;
-            resultCreator.Draw();
-            DrawWindow.Source = SuperBitmap.GetInstanceCopy();
-            isFirstClicked = true;
-            prev.X = 0;
-            prev.Y = 0;
-            currentFigure = FigureEnum.Pencil;
-            isDrawingFigure = true;
-        }
-    }
-        #endregion
+        var temp = e.MouseDevice.GetPosition(DrawWindow1);
+        Point p = new Point((int)temp.X, (int)temp.Y);
 
-    #region Checks
+        Matrix m = DrawWindow1.RenderTransform.Value;
+        if (e.Delta > 0)
+            m.ScaleAtPrepend(1.1, 1.1, p.X, p.Y);
+        else
+            m.ScaleAtPrepend(1 / 1.1, 1 / 1.1, p.X, p.Y);
+
+        DrawWindow1.RenderTransform = new MatrixTransform(m);
+    }
+    private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+{
+    isDoubleClicked = true;
+    if (currentFigure == FigureEnum.BrokenLine)
+    {
+        var resultCreator = currentCreator.CreateFigure(prev, pStaticStart);
+        resultCreator.ConcreteDraw = drawStrategy;
+        resultCreator.Draw();
+        DrawWindow.Source = SuperBitmap.GetInstanceCopy();
+        isFirstClicked = true;
+        prev.X = 0;
+        prev.Y = 0;
+        currentFigure = FigureEnum.Pencil;
+        isDrawingFigure = true;
+    }
+}
+    #endregion
+
+        #region Checks
     private void Eraser_Checked(object sender, RoutedEventArgs e)
     {
         picker = true;
@@ -411,7 +454,7 @@ namespace DevEducationPaint
     }
         #endregion
 
-    #region Changes From UI
+        #region Changes From UI
     private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         counterToTabControl++;
@@ -473,9 +516,9 @@ namespace DevEducationPaint
         Int32.TryParse(tbxAngleNumber.Text as string, out int value);
         angleNumber = value;
     }
-        #endregion
+    #endregion
 
-    #region Filling //надо отсюда унести!
+        #region Filling 
     private void PickColor()
     {
         if (cp.SelectedColor.HasValue)
@@ -485,8 +528,8 @@ namespace DevEducationPaint
                 cp.SelectedColor.Value.G,
                 cp.SelectedColor.Value.B);
         }
-    }
-    private byte[] GetPixelColorData(WriteableBitmap bmp, Point prev)
+     }
+        private byte[] GetPixelColorData(WriteableBitmap bmp, Point prev)
     {
         int bytePerPixel = 4;
         //System.Windows.Media.Color returnColor = new System.Windows.Media.Color();
@@ -557,13 +600,14 @@ namespace DevEducationPaint
 
     }
     #endregion
-
+        //надо отсюда унести!
+        
         private void BtnCreate_Click(object sender, RoutedEventArgs e)
-        {
-            CreateBitmapWindow bitmapWindow = new CreateBitmapWindow();
+{
+    CreateBitmapWindow bitmapWindow = new CreateBitmapWindow();
 
-            bitmapWindow.Show();
+    bitmapWindow.Show();
 
-        }
+    }//тому, кто делал метод и знает, как он работает надо унести его в регион Clicks
     }
 }

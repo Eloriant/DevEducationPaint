@@ -12,7 +12,6 @@ namespace DevEducationPaint.Surface_Strategy
         public DrawColor CurrentColor { get; set; }
         public ThicknessStrategy ConcreteThickness { get; set; }
         public void DrawLine(Point p1, Point p2);
-
         public int FindQuarter(Point prev, Point position)
         {
           int quarter = 0;
@@ -34,5 +33,5 @@ namespace DevEducationPaint.Surface_Strategy
           }
           return quarter;
         }
-  }
+    }
 }

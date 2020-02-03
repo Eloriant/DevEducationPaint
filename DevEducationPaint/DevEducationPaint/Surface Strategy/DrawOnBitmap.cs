@@ -23,7 +23,6 @@ namespace DevEducationPaint.Surface_Strategy
         Draw(points1[i], points2[i]);
       }
     }
-
     private void Draw(Point prev, Point position)
     {
       int wth = Convert.ToInt32(Math.Abs(position.X - prev.X));

@@ -350,8 +350,8 @@
                 <Canvas x:Name="DrawWindow1"
              Height="580" 
              Width="800"
-             MouseMove="Image_MouseMove"
-             MouseWheel="Image_MouseWheel">
+             MouseMove="Canvas_MouseMove"
+             MouseWheel="Canvas_MouseWheel" Margin="-3,0,-2,0"> 
                 </Canvas>
 
             </TabItem>

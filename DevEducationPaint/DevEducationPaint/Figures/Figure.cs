@@ -10,6 +10,7 @@ namespace DevEducationPaint.Figures
     public abstract class Figure
     {
         public List<Point> FigurePoints { get; set; }
+        public string FugureName { get; set; }
         public IDrawStrategy ConcreteDraw { get; set; }
         public void Draw()
         {

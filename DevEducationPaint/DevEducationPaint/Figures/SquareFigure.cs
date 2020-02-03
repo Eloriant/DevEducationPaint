@@ -15,5 +15,10 @@ namespace DevEducationPaint.Figures
         {
             FigurePoints = points;
         }
+
+        public SquareFigure(string fugureName)
+        {
+            FugureName = fugureName;
+        }
     }
 }
