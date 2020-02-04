@@ -60,7 +60,7 @@ namespace DevEducationPaint
         SurfaceStrategy = new DrawOnBitmap
         {
           CurrentColor = new DrawColor(255, 0, 0, 255),
-          ConcreteThickness = new BoldThickness()
+          ConcreteThickness = new DefaultThickness()
         }
       };
       InitializeComponent();
@@ -68,12 +68,20 @@ namespace DevEducationPaint
       BitmapPalette myPalette = new BitmapPalette(colors);
       SuperBitmap.Instance = new WriteableBitmap((int)DrawWindow.Width,
       (int)DrawWindow.Height, 96, 96, PixelFormats.Bgra32, null);
+
+      SuperCanvas.Instance = DrawWindow1;
+      //new Canvas
+      //{
+      //  Height = DrawWindow1.Height,
+      //  Width = DrawWindow1.Width
+      //};
       Int32.TryParse(tbxAngleNumber.Text as string, out int nValue);
       angleNumber = nValue;
       FillWhite();
       DrawWindow.Source = SuperBitmap.Instance;
       point = prev;
-
+      SuperCanvas.Instance = SuperCanvas.GetInstanceCopy();
+      DrawWindow1 = SuperCanvas.Instance;
       SuperBitmap.Instance = SuperBitmap.GetInstanceCopy(); // делаем копию пустого холста, чтобы можно было к нему откатиться через кнопку back
       SuperBitmap.Copies.Add(SuperBitmap.Instance);
       countClick = SuperBitmap.Copies.Count;
@@ -109,7 +117,9 @@ namespace DevEducationPaint
       myLine.HorizontalAlignment = HorizontalAlignment.Left;
       myLine.VerticalAlignment = VerticalAlignment.Center;
       myLine.StrokeThickness = 2;
-      DrawWindow1.Children.Add(myLine);
+      SuperCanvas.Instance.Children.Add(myLine);
+
+      DrawWindow1 = SuperCanvas.Instance;
     }
     private void BtnOpen_Click(object sender, RoutedEventArgs e)
     {
@@ -177,7 +187,7 @@ namespace DevEducationPaint
     }
     private void Back_Click(object sender, RoutedEventArgs e)
     {
-      if(countClick == SuperBitmap.Copies.Count)
+      if (countClick == SuperBitmap.Copies.Count)
         SuperBitmap.Copies.Add(SuperBitmap.Instance);
 
       if (countClick > 0)
@@ -185,13 +195,13 @@ namespace DevEducationPaint
         --countClick;
         SuperBitmap.Instance = SuperBitmap.Copies[countClick];
         DrawWindow.Source = SuperBitmap.Instance;
-       
+
       }
     }
 
     private void Next_Click(object sender, RoutedEventArgs e)
     {
-      if (countClick < SuperBitmap.Copies.Count-1)
+      if (countClick < SuperBitmap.Copies.Count - 1)
       {
         ++countClick;
         SuperBitmap.Instance = SuperBitmap.Copies[countClick];
@@ -208,69 +218,55 @@ namespace DevEducationPaint
 
 
 
-        #endregion
+    #endregion
 
     #region Mouse Methods
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+    private void Window_MouseDown(object sender, MouseButtonEventArgs e)
     {
-      if (vector)
-      {
 
-      }
-      else if (vector == false)
+      if (isDoubleClicked && currentFigure == FigureEnum.BrokenLine)
       {
-        if (isDoubleClicked && currentFigure == FigureEnum.BrokenLine)
-        {
-          SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
-          FigureCreator creator = new LineCreator();
-          Figure figure = creator.CreateFigure(prev, pStaticStart);
-          figure.ConcreteDraw.SurfaceStrategy.ConcreteThickness = new DefaultThickness();
-          figure.Draw();
-          DrawWindow.Source = SuperBitmap.Instance;
-          isDoubleClicked = false;
-          isDrawingFigure = false;
-          isFirstClicked = true;
-        }
+        SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
+        FigureCreator creator = new LineCreator();
+        Figure figure = creator.CreateFigure(prev, pStaticStart);
+        figure.ConcreteDraw.SurfaceStrategy.ConcreteThickness = new DefaultThickness();
+        figure.Draw();
+        DrawWindow.Source = SuperBitmap.Instance;
         isDoubleClicked = false;
-        var temp = e.GetPosition(this.DrawWindow);
-        prev = new Point((int)temp.X, (int)temp.Y);
-        ddd.Content = $"{prev.X} {prev.Y}";
-        if (picker)
+        isDrawingFigure = false;
+        isFirstClicked = true;
+      }
+      isDoubleClicked = false;
+      var temp = e.GetPosition(this.DrawWindow);
+      prev = new Point((int)temp.X, (int)temp.Y);
+      ddd.Content = $"{prev.X} {prev.Y}";
+      if (picker)
+      {
+        byte[] color = GetPixelColorData(SuperBitmap.Instance, prev);
+        cp.SelectedColor = System.Windows.Media.Color.FromArgb(color[3], color[2], color[1], color[0]);
+        drawStrategy.SurfaceStrategy.CurrentColor = new DrawColor(color[3], color[2], color[1], color[0]);
+        picker = false;
+        SetState(FigureEnum.Picker);
+      }
+      while (filler)
+      {
+        if (prev.X <= 0 || prev.Y <= 0 || prev.X >= SuperBitmap.Instance.PixelWidth || prev.Y >= SuperBitmap.Instance.PixelHeight)
         {
-          if (prev.X <= 0 || prev.Y <= 0 || prev.X >= SuperBitmap.Instance.PixelWidth || prev.Y >= SuperBitmap.Instance.PixelHeight)
-          {
-              picker = false;
-              Picker.IsChecked = false;
-          }
-          else
-          {
-              byte[] color = GetPixelColorData(SuperBitmap.Instance, prev);
-              cp.SelectedColor = System.Windows.Media.Color.FromArgb(color[3], color[2], color[1], color[0]);
-              drawStrategy.SurfaceStrategy.CurrentColor = new DrawColor(color[3], color[2], color[1], color[0]);
-              picker = false;
-              SetState(FigureEnum.Picker);
-          }
-          
-        }
-        while (filler)
-        {
-          if (prev.X <= 0 || prev.Y <= 0 || prev.X >= SuperBitmap.Instance.PixelWidth || prev.Y >= SuperBitmap.Instance.PixelHeight)
-          {
-            filler = false;
-            Fill.IsChecked = false;
-            break;
-          }
-          Filling(prev);
-          SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
           filler = false;
           Fill.IsChecked = false;
+          break;
         }
+        Filling(prev);
+        SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
+        filler = false;
+        Fill.IsChecked = false;
       }
 
+
     }
-    private void Image_MouseMove(object sender, MouseEventArgs e)
+
+    private void TakeFigure()
     {
-      SuperBitmap.CopyInstance();
       bool isShiftPressed = Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
       bool isCtrlPressed = Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
       switch (currentFigure)
@@ -297,6 +293,12 @@ namespace DevEducationPaint
           currentCreator = new BrokenLineCreator();
           break;
       }
+    }
+    private void Image_MouseMove(object sender, MouseEventArgs e)
+    {
+      SuperBitmap.CopyInstance();
+      
+     TakeFigure();
 
       if (currentCreator == null) return;
       if (isDrawingFigure && prev.X != 0 && prev.Y != 0)//алгоритм рисования в растровом режиме для всех фигур, кроме карандаша
@@ -398,193 +400,49 @@ namespace DevEducationPaint
       }
     }
 
-    int point_index = 0; // номер точки в фигуре для редактирования
-    Line currentLine = null;
-    System.Windows.Point currentPoint = new System.Windows.Point();
-    int cnt = 0;
-    bool mp_press;
 
-    public object DrowWindow1 { get; private set; }
     private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
     {
-      double markerX = -1, markerY = -1; //красные маркеры в уголках линий
+      
 
-      mp_press = true;
-
-      if (e.LeftButton == MouseButtonState.Pressed)
-      {
-        currentPoint = e.GetPosition(this.DrawWindow1);
-        ddd.Content = $"{currentPoint.X} {currentPoint.Y}";
-      }
-
-      Line line;
-
-      foreach (Line line1 in DrawWindow1.Children.OfType<Line>())
-      {
-        line = line1;
-
-        if (Math.Abs(line.X1 - e.GetPosition(this.DrawWindow1).X) < 5 && Math.Abs(e.GetPosition(this.DrawWindow1).Y - 5 - line.Y1) < 5)
-        {
-
-          point_index = 0;
-          markerX = line.X1;
-          markerY = line.Y1;
-          currentLine = line;
-
-        }
-        else if ((Math.Abs(line.X2 - e.GetPosition(this.DrawWindow1).X) < 5 && Math.Abs(e.GetPosition(this.DrawWindow1).Y - 5 - line.Y2) < 5))
-        {
-          point_index = 1;
-          markerX = line.X2;
-          markerY = line.Y2;
-          currentLine = line;
-        }
-      }
-
+      var tmp = e.GetPosition(this.DrawWindow1);
+      position = new Point((int)tmp.X, (int)tmp.Y);
+      prev = position;
     }
+
     private void Canvas_MouseMove(object sender, MouseEventArgs e)
     {
-      double markerX = -1, markerY = -1;
-      if (e.LeftButton == MouseButtonState.Pressed)
+      TakeFigure();
+      SuperCanvas.CopyInstance();
+
+      
+      if (isDrawingFigure && prev.X != 0 && prev.Y != 0)//алгоритм рисования в растровом режиме для всех фигур, кроме карандаша
       {
-        Line line = null;
-        if (currentLine != null)
-        {
-          if (point_index == 0)
-          {
-            currentLine.X1 = e.GetPosition(this.DrawWindow1).X;
-            currentLine.Y1 = e.GetPosition(this.DrawWindow1).Y;
-            markerX = currentLine.X1;
-            markerY = currentLine.Y1;
-          }
-
-          else
-          {
-            currentLine.X2 = e.GetPosition(this.DrawWindow1).X;
-            currentLine.Y2 = e.GetPosition(this.DrawWindow1).Y;
-            markerX = currentLine.X2;
-            markerY = currentLine.Y2;
-          }
-
-          for (int i = 0; i < 10; i++)
-            foreach (System.Windows.Shapes.Rectangle rect1 in DrawWindow1.Children.OfType<System.Windows.Shapes.Rectangle>())
-            {
-              DrawWindow1.Children.Remove(rect1);
-              break;
-            }
-
-          System.Windows.Shapes.Rectangle rect;
-          rect = new System.Windows.Shapes.Rectangle();
-          rect.Stroke = new SolidColorBrush(Colors.Red);
-          rect.Fill = new SolidColorBrush(Colors.Transparent);
-          rect.Width = 10;
-          rect.Height = 10;
-          Canvas.SetLeft(rect, markerX - 5);
-          Canvas.SetTop(rect, markerY - 5);
-          DrawWindow1.Children.Add(rect);
-          return;
-        }
-
-        else
-        {
-          foreach (Line line1 in DrawWindow1.Children.OfType<Line>())
-          {
-            line = line1;
-
-            if (line.Name == "line_" + cnt)
-            {
-              break;
-            }
-            else
-              line = null;
-          }
-
-        }
-
-        // 
-        if (currentLine == null)
-        {
-          if (line == null)
-          {
-            line = new Line();
-
-            line.Stroke = System.Windows.SystemColors.WindowFrameBrush;
-            line.X1 = currentPoint.X;
-            line.Y1 = currentPoint.Y;
-            line.X2 = e.GetPosition(this.DrawWindow1).X;
-            line.Y2 = e.GetPosition(this.DrawWindow1).Y;
-
-            currentPoint = e.GetPosition(this.DrawWindow1);
-            line.Name = "line_" + cnt;
-
-            DrawWindow1.Children.Add(line);
-          }
-
-          else
-          {
-            line.X2 = e.GetPosition(this.DrawWindow1).X;
-            line.Y2 = e.GetPosition(this.DrawWindow1).Y;
-            DrawWindow1.InvalidateVisual();
-          }
-        }
+        var temp = e.GetPosition(this.DrawWindow1);
+        position = new Point((int)temp.X, (int)temp.Y);
+        resultFigure = currentCreator.CreateFigure(prev, position);
+        resultFigure.ConcreteDraw = drawStrategy;
+        resultFigure.Draw();
+        DrawWindow1 = SuperCanvas.GetInstanceCopy();
       }
 
-      else
-      {
-        Line line = null;
+      if (isDrawingFigure) return;
+      ddd.Content = e.GetPosition(this.DrawWindow1);
+      if (e.LeftButton != MouseButtonState.Pressed) return;
+      var tmp = e.GetPosition(this.DrawWindow1);
+      prev = position;
+      position = new Point((int)tmp.X, (int)tmp.Y);
 
-        foreach (Line line1 in DrawWindow1.Children.OfType<Line>())
-        {
-          line = line1;
+      drawStrategy.SurfaceStrategy.DrawLine(prev, position);
+      DrawWindow1 = SuperCanvas.GetInstanceCopy();
 
-          if (Math.Abs(line.X1 - e.GetPosition(this.DrawWindow1).X) < 5 && Math.Abs(e.GetPosition(this.DrawWindow1).Y - 5 - line.Y1) < 5)
-          {
-            point_index = 0;
-            markerX = line.X1;
-            markerY = line.Y1;
-            currentLine = line;
-          }
-          else
-          if (Math.Abs(line.X2 - e.GetPosition(this.DrawWindow1).X) < 5 && Math.Abs(e.GetPosition(this.DrawWindow1).Y - 5 - line.Y2) < 5)
-          {
-            point_index = 1;
-            markerX = line.X2;
-            markerY = line.Y2;
-            currentLine = line;
-          }
-        }
-      }
-      if (markerX != -1)
-      {
-        System.Windows.Shapes.Rectangle rect;
-        rect = new System.Windows.Shapes.Rectangle();
-        rect.Stroke = new SolidColorBrush(Colors.Red);
-        rect.Fill = new SolidColorBrush(Colors.Transparent);
-        rect.Width = 10;
-        rect.Height = 10;
-        Canvas.SetLeft(rect, markerX - 5);
-        Canvas.SetTop(rect, markerY - 5);
-        DrawWindow1.Children.Add(rect);
-      }
-      else
-      {
-        if (e.LeftButton != MouseButtonState.Pressed)
-        {
-          for (int i = 0; i < 10; i++)
-            foreach (System.Windows.Shapes.Rectangle rect in DrawWindow1.Children.OfType<System.Windows.Shapes.Rectangle>())
-            {
-              DrawWindow1.Children.Remove(rect);
-              currentLine = null;
-              DrawWindow1.InvalidateVisual();
-              break;
-            }
-        }
-      }
+      
     }
+
+
     private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
     {
-      mp_press = false;
-      cnt++; //номер линии
+      
     }
     #endregion
 
@@ -665,12 +523,12 @@ namespace DevEducationPaint
       if (vector)
       {
         DrawWindow1.Visibility = Visibility.Visible;
-        DrawWindow.Visibility = Visibility.Collapsed;
+        //DrawWindow.Visibility = Visibility.Collapsed;
       }
       else if (vector == false)
       {
         DrawWindow.Visibility = Visibility.Visible;
-        DrawWindow1.Visibility = Visibility.Collapsed;
+        //DrawWindow1.Visibility = Visibility.Collapsed;
       }
 
     }
@@ -798,5 +656,20 @@ namespace DevEducationPaint
     #endregion
 
 
+    private void Vector_OnMouseDown(object sender, MouseButtonEventArgs e)
+    {
+      //drawStrategy = new DrawByLine
+      //{
+      //  SurfaceStrategy = new DrawOnCanvas
+      //  {
+          
+      //  }
+      //};
+      drawStrategy.SurfaceStrategy = new DrawOnCanvas
+      {
+        CurrentColor = new DrawColor(255, 0, 0, 255)
+        //ConcreteThickness = new DefaultThickness()
+      };
+    }
   }
 }
