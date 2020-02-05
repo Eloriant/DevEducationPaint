@@ -8,7 +8,7 @@ using DevEducationPaint.Bitmap;
 
 namespace DevEducationPaint.Surface_Strategy
 {
-  class DrawOnBitmap : ISurfaceStrategy
+  public class DrawOnBitmap : ISurfaceStrategy
   {
     public DrawColor CurrentColor { get; set; }
     public ThicknessStrategy ConcreteThickness { get; set; }
