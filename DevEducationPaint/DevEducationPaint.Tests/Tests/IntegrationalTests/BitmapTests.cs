@@ -14,6 +14,7 @@ using DevEducationPaint.Share;
 using DevEducationPaint.Strategies;
 using DevEducationPaint.Surface_Strategy;
 using DevEducationPaint.Thicknesses;
+using Figure = DevEducationPaint.Figures.Figure;
 using Point = System.Drawing.Point;
 
 namespace DevEducationPaint.Tests.Tests.IntegrationalTests
@@ -24,17 +25,27 @@ namespace DevEducationPaint.Tests.Tests.IntegrationalTests
     [TestCase]
     public void GetLineOnTheBitmap()
     {
-      //private IDrawStrategy drawStrategy;
-      DevEducationPaint.Figures.Figure resultFigure;
+      var prev = new Point(5, 3);
+      var position = new Point(5, 9);
+
+      Figure resultFigure = getFigure(prev, position);
+
       SuperBitmap.Instance = new WriteableBitmap(10,
     10, 96, 96, PixelFormats.Bgra32, null);
 
       WriteableBitmap bitmap = GetBitmap();
-      
-      Point prev = new Point(5, 3);
-      Point position = new Point(5, 9);
+      resultFigure.Draw();
+     
+      var expected = bitmapToArray(bitmap);
+      var actual = bitmapToArray(SuperBitmap.GetInstanceCopy());
+
+      Assert.AreEqual(expected, actual);
+    }
 
 
+    private Figure getFigure(Point prev, Point position)
+    {
+      Figure resultFigure;
       FigureCreator currentCreator = new LineCreator();
       resultFigure = currentCreator.CreateFigure(prev, position);
       resultFigure.ConcreteDraw = new DrawByLine
@@ -45,12 +56,7 @@ namespace DevEducationPaint.Tests.Tests.IntegrationalTests
           ConcreteThickness = new DefaultThickness()
         }
       };
-      resultFigure.Draw();
-      SuperBitmap.Instance = SuperBitmap.GetInstanceCopy();
-      var expected = bitmapToArray(bitmap);
-      var actual = bitmapToArray(SuperBitmap.Instance);
-
-      Assert.AreEqual(expected, actual);
+      return resultFigure;
     }
 
 
@@ -60,29 +66,29 @@ namespace DevEducationPaint.Tests.Tests.IntegrationalTests
       var bitmap = new WriteableBitmap(10,
         10, 96, 96, PixelFormats.Bgra32, null);
 
-      var instance = new byte[] {255, 255, 255, 255};
-      bitmap.WritePixels(new Int32Rect(5,3,1,1),instance ,4,0 );
-      bitmap.WritePixels(new Int32Rect(5, 4, 1, 1), instance, 4, 0);
-      bitmap.WritePixels(new Int32Rect(5, 5, 1, 1), instance, 4, 0);
-      bitmap.WritePixels(new Int32Rect(5, 6, 1, 1), instance, 4, 0);
-      bitmap.WritePixels(new Int32Rect(5, 7, 1, 1), instance, 4, 0);
-      bitmap.WritePixels(new Int32Rect(5, 8, 1, 1), instance, 4, 0);
-      bitmap.WritePixels(new Int32Rect(5, 9, 1, 1), instance, 4, 0);
+      var colorBytes = new byte[] {255, 255, 255, 255};
+      bitmap.WritePixels(new Int32Rect(5, 3,1,1), colorBytes, 4,0 );
+      bitmap.WritePixels(new Int32Rect(5, 4, 1, 1), colorBytes, 4, 0);
+      bitmap.WritePixels(new Int32Rect(5, 5, 1, 1), colorBytes, 4, 0);
+      bitmap.WritePixels(new Int32Rect(5, 6, 1, 1), colorBytes, 4, 0);
+      bitmap.WritePixels(new Int32Rect(5, 7, 1, 1), colorBytes, 4, 0);
+      bitmap.WritePixels(new Int32Rect(5, 8, 1, 1), colorBytes, 4, 0);
+      bitmap.WritePixels(new Int32Rect(5, 9, 1, 1), colorBytes, 4, 0);
       return bitmap;
     }
 
 
-    private Array bitmapToArray(WriteableBitmap renderTarget)
+    private Array bitmapToArray(WriteableBitmap bitmap)
     {
-      if (renderTarget == null || renderTarget.PixelHeight == 0 || renderTarget.PixelWidth == 0)
+      if (bitmap == null || bitmap.PixelHeight == 0 || bitmap.PixelWidth == 0)
         return null;
 
-      int stride = renderTarget.PixelWidth * renderTarget.Format.BitsPerPixel / 8;
-      int size = stride * renderTarget.PixelHeight;
+      int stride = bitmap.PixelWidth * bitmap.Format.BitsPerPixel / 8;
+      int size = stride * bitmap.PixelHeight;
 
       byte[] buffer = new byte[size];
 
-      renderTarget.CopyPixels(buffer, stride, 0);
+      bitmap.CopyPixels(buffer, stride, 0);
 
       return buffer;
     }
