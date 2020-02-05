@@ -298,7 +298,7 @@ namespace DevEducationPaint
     {
       SuperBitmap.CopyInstance();
       
-     TakeFigure();
+      TakeFigure();
 
       if (currentCreator == null) return;
       if (isDrawingFigure && prev.X != 0 && prev.Y != 0)//алгоритм рисования в растровом режиме для всех фигур, кроме карандаша

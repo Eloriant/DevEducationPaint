@@ -12,8 +12,8 @@ namespace DevEducationPaint.Strategies
   {
         public abstract void CalculatePointsForDrawMethod(Point p1, Point p2);
         public ISurfaceStrategy SurfaceStrategy { get; set; }
-
-  }
+        public static IDrawStrategy DrawByLine { get; set; }
+    }
 }
 
 
