@@ -26,7 +26,7 @@ namespace DevEducationPaint.Surface_Strategy
         Y2 = p2.Y,
         HorizontalAlignment = HorizontalAlignment.Right,
         VerticalAlignment = VerticalAlignment.Center,
-        StrokeThickness = getThickness(),
+        StrokeThickness = 5/*getThickness()*/,
         Stroke = new SolidColorBrush(Colors.Black),
 
       };

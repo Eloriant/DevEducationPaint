@@ -415,7 +415,7 @@ namespace DevEducationPaint
       TakeFigure();
       SuperCanvas.CopyInstance();
 
-      
+      if (e.LeftButton != MouseButtonState.Pressed) return;
       if (isDrawingFigure && prev.X != 0 && prev.Y != 0)//алгоритм рисования в растровом режиме для всех фигур, кроме карандаша
       {
         var temp = e.GetPosition(this.DrawWindow1);
@@ -658,18 +658,18 @@ namespace DevEducationPaint
 
     private void Vector_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
-      //drawStrategy = new DrawByLine
-      //{
-      //  SurfaceStrategy = new DrawOnCanvas
-      //  {
-          
-      //  }
-      //};
-      drawStrategy.SurfaceStrategy = new DrawOnCanvas
+      drawStrategy = new DrawByLine
       {
-        CurrentColor = new DrawColor(255, 0, 0, 255)
-        //ConcreteThickness = new DefaultThickness()
+        SurfaceStrategy = new DrawOnCanvas
+        {
+          CurrentColor = new DrawColor(255, 0, 0, 255),
+          ConcreteThickness = new DefaultThickness()
+        }
       };
+      //drawStrategy.SurfaceStrategy = new DrawOnCanvas
+      //{
+        
+      //};
     }
   }
 }

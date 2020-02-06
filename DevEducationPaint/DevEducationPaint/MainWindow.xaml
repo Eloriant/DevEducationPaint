@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:DevEducationPaint"
         xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="DevEducationPaint" Height="710" Width="920" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"  Background="#FFE7EAEA" MouseDoubleClick="Window_MouseDoubleClick">
+        Title="DevEducationPaint" Height="710" Width="920"   Background="#FFE7EAEA" MouseDoubleClick="Window_MouseDoubleClick">
     <Grid x:Name="_double">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"></RowDefinition>
@@ -343,7 +343,9 @@
              Height="580" 
              Width="800"
              MouseMove="Image_MouseMove"
-             MouseWheel="Image_MouseWheel" Margin="-3,0,-2,0">
+             MouseWheel="Image_MouseWheel" Margin="-3,0,-2,0"
+             MouseDown="Window_MouseDown" 
+             MouseUp="Window_MouseUp">
                 </Image>
             </TabItem>
             <TabItem Header="Vector" Name="Vector" Height="20" Width="50" HorizontalAlignment="Right" MouseDown="Vector_OnMouseDown" >
