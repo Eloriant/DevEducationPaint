@@ -16,10 +16,6 @@ namespace DevEducationPaint.FigureCreators
         }
         public override Figure CreateFigure(Point start, Point end)
         {
-            start.Y = 1;
-            end.Y = 10;
-            start.X = 1;
-            end.X = 20;
 
             List<Point> tempDots = new List<Point>();
             double y = Math.Abs(start.Y - end.Y);
