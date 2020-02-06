@@ -275,7 +275,7 @@ namespace DevEducationPaint
           currentCreator = new PencilCreator();
           break;
         case FigureEnum.Circle:
-          currentCreator = new CircleCreator();
+          currentCreator = new CircleCreator(isShiftPressed);
           break;
         case FigureEnum.Triangle:
           currentCreator = new TriangleCreator(isShiftPressed, isCtrlPressed);

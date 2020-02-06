@@ -9,43 +9,77 @@ namespace DevEducationPaint.FigureCreators
 {
     public class CircleCreator : FigureCreator
     {
+        bool shiftPressed;
+        public CircleCreator(bool shiftPressed)
+        {
+            this.shiftPressed = shiftPressed;
+        }
         public override Figure CreateFigure(Point start, Point end)
         {
-            int cx =  start.X;
-            int cy = start.Y;
-            int r = Convert.ToInt32(Math.Sqrt((end.X - start.X)* (end.X - start.X)+ (end.Y - start.Y)* (end.Y - start.Y)));
+            start.Y = 1;
+            end.Y = 10;
+            start.X = 1;
+            end.X = 20;
 
-            List<Point> arcPoints = new List<Point>();
+            List<Point> tempDots = new List<Point>();
+            double y = Math.Abs(start.Y - end.Y);
+            double x = 0;
+            double delta = 1 - 2 * y;
+            double coeff;
+            int countOfDots = 0;
 
-            int arcMidPoint = (int)(r * 0.707);
-            for (int i = 0; i <= arcMidPoint; i++)
+            if (start.Y - end.Y != 0)
             {
-                arcPoints.Add(new Point(i, Convert.ToInt32(Math.Round(Math.Sqrt(r * r - i * i)))));
+                coeff = Math.Abs((start.X - end.X) / ((double)start.Y - end.Y));
+            }
+            else
+            {
+                coeff = Math.Abs((double)start.X - end.X);
             }
 
-            for (int i = arcPoints.Count-2; i >=0; i--)
+
+            if (shiftPressed)
             {
-                arcPoints.Add(new Point(arcPoints[i].Y, arcPoints[i].X));
+                coeff = 1;
             }
 
-            List<Point> circlePoints = new List<Point>();
-            List<Point> circlePoints1 = new List<Point>();
-            List<Point> circlePoints2 = new List<Point>();
-            List<Point> circlePoints3 = new List<Point>();
-            List<Point> circlePoints4 = new List<Point>();
-            for (int i = 1; i < arcPoints.Count; i++)
+            while (y >= 0)
             {
-                circlePoints1.Add(new Point(arcPoints[i].X + cx, arcPoints[i].Y + cy));
-                circlePoints2.Add(new Point(arcPoints[arcPoints.Count - i - 1].X + cx, cy - arcPoints[arcPoints.Count - i - 1].Y));
-                circlePoints3.Add(new Point(cx -arcPoints[i - 1].X, cy - arcPoints[i - 1].Y));
-                circlePoints4.Add(new Point(cx - arcPoints[arcPoints.Count - i - 1].X, arcPoints[arcPoints.Count - i - 1].Y + cy));
-            }
-            circlePoints.AddRange(circlePoints1);
-            circlePoints.AddRange(circlePoints2);
-            circlePoints.AddRange(circlePoints3);
-            circlePoints.AddRange(circlePoints4);
+                double tempX = start.X + coeff * x;
+                tempDots.Add(new Point(Convert.ToInt32(tempX), start.Y + (int)y));
 
-            return new CircleFigure(circlePoints);
+                if ((delta < 0))
+                {
+                    x++;
+                    delta = delta + 2 * x + 1;
+                    continue;
+                }
+                if ((delta > 0))
+                {
+                    y--;
+                    delta = delta - 2 * y + 1;
+                    continue;
+                }
+                x++;
+                delta = delta + 2 * (x - y);
+                y--;
+            }
+            countOfDots = tempDots.Count;
+
+            for (int i = countOfDots - 1; i > 0; i--)
+            {
+                tempDots.Add(new Point(tempDots[i].X, 2 * start.Y - tempDots[i].Y));
+            }
+            for (int i = 0; i < countOfDots; i++)
+            {
+                tempDots.Add(new Point(2 * start.X - tempDots[i].X, 2 * start.Y - tempDots[i].Y));
+            }
+            for (int i = countOfDots - 1; i > 0; i--)
+            {
+                tempDots.Add(new Point(2 * start.X - tempDots[i].X, tempDots[i].Y));
+            }
+
+            return new CircleFigure(tempDots);
         }
     }
 }
