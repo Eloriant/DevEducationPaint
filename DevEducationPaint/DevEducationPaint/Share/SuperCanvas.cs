@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Controls;
+using DevEducationPaint.Figures;
 
 namespace DevEducationPaint.Share
 {
@@ -10,7 +11,7 @@ namespace DevEducationPaint.Share
     private static List<Canvas> copies;
     private static Canvas instance;
     private static Canvas instanceCopy;
-
+    private static List<VectorFigure> listVectorFigures;
     public static Canvas Instance
     {
       get => instance;
@@ -19,6 +20,20 @@ namespace DevEducationPaint.Share
         instance = value;
         instanceCopy = instance;
       }
+    }
+
+    public static List<VectorFigure> ListVectorFigures
+    {
+      get
+      {
+        if (listVectorFigures == null)
+        {
+          listVectorFigures = new List<VectorFigure>();
+        }
+
+        return listVectorFigures;
+      }
+      set => listVectorFigures = value;
     }
 
     public static List<Canvas> Copies

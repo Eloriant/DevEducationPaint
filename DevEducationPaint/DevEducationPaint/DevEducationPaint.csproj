@@ -10,6 +10,8 @@
     <None Remove="brokenLine.png" />
     <None Remove="circle.png" />
     <None Remove="clear.png" />
+    <None Remove="Figures\NewFile1.txt" />
+    <None Remove="Figures\NewFile2.txt" />
     <None Remove="filler.png" />
     <None Remove="line.png" />
     <None Remove="pencil.png" />

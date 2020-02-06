@@ -22,6 +22,5 @@ namespace DevEducationPaint.Strategies
         }
 
       }
-
     }
   }

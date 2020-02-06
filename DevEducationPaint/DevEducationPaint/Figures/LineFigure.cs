@@ -15,6 +15,5 @@ namespace DevEducationPaint.Figures
         {
             FigurePoints = points;
         }
-
     }
 }

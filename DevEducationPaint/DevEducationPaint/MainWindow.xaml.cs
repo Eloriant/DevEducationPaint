@@ -413,7 +413,7 @@ namespace DevEducationPaint
     private void Canvas_MouseMove(object sender, MouseEventArgs e)
     {
       TakeFigure();
-      SuperCanvas.CopyInstance();
+      //SuperCanvas.CopyInstance();
 
       if (e.LeftButton != MouseButtonState.Pressed) return;
       if (isDrawingFigure && prev.X != 0 && prev.Y != 0)//алгоритм рисования в растровом режиме для всех фигур, кроме карандаша
@@ -423,6 +423,23 @@ namespace DevEducationPaint
         resultFigure = currentCreator.CreateFigure(prev, position);
         resultFigure.ConcreteDraw = drawStrategy;
         resultFigure.Draw();
+        SuperCanvas.ListVectorFigures.Add(new VectorFigure(resultFigure.FigurePoints));
+        foreach (Line line in DrawWindow1.Children )
+        {
+          foreach (var figureLine in SuperCanvas.ListVectorFigures)
+          {
+            foreach (var VARIABLE in figureLine.lines)
+            {
+              if (line.Equals(VARIABLE))
+              {
+                DrawWindow1.Children.Remove(line);
+              }
+            }
+            
+          }
+        }
+        //var vectorFigure = new VectorFigure(resultFigure.FigurePoints) {ConcreteDraw = drawStrategy};
+        //vectorFigure.Draw();
         DrawWindow1 = SuperCanvas.GetInstanceCopy();
       }
 
