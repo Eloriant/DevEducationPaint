@@ -15,7 +15,7 @@ namespace DevEducationPaint.Figures
         private List<Line> CreateVectorFigure(List<Point> points)
         {
             List<Line> figureLine = new List<Line>();
-            for (int i = 0; i < points.Count - 1; i++)
+            for (int i = 0; i < points.Count; i++)
             {
                 figureLine.Add(new Line()
                 {
@@ -31,7 +31,7 @@ namespace DevEducationPaint.Figures
 
         public VectorFigure(List<Point> points)
         {
-            lines = CreateVectorFigure(points);
+            lines = new List<Line>(); //CreateVectorFigure(points);
         }
 
 

@@ -412,7 +412,28 @@ namespace DevEducationPaint
 
         public void Line_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            int tmp = 2;
+
+            foreach(VectorFigure figure in SuperCanvas.ListVectorFigures)
+            {
+                foreach(var tmp in figure.lines)
+                {
+                    if (sender == tmp)
+                    {
+                        SuperCanvas.CurrentFigure = figure;
+                        break;
+                    }
+                }
+            }
+            
+            foreach(var line in SuperCanvas.CurrentFigure.lines)
+            {
+                line.X1 += 20;
+                line.X2 += 20;
+                line.Y1 += 20;
+                line.Y2 += 20;
+            }
+
+            //currentFigure = 
         }
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
@@ -434,12 +455,13 @@ namespace DevEducationPaint
                 else
                 {
                     SuperCanvas.RemoveChildrenByTag();
+                    SuperCanvas.CurrentFigure.lines = new List<Line>();
                 }
 
                 resultFigure.ConcreteDraw = drawStrategy;
                 resultFigure.Draw();
-                if (SuperCanvas.CurrentFigure == null)
-                    SuperCanvas.ListVectorFigures.Add(new VectorFigure(resultFigure.FigurePoints));
+                //if (SuperCanvas.CurrentFigure == null)
+                //    SuperCanvas.ListVectorFigures.Add(new VectorFigure(resultFigure.FigurePoints));
                 intermediatePoint = position;
                 //}
                 //else
@@ -474,9 +496,12 @@ namespace DevEducationPaint
 
         private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
+
+            
             if (SuperCanvas.CurrentFigure != null)
             {
-                foreach (Line line in SuperCanvas.CurrentFigure.lines)
+                SuperCanvas.ListVectorFigures.Add(SuperCanvas.CurrentFigure);
+                foreach (Line line in DrawWindow1.Children)
                 {
                     line.MouseDown += Line_MouseDown;
                 }

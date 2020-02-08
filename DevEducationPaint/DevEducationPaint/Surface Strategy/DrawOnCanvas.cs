@@ -33,6 +33,8 @@ namespace DevEducationPaint.Surface_Strategy
 
             };
             newLine.Tag = SuperCanvas.CurrentFigure;
+            newLine.Uid = Guid.NewGuid().ToString();
+            SuperCanvas.CurrentFigure.lines.Add(newLine);
             SuperCanvas.GetInstanceCopy().Children.Add(newLine);
         }
 
