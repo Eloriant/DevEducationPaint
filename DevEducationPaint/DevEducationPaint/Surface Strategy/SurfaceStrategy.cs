@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using System.Windows.Shapes;
 
 namespace DevEducationPaint.Surface_Strategy
 {
@@ -13,6 +14,5 @@ namespace DevEducationPaint.Surface_Strategy
         public ThicknessStrategy ConcreteThickness { get; set; }
         public void DrawLine(Point p1, Point p2);
 
-      
   }
 }

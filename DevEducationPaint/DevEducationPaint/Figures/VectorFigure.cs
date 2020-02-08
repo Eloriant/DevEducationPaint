@@ -32,7 +32,6 @@ namespace DevEducationPaint.Figures
         public VectorFigure(List<Point> points)
         {
             lines = CreateVectorFigure(points);
-
         }
 
 

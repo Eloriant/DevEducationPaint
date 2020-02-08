@@ -1,4 +1,5 @@
-﻿using DevEducationPaint.Strategies;
+﻿using DevEducationPaint.Share;
+using DevEducationPaint.Strategies;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

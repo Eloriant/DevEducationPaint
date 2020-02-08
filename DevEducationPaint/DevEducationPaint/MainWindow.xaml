@@ -348,7 +348,7 @@
              MouseUp="Window_MouseUp">
                 </Image>
             </TabItem>
-            <TabItem Header="Vector" Name="Vector" Height="20" Width="50" HorizontalAlignment="Right" MouseDown="Vector_OnMouseDown" >
+            <TabItem Header="Vector" Name="Vector" Height="20" Width="50" HorizontalAlignment="Right" >
                 <Canvas x:Name="DrawWindow1" Background="Beige"
              Height="580" 
              Width="800"

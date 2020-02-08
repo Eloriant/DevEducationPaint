@@ -1,65 +1,78 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using DevEducationPaint.Figures;
 
 namespace DevEducationPaint.Share
 {
-  public class SuperCanvas
-  {
-    private static List<Canvas> copies;
-    private static Canvas instance;
-    private static Canvas instanceCopy;
-    private static List<VectorFigure> listVectorFigures;
-    public static Canvas Instance
+    public class SuperCanvas
     {
-      get => instance;
-      set
-      {
-        instance = value;
-        instanceCopy = instance;
-      }
-    }
-
-    public static List<VectorFigure> ListVectorFigures
-    {
-      get
-      {
-        if (listVectorFigures == null)
+        private static List<Canvas> copies;
+        private static Canvas instance;
+        private static Canvas instanceCopy;
+        private static List<VectorFigure> listVectorFigures;
+        public static VectorFigure CurrentFigure;
+        public static Canvas Instance
         {
-          listVectorFigures = new List<VectorFigure>();
+            get => instance;
+            set
+            {
+                instance = value;
+                instanceCopy = instance;
+            }
         }
 
-        return listVectorFigures;
-      }
-      set => listVectorFigures = value;
-    }
-
-    public static List<Canvas> Copies
-    {
-      get
-      {
-        if (copies == null)
+        public static List<VectorFigure> ListVectorFigures
         {
-          copies = new List<Canvas>();
+            get
+            {
+                if (listVectorFigures == null)
+                {
+                    listVectorFigures = new List<VectorFigure>();
+                }
+
+                return listVectorFigures;
+            }
+            set => listVectorFigures = value;
         }
-        return copies;
-      }
-      set => copies = value;
-    }
 
-    public static void CopyInstance()
-    {
-      if (instance != null)
-        instanceCopy = instance;
-    }
+        public static List<Canvas> Copies
+        {
+            get
+            {
+                if (copies == null)
+                {
+                    copies = new List<Canvas>();
+                }
+                return copies;
+            }
+            set => copies = value;
+        }
 
-    public static Canvas GetInstanceCopy()
-    {
-      if (instanceCopy == null && instance != null)
-        instanceCopy = instance;
-      return instanceCopy;
+        public static void CopyInstance()
+        {
+            if (instance != null)
+                instanceCopy = instance;
+        }
+
+        public static Canvas GetInstanceCopy()
+        {
+            if (instanceCopy == null && instance != null)
+                instanceCopy = instance;
+            return instanceCopy;
+        }
+
+        public static void RemoveChildrenByTag()
+        {
+            //List<int> indexes = new List<int>();
+            for (int i = 0; i < instance.Children.Count; i++)
+            {
+                FrameworkElement child = (FrameworkElement)instance.Children[i];
+                if (child.Tag == CurrentFigure)
+                    instance.Children.Remove(child);
+            }
+        }
     }
-  }
 }
