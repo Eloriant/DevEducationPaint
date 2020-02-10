@@ -17,10 +17,10 @@ namespace DevEducationPaint.Surface_Strategy
 
         public ThicknessStrategy ConcreteThickness { get; set; }
 
+        
         public void DrawLine(Point p1, Point p2)
         {
-
-            Line newLine = new Line
+          Line newLine = new Line
             {
                 X1 = p1.X,
                 X2 = p2.X,
@@ -29,7 +29,7 @@ namespace DevEducationPaint.Surface_Strategy
                 HorizontalAlignment = HorizontalAlignment.Right,
                 VerticalAlignment = VerticalAlignment.Center,
                 StrokeThickness = getThickness(),
-                Stroke = new SolidColorBrush(Colors.Black),
+                Stroke = new SolidColorBrush(CurrentColor.CurColor()),
 
             };
             newLine.Tag = SuperCanvas.CurrentFigure;
