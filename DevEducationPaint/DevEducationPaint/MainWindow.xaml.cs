@@ -447,49 +447,14 @@ namespace DevEducationPaint
 
     private void ChangeFigurePosition(Point mousePosition)
     {
-      switch (Quarter.FindQuarter(prev, mousePosition))
+      var shiftX = mousePosition.X - prev.X;
+      var shiftY = mousePosition.Y - prev.Y;
+      foreach (var line in dragAndDropVectorFigure.lines)
       {
-        case 1:
-
-          foreach (var line in dragAndDropVectorFigure.lines)
-          {
-            line.X1 += 1;
-            line.X2 += 1;
-            line.Y1 -= 1;
-            line.Y2 -= 1;
-
-          }
-
-          break;
-        case 2:
-          foreach (var line in dragAndDropVectorFigure.lines)
-          {
-            line.X1 -= 1;
-            line.X2 -= 1;
-            line.Y1 -= 1;
-            line.Y2 -= 1;
-          }
-          break;
-        case 3:
-          foreach (var line in dragAndDropVectorFigure.lines)
-          {
-            line.X1 -= 1;
-            line.X2 -= 1;
-            line.Y1 += 1;
-            line.Y2 += 1;
-          }
-          break;
-        case 4:
-          foreach (var line in dragAndDropVectorFigure.lines)
-          {
-            line.X1 += 1;
-            line.X2 += 1;
-            line.Y1 += 1;
-            line.Y2 += 1;
-          }
-          break;
-
-
+        line.X1 += shiftX;
+        line.X2 += shiftX;
+        line.Y1 += shiftY;
+        line.Y2 += shiftY;
       }
     }
 
@@ -516,7 +481,7 @@ namespace DevEducationPaint
         ChangeFigurePosition(new Point((int)mousePosition.X, (int)mousePosition.Y));
         prev = new Point((int)mousePosition.X, (int)mousePosition.Y);
         RemoveRect();
-        
+
       }
       else
       {
