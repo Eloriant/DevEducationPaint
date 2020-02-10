@@ -11,7 +11,7 @@ namespace DevEducationPaint.Strategies
     public class DrawByDash : IDrawStrategy
     {
 
-      public override void CalculatePointsForDrawMethod(Point p1, Point p2)
+      public override void CalculatePointsForDrawMethod(Point p1, Point p2, bool isVector)
         {
             throw new NotImplementedException();
         }

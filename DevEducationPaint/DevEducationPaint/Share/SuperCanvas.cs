@@ -67,12 +67,14 @@ namespace DevEducationPaint.Share
         public static void RemoveChildrenByTag()
         {
             //List<int> indexes = new List<int>();
-            for (int i = 0; i < instance.Children.Count; i++)
+            for (int i = instance.Children.Count - 1; i > 0; i--)
             {
-                FrameworkElement child = (FrameworkElement)instance.Children[i];
+                FrameworkElement child = (FrameworkElement)GetInstanceCopy().Children[i];
                 if (child.Tag == CurrentFigure)
-                    instance.Children.Remove(child);
+                  GetInstanceCopy().Children.Remove(child);
             }
+
+            int еьз = 2;
         }
     }
 }
