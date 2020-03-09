@@ -337,7 +337,7 @@
         <Rectangle HorizontalAlignment="Center" Height="40" Width="85" Margin="0,230,0,0" VerticalAlignment="Top" Grid.Row="1" Fill="White" />
         <Label x:Name="angles" Content="Angles" HorizontalAlignment="Left" Margin="8,237,0,0" Grid.Row="1" VerticalAlignment="Top"/>
         <TabControl Margin="99,47,0,0" VerticalAlignment="Top" SelectionChanged="TabControl_SelectionChanged" Grid.RowSpan="2" Grid.ColumnSpan="2" TabStripPlacement="Top" FlowDirection="RightToLeft" BorderBrush="{x:Null}">
-            <TabItem Header="Rastr"  Name="Rastr" Height="20" Width="50">
+            <TabItem Header="Rastr"  Name="Rastr" Height="20" Width="50" Margin="0,-1,0,0" VerticalAlignment="Top">
 
                 <Image x:Name="DrawWindow"       
              Height="580" 

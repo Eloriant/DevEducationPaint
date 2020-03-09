@@ -4,6 +4,7 @@ using DevEducationPaint.Surface_Strategy;
 using DevEducationPaint.Thicknesses;
 using System.Collections.Generic;
 using System.Drawing;
+using DevEducationPaint.Surface_Strategy.AbstractFactory;
 using Point = System.Drawing.Point;
 
 namespace DevEducationPaint.Strategies
@@ -12,6 +13,8 @@ namespace DevEducationPaint.Strategies
   {
         public abstract void CalculatePointsForDrawMethod(Point p1, Point p2, bool isVector);
         public ISurfaceStrategy SurfaceStrategy { get; set; }
+
+        public ISurface Surface { get; set; }
         public static IDrawStrategy DrawByLine { get; set; }
     }
 }

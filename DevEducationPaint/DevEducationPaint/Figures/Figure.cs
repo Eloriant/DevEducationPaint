@@ -12,6 +12,7 @@ namespace DevEducationPaint.Figures
     {
         public List<Point> FigurePoints { get; set; }
         public IDrawStrategy ConcreteDraw { get; set; }
+
         public void Draw(bool isVector)
         {
             for (int i = 0; i < FigurePoints.Count; i++)
